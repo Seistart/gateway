@@ -64,7 +64,7 @@ export default function Categories() {
       ></ComboBox>
       <div className="grid grid-cols-2 mx-auto place-items-center">
         {filteredProjects.map((project, index) => (
-          <Button variant={"white"} className="min-w-[400px]" key={index}>
+          <Button className="min-w-[400px]" key={index}>
             <div className="flex flex-col">
               <div>{project.projectName}</div>
               <div> {project.tags.toString()}</div>

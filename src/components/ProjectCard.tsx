@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 
 interface CardProps {
   title: string;
@@ -15,7 +15,7 @@ interface CardProps {
 import Image from "next/image";
 import { UserIcon } from "lucide-react";
 
-const CardComponent: React.FC<CardProps> = ({
+const ProjectCard: React.FC<CardProps> = ({
   title,
   subtitle,
   count,
@@ -75,4 +75,4 @@ const CardComponent: React.FC<CardProps> = ({
   );
 };
 
-export default CardComponent;
+export default ProjectCard;

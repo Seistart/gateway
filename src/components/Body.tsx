@@ -2,7 +2,7 @@ import { Paintbrush2Icon } from "lucide-react";
 import ImageSlider from "./ImageSlider";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import CardComponent from "./ui/card";
+import CardComponent from "./ProjectCard";
 
 export const Body = () => {
   return (
@@ -39,27 +39,27 @@ export const Body = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="flex flex-col items-start bg-quadiry p-6 pb-2 bg-foreground">
+      <div className="grid grid-cols-4 gap-4 mb-6 text-secondary">
+        <div className="flex flex-col items-start bg-primary  p-6 pb-2">
           <div className="flex items-start justify-between mb-0 w-full ">
             <div className="w-12 h-12 bg-tertiary flex items-center justify-center">
-              <Button variant={"ghost"} size="icon" className="text-black">
+              <Button variant={"ghost"} size="icon" className="text-secondary">
                 <Paintbrush2Icon />
               </Button>
             </div>
             <div className="items-start justify-start text-left w-full px-6">
               <h3 className="text-xl font-bold">124k</h3>
               <p className="mb-2 text-sm font-extralight">Artworks</p>
-              <Button variant="link" className="m-1 p-2 w-10">
+              <Button variant="link" className="m-1 p-2 w-10 text-secondary">
                 View All
               </Button>
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start bg-quadiry p-6 pb-2 bg-foreground">
+        <div className="flex flex-col items-start bg-quadiry p-6 pb-2 bg-primary">
           <div className="flex items-start justify-between mb-0 w-full ">
             <div className="w-12 h-12 bg-tertiary flex items-center justify-center">
-              <Button variant={"ghost"} size="icon" className="text-black">
+              <Button variant={"ghost"} size="icon" className="text-secondary">
                 <Paintbrush2Icon />
               </Button>
             </div>
@@ -72,10 +72,10 @@ export const Body = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start bg-quadiry p-6 pb-2 bg-foreground">
+        <div className="flex flex-col items-start bg-quadiry p-6 pb-2 bg-primary">
           <div className="flex items-start justify-between mb-0 w-full ">
             <div className="w-12 h-12 bg-tertiary flex items-center justify-center">
-              <Button variant={"ghost"} size="icon" className="text-black">
+              <Button variant={"ghost"} size="icon" className="text-secondary">
                 <Paintbrush2Icon />
               </Button>
             </div>
@@ -88,10 +88,10 @@ export const Body = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-start bg-quadiry p-6 pb-2 bg-foreground">
+        <div className="flex flex-col items-start bg-quadiry p-6 pb-2 bg-primary">
           <div className="flex items-start justify-between mb-0 w-full ">
             <div className="w-12 h-12 bg-tertiary flex items-center justify-center">
-              <Button variant={"ghost"} size="icon" className="text-black">
+              <Button variant={"ghost"} size="icon" className="text-secondary">
                 <Paintbrush2Icon />
               </Button>
             </div>

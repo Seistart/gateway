@@ -6,10 +6,10 @@
   font-family: "space-grotesk";
   src: url("/fonts/SpaceGrotesk-Regular.ttf") format("truetype");
 }
-
+/* 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 0 0% 98%;
     --foreground: 224 71.4% 4.1%;
 
     --card: 0 0% 100%;
@@ -26,10 +26,6 @@
 
     --tertiary: 340, 41%, 83%;
     --tertiary-foreground: 330, 41%, 83%;
-
-    --quantenary: 0, 0%, 98%;
-
-    --quinary: 0, 0%, 8%;
 
     --muted: 220 14.3% 95.9%;
     --muted-foreground: 220 8.9% 46.1%;
@@ -48,7 +44,7 @@
   }
 
   .dark {
-    --background: 200, 6%, 9%;
+    --background: 0 0% 8%;
     --foreground: 195, 7%, 11%;
 
     --card: 224 71.4% 4.1%;
@@ -57,18 +53,14 @@
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
 
-    --primary: 225, 86%, 92%;
-    --primary-foreground: 210, 86%, 92%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 8%;
 
-    --secondary: 207, 19%, 91%;
+    --secondary: 0 0% 100%;
     --secondary-foreground: 200, 19%, 91%;
 
     --tertiary: 340, 41%, 83%;
     --tertiary-foreground: 330, 41%, 83%;
-
-    --quantenary: 0, 0%, 98%;
-
-    --quinary: 0, 0%, 8%;
 
     --muted: 215 27.9% 16.9%;
     --muted-foreground: 217.9 10.6% 64.9%;
@@ -82,6 +74,70 @@
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
+  }
+} */
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 8%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 0 0% 8%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 

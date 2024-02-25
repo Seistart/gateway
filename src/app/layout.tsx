@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Space_Grotesk } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,12 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`dark bg-half-half h-[100%] bg-union font-space-grotesk font-custom-gray text-white`}
-      >
-        <Header></Header>
-        <main>{children}</main>
-        <Footer></Footer>
+      <body className={cn(spaceGrotesk.className)}>
+        <ThemeProvider
+          attribute="class"
+          enableSystem={true}
+          disableTransitionOnChange
+        >
+          <Header></Header>
+          <main>{children}</main>
+          <Footer></Footer>
+        </ThemeProvider>
       </body>
     </html>
   );

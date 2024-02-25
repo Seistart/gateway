@@ -17,9 +17,6 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        "space-grotesk": ["space-grotesk", "sans-serif"],
-      },
       animation: {
         "infinite-scroll": "infinite-scroll 25s linear infinite",
       },
@@ -42,18 +39,6 @@ const config = {
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
-        },
-        tertiary: {
-          DEFAULT: "hsl(var(--tertiary))",
-          foreground: "hsl(var(--tertiary-foreground))",
-        },
-        quantenary: {
-          DEFAULT: "hsl(var(--quantenary))",
-          foreground: "hsl(var(--quantenary-foreground))",
-        },
-        quinary: {
-          DEFAULT: "hsl(var(--quinary))",
-          foreground: "hsl(var(--quinary-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -81,9 +66,6 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      backgroundImage: (theme) => ({
-        "half-half": "linear-gradient(to bottom, black 100%, white 0%)",
-      }),
     },
   },
   plugins: [require("tailwindcss-animate"), require("tailwindcss-gradients")],
