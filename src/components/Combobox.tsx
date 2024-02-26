@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import {
   Command,
@@ -6,27 +6,27 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '@/components/ui/command';
+} from '@/components/ui/command'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from '@/components/ui/popover'
 
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { Check, ChevronsUpDown } from 'lucide-react';
-import { useState } from 'react';
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { useState } from 'react'
 
 interface ComboBoxProps<T> {
   items: {
-    value: string;
-    label: T;
-  }[];
-  value: T | null;
-  setValue: (value: T | null) => void;
-  selectPlaceHolder: string;
-  searchPlaceHolder: string;
+    value: string
+    label: T
+  }[]
+  value: T | null
+  setValue: (value: T | null) => void
+  selectPlaceHolder: string
+  searchPlaceHolder: string
 }
 export const ComboBox = <T extends string>({
   items,
@@ -35,7 +35,7 @@ export const ComboBox = <T extends string>({
   selectPlaceHolder,
   searchPlaceHolder,
 }: ComboBoxProps<T>) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -66,8 +66,8 @@ export const ComboBox = <T extends string>({
                 onSelect={() => {
                   setValue(
                     items[index]?.label === value ? null : items[index]!.label
-                  );
-                  setOpen(false);
+                  )
+                  setOpen(false)
                 }}
               >
                 <Check
@@ -83,5 +83,5 @@ export const ComboBox = <T extends string>({
         </Command>
       </PopoverContent>
     </Popover>
-  );
-};
+  )
+}

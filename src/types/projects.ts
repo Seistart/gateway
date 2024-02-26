@@ -1,12 +1,12 @@
 export interface Project {
-  projectName: string;
-  description: string;
-  imageUrl: string;
-  tags: ProjectTags[];
-  startDate: string;
-  endDate: string;
-  seiVersion: number;
-  status: string;
+  projectName: string
+  description: string
+  imageUrl: string
+  tags: ProjectTags[]
+  startDate: string
+  endDate: string
+  seiVersion: number
+  status: string
 }
 
 export enum ProjectStatus {

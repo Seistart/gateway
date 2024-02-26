@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import * as React from 'react';
+import Link from 'next/link'
+import * as React from 'react'
 
 import {
   NavigationMenu,
@@ -11,8 +11,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/navigation-menu'
+import { cn } from '@/lib/utils'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -27,7 +27,7 @@ const components: { title: string; href: string; description: string }[] = [
     description:
       'Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.',
   },
-];
+]
 
 export function NavigationMenuPage() {
   return (
@@ -103,14 +103,14 @@ export function NavigationMenuPage() {
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  );
+  )
 }
 
 interface ListItemProps {
-  className?: string;
-  title: string;
-  href: string;
-  children: React.ReactNode;
+  className?: string
+  title: string
+  href: string
+  children: React.ReactNode
 }
 
 const ListItem = ({ className, title, children, href }: ListItemProps) => {
@@ -130,5 +130,5 @@ const ListItem = ({ className, title, children, href }: ListItemProps) => {
         </NavigationMenuLink>
       </Link>
     </li>
-  );
-};
+  )
+}

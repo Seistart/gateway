@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import React from 'react';
+import React from 'react'
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from './ui/button';
+import Image from 'next/image'
+import Link from 'next/link'
+import { Button } from './ui/button'
 
 interface ImageData {
-  src: string;
-  alt: string;
-  title: string;
-  subtitle: string;
-  tags: string[];
+  src: string
+  alt: string
+  title: string
+  subtitle: string
+  tags: string[]
 }
 
 const images: ImageData[] = [
@@ -59,17 +59,17 @@ const images: ImageData[] = [
     tags: ['Tag1', 'Tag2', 'Tag3'],
   },
   // Add more images as needed
-];
+]
 
 const ImageSlider: React.FC = () => {
   return (
     <div className='relative flex flex-col justify-center overflow-hidden'>
-      <div className='w-full max-w-full mx-auto px-4 md:px-6 py-2'>
+      <div className='mx-auto w-full max-w-full px-4 py-2 md:px-6'>
         <div className='text-center'>
-          <div className='w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]'>
+          <div className='inline-flex w-full flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]'>
             <ul
               x-ref='logos'
-              className='flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll'
+              className='flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8'
             >
               {images.map((image, index) => (
                 <li key={index}>
@@ -81,7 +81,7 @@ const ImageSlider: React.FC = () => {
                         height='285'
                         width='285'
                       />
-                      <div className='absolute w-full text-xs bottom-0 bg-black bg-opacity-50 justify-start text-left text-white p-2'>
+                      <div className='absolute bottom-0 w-full justify-start bg-black bg-opacity-50 p-2 text-left text-xs text-white'>
                         <h3 className='text-lg'>{image.title}</h3>
                         <p className='text-sm'>{image.subtitle}</p>
                         <div className='flex space-x-1'>
@@ -89,7 +89,7 @@ const ImageSlider: React.FC = () => {
                             <Button
                               key={index}
                               variant='outline'
-                              className='w-auto p-2 mx-0 mr-1 my-2 mb-0'
+                              className='mx-0 my-2 mb-0 mr-1 w-auto p-2'
                             >
                               {tag}
                             </Button>
@@ -103,7 +103,7 @@ const ImageSlider: React.FC = () => {
             </ul>
             <ul
               x-ref='logos'
-              className='flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll'
+              className='flex animate-infinite-scroll items-center justify-center md:justify-start [&_img]:max-w-none [&_li]:mx-8'
             >
               {images.map((image, index) => (
                 <li key={index}>
@@ -115,7 +115,7 @@ const ImageSlider: React.FC = () => {
                         height='285'
                         width='285'
                       />
-                      <div className='absolute w-full text-xs bottom-0 bg-black bg-opacity-50 justify-start text-left text-white p-2'>
+                      <div className='absolute bottom-0 w-full justify-start bg-black bg-opacity-50 p-2 text-left text-xs text-white'>
                         <h3 className='text-lg'>{image.title}</h3>
                         <p className='text-sm'>{image.subtitle}</p>
                         <div className='flex space-x-1'>
@@ -123,7 +123,7 @@ const ImageSlider: React.FC = () => {
                             <Button
                               key={index}
                               variant='outline'
-                              className='w-auto p-2 mx-0 mr-1 my-2 mb-0'
+                              className='mx-0 my-2 mb-0 mr-1 w-auto p-2'
                             >
                               {tag}
                             </Button>
@@ -163,7 +163,7 @@ const ImageSlider: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ImageSlider;
+export default ImageSlider

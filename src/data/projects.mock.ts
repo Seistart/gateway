@@ -1,4 +1,4 @@
-import { Project, ProjectTags } from '@/types';
+import { Project, ProjectTags } from '@/types'
 
 export const MockProjects: Project[] = [
   {
@@ -115,4 +115,4 @@ export const MockProjects: Project[] = [
     seiVersion: 1,
     status: 'In Development',
   },
-];
+]

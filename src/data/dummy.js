@@ -35,4 +35,4 @@ const projects = [
     image: 'https://picsum.photos/id/6/200/300',
     url: 'https://www.google.com',
   },
-];
+]

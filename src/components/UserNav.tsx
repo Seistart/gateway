@@ -1,9 +1,9 @@
-'use client';
+'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 
-import { ThemeRadioGroup } from './theme/theme-radio-group';
-import { Button } from './ui/button';
+import { ThemeRadioGroup } from './theme/theme-radio-group'
+import { Button } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,20 +16,20 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+} from './ui/dropdown-menu'
 
 export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className='w-10 h-10 rounded-full' size='icon' variant='ghost'>
+        <Button className='h-10 w-10 rounded-full' size='icon' variant='ghost'>
           <Avatar>
             <AvatarImage
               src='https://github.com/shadcn.png'
               className='rounded-full'
             />
             <AvatarFallback>
-              <div className='w-10 h-10 bg-primary/10 rounded-full animate-pulse'></div>
+              <div className='h-10 w-10 animate-pulse rounded-full bg-primary/10'></div>
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -64,5 +64,5 @@ export function UserNav() {
         <DropdownMenuItem>Disconnect Wallet</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

@@ -1,31 +1,31 @@
-'use client';
+'use client'
 
-import { analytics } from '@/utils/analytics';
-import { BarChart, Card } from '@tremor/react';
-import { ArrowDownRight, ArrowRight, ArrowUpRight } from 'lucide-react';
-import ReactCountryFlag from 'react-country-flag';
+import { analytics } from '@/utils/analytics'
+import { BarChart, Card } from '@tremor/react'
+import { ArrowDownRight, ArrowRight, ArrowUpRight } from 'lucide-react'
+import ReactCountryFlag from 'react-country-flag'
 
 interface AnalyticsDashboardProps {
-  avgVisitorsPerDay: string;
-  amtVisitorsToday: number;
-  timeseriesPageviews: Awaited<ReturnType<typeof analytics.retrieveDays>>;
-  topCountries: [string, number][];
+  avgVisitorsPerDay: string
+  amtVisitorsToday: number
+  timeseriesPageviews: Awaited<ReturnType<typeof analytics.retrieveDays>>
+  topCountries: [string, number][]
 }
 
 const Badge = ({ percentage }: { percentage: number }) => {
-  const isPositive = percentage > 0;
-  const isNeutral = percentage === 0;
-  const isNegative = percentage < 0;
+  const isPositive = percentage > 0
+  const isNeutral = percentage === 0
+  const isNegative = percentage < 0
 
-  if (isNaN(percentage)) return null;
+  if (isNaN(percentage)) return null
 
-  const positiveClassname = 'bg-green-900/25 text-green-400 ring-green-400/25';
-  const neutralClassname = 'bg-zinc-900/25 text-zinc-400 ring-zinc-400/25';
-  const negativeClassname = 'bg-red-900/25 text-red-400 ring-red-400/25';
+  const positiveClassname = 'bg-green-900/25 text-green-400 ring-green-400/25'
+  const neutralClassname = 'bg-zinc-900/25 text-zinc-400 ring-zinc-400/25'
+  const negativeClassname = 'bg-red-900/25 text-red-400 ring-red-400/25'
 
   return (
     <span
-      className={`inline-flex gap-1 items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
+      className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
         isPositive
           ? positiveClassname
           : isNeutral
@@ -38,8 +38,8 @@ const Badge = ({ percentage }: { percentage: number }) => {
       {isNegative ? <ArrowDownRight className='h-3 w-3' /> : null}
       {percentage.toFixed(0)}%
     </span>
-  );
-};
+  )
+}
 
 const AnalyticsDashboard = ({
   avgVisitorsPerDay,
@@ -49,17 +49,17 @@ const AnalyticsDashboard = ({
 }: AnalyticsDashboardProps) => {
   return (
     <div className='flex flex-col gap-6'>
-      <div className='grid w-full mx-auto grid-cols-1 sm:grid-cols-2 gap-6'>
+      <div className='mx-auto grid w-full grid-cols-1 gap-6 sm:grid-cols-2'>
         <Card className='w-full'>
           <p className='text-tremor-default text-dark-tremor-content'>
             Avg. visitors/day
           </p>
-          <p className='text-3xl text-dark-tremor-content-strong font-semibold'>
+          <p className='text-dark-tremor-content-strong text-3xl font-semibold'>
             {avgVisitorsPerDay}
           </p>
         </Card>
         <Card className='w-full'>
-          <p className='flex gap-2.5 items-center text-tremor-default text-dark-tremor-content'>
+          <p className='text-tremor-default text-dark-tremor-content flex items-center gap-2.5'>
             Visitors today
             <Badge
               percentage={
@@ -67,24 +67,24 @@ const AnalyticsDashboard = ({
               }
             />
           </p>
-          <p className='text-3xl text-dark-tremor-content-strong font-semibold'>
+          <p className='text-dark-tremor-content-strong text-3xl font-semibold'>
             {amtVisitorsToday}
           </p>
         </Card>
       </div>
 
-      <Card className='flex flex-col sm:grid grid-cols-4 gap-6'>
-        <h2 className='w-full text-dark-tremor-content-strong text-center sm:left-left font-semibold text-xl'>
+      <Card className='flex grid-cols-4 flex-col gap-6 sm:grid'>
+        <h2 className='text-dark-tremor-content-strong sm:left-left w-full text-center text-xl font-semibold'>
           This weeks top visitors:
         </h2>
-        <div className='col-span-3 flex items-center justify-between flex-wrap gap-8'>
+        <div className='col-span-3 flex flex-wrap items-center justify-between gap-8'>
           {topCountries?.map(([countryCode, number]) => {
             return (
               <div
                 key={countryCode}
-                className='flex items-center gap-3 text-dark-tremor-content-strong'
+                className='text-dark-tremor-content-strong flex items-center gap-3'
               >
-                <p className='hidden sm:block text-tremor-content'>
+                <p className='text-tremor-content hidden sm:block'>
                   {countryCode}
                 </p>
                 <ReactCountryFlag
@@ -97,7 +97,7 @@ const AnalyticsDashboard = ({
                   {number}
                 </p>
               </div>
-            );
+            )
           })}
         </div>
       </Card>
@@ -110,7 +110,7 @@ const AnalyticsDashboard = ({
             data={timeseriesPageviews.map((day) => ({
               name: day.date,
               Visitors: day.events.reduce((acc, curr) => {
-                return acc + Object.values(curr)[0]!;
+                return acc + Object.values(curr)[0]!
               }, 0),
             }))}
             categories={['Visitors']}
@@ -119,7 +119,7 @@ const AnalyticsDashboard = ({
         ) : null}
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default AnalyticsDashboard;
+export default AnalyticsDashboard

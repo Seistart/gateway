@@ -1,8 +1,8 @@
-import { cn } from '@/lib/utils';
-import { MDXRemote } from 'next-mdx-remote/rsc';
+import { cn } from '@/lib/utils'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 
 interface Props {
-  markdown: string;
+  markdown: string
 }
 
 const components = {
@@ -131,7 +131,7 @@ const components = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <pre
       className={cn(
-        'mb-4 mt-6 p-4 overflow-x-auto rounded-lg border bg-black py-4',
+        'mb-4 mt-6 overflow-x-auto rounded-lg border bg-black p-4 py-4',
         className
       )}
       {...props}
@@ -140,14 +140,14 @@ const components = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        'relative rounded font-mono text-sm text-white language-javascript',
+        'language-javascript relative rounded font-mono text-sm text-white',
         className
       )}
       {...props}
     />
   ),
-};
+}
 
 export function MDX({ markdown }: Props) {
-  return <MDXRemote source={markdown} components={{ ...components }} />;
+  return <MDXRemote source={markdown} components={{ ...components }} />
 }

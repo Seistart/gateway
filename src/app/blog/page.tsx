@@ -4,20 +4,20 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { getSortedBlogPosts } from '@/lib/blog';
-import Link from 'next/link';
+} from '@/components/ui/card'
+import { getSortedBlogPosts } from '@/lib/blog'
+import Link from 'next/link'
 
 export function generateMetadata() {
   return {
     title: 'Blog',
     description: '',
     keywords: [],
-  };
+  }
 }
 
 export default async function Blogs() {
-  const blogPosts = await getSortedBlogPosts();
+  const blogPosts = await getSortedBlogPosts()
   return (
     <>
       <ul>
@@ -36,5 +36,5 @@ export default async function Blogs() {
         ))}
       </ul>
     </>
-  );
+  )
 }

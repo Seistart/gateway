@@ -1,19 +1,19 @@
 // Adjust the import path as needed
 
-import { MockProjects } from '@/data/projects.mock';
-import { useProjectStore } from '@/state';
-import { useEffect } from 'react';
+import { MockProjects } from '@/data/projects.mock'
+import { useProjectStore } from '@/state'
+import { useEffect } from 'react'
 
 export function useProjects() {
   //   const { data, error } = useSWR('/api/projects', fetcher); // Adjust the API endpoint as needed
-  const data = MockProjects;
-  const setProjects = useProjectStore((state) => state.setProjects);
+  const data = MockProjects
+  const setProjects = useProjectStore((state) => state.setProjects)
 
   useEffect(() => {
     if (data) {
-      setProjects(data);
+      setProjects(data)
     }
-  }, [data, setProjects]);
+  }, [data, setProjects])
 
   return {
     projects: useProjectStore((state) => state.projects),
@@ -26,5 +26,5 @@ export function useProjects() {
     resetFilter: useProjectStore((state) => state.resetFilter),
     // isLoading: !error && !data,
     // isError: error,
-  };
+  }
 }

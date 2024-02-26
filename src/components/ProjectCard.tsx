@@ -1,19 +1,19 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { Button } from './ui/button';
+import React from 'react'
+import { Button } from './ui/button'
 
 interface CardProps {
-  title: string;
-  subtitle: string;
-  count: number;
-  imgSrc: string;
-  smallImgSrcs: string[];
-  buttonLabel: string;
+  title: string
+  subtitle: string
+  count: number
+  imgSrc: string
+  smallImgSrcs: string[]
+  buttonLabel: string
 }
 
-import { UserIcon } from 'lucide-react';
-import Image from 'next/image';
+import { UserIcon } from 'lucide-react'
+import Image from 'next/image'
 
 const ProjectCard: React.FC<CardProps> = ({
   title,
@@ -35,9 +35,9 @@ const ProjectCard: React.FC<CardProps> = ({
                 alt=''
                 width={1000}
                 height={1000}
-                className='w-full h-full object-cover'
+                className='h-full w-full object-cover'
               />
-              <div className='absolute top-4 left-4 flex -space-x-6 rtl:space-x-reverse'>
+              <div className='absolute left-4 top-4 flex -space-x-6 rtl:space-x-reverse'>
                 {smallImgSrcs.map((src, index) => (
                   <Image
                     key={index}
@@ -45,21 +45,21 @@ const ProjectCard: React.FC<CardProps> = ({
                     alt=''
                     width={50}
                     height={50}
-                    className={`w-10 h-10 border-2 border-white rounded-full dark:border-white-800`}
+                    className={`dark:border-white-800 h-10 w-10 rounded-full border-2 border-white`}
                   />
                 ))}
               </div>
             </div>
             <div className='p-4'>
-              <div className='flex justify-between items-center mt-2'>
+              <div className='mt-2 flex items-center justify-between'>
                 <h2 className='text-base font-semibold text-black'>{title}</h2>
-                <div className='flex justify-between items-center mt-2'>
+                <div className='mt-2 flex items-center justify-between'>
                   <span className='text-xs text-gray-400'>{count}</span>
-                  <UserIcon className='w-4 h-4 text-gray-400' />
+                  <UserIcon className='h-4 w-4 text-gray-400' />
                 </div>
               </div>
-              <p className='text-sm text-gray-400 mt-1'>{subtitle}</p>
-              <div className='flex justify-between items-center mt-2'>
+              <p className='mt-1 text-sm text-gray-400'>{subtitle}</p>
+              <div className='mt-2 flex items-center justify-between'>
                 <div className='flex flex-col'>
                   <h3 className='text-sm text-gray-400'>Raised</h3>
                   <span className='text-base text-gray-800'>200 sei</span>
@@ -72,7 +72,7 @@ const ProjectCard: React.FC<CardProps> = ({
           </div>
         ))}
     </div>
-  );
-};
+  )
+}
 
-export default ProjectCard;
+export default ProjectCard
