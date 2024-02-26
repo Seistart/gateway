@@ -1,9 +1,10 @@
-import { FaBell, FaEthereum, FaSearch } from "react-icons/fa";
-import { Button } from "./ui/button";
-import Image from "next/image";
-import { NavigationMenuPage } from "./Navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UserNav } from "./UserNav";
+import Image from 'next/image'
+import Link from 'next/link'
+import { FaBell, FaSearch } from 'react-icons/fa'
+import { MobileNavigation } from './MobileNavigation'
+import { NavigationMenuPage } from './Navigation'
+import { UserNav } from './UserNav'
+import { Button } from './ui/button'
 
 /**
  * Header component that renders a header with logo, navigation,
@@ -11,32 +12,32 @@ import { UserNav } from "./UserNav";
  */
 export const Header = () => {
   return (
-    <header className="border-b-2 border-gray-800 flex items-center justify-between text-sm font-medium mx-6">
-      <div className="flex justify-center pt-4">
-        <div className="w-32">
-          <Image src="/images/logo_850.png" width="50" height="50" alt="test" />
-        </div>
-        <div className="h-16">
+    <header className='flex items-center justify-between border-b-2 border-primary/10'>
+      <div className='flex flex-shrink-0 items-center justify-center'>
+        <Link href='/' className='mr-2'>
+          <Image src='/images/logo_850.png' width='50' height='50' alt='test' />
+        </Link>
+        <div className='hidden items-center justify-center md:flex'>
           <NavigationMenuPage />
         </div>
+        <div className='flex items-center justify-center md:hidden'>
+          <MobileNavigation />
+        </div>
       </div>
-      <div className="flex h-[5rem]">
-        <Button variant={"white"}>Create</Button>
-        <Button variant={"outline"}>
-          <div className="bg-gray-800 p-2 mr-2 rounded-full">
-            <FaEthereum className="h-4 w-4 " />
-          </div>
-          <span className="flex">32.06 ETH</span>
-        </Button>
-        <Button variant={"ghost"} size="icon">
-          <FaSearch className="h-4 w-4" />
-        </Button>
-        <Button variant={"ghost"} size="icon">
-          <FaBell className="h-4 w-4" />
-        </Button>
-
+      <div className='flex items-center'>
+        <div className='hidden items-center justify-center md:flex'>
+          <Button variant='outline'>
+            <span className='flex'>32.06 ETH</span>
+          </Button>
+          <Button variant='ghost' size='icon'>
+            <FaSearch className='h-4 w-4' />
+          </Button>
+          <Button variant='ghost' size='icon'>
+            <FaBell className='h-4 w-4' />
+          </Button>
+        </div>
         <UserNav />
       </div>
     </header>
-  );
-};
+  )
+}

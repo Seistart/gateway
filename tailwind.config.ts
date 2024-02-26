@@ -1,92 +1,72 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 const config = {
-  darkMode: ["class"],
+  darkMode: ['class'],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
-  prefix: "",
+  prefix: '',
   theme: {
     container: {
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      padding: '1rem',
+      screens: {},
     },
     extend: {
-      fontFamily: {
-        "space-grotesk": ["space-grotesk", "sans-serif"],
-      },
       animation: {
-        "infinite-scroll": "infinite-scroll 25s linear infinite",
+        'infinite-scroll': 'infinite-scroll 25s linear infinite',
       },
       keyframes: {
-        "infinite-scroll": {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-100%)" },
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
         },
       },
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        tertiary: {
-          DEFAULT: "hsl(var(--tertiary))",
-          foreground: "hsl(var(--tertiary-foreground))",
-        },
-        quantenary: {
-          DEFAULT: "hsl(var(--quantenary))",
-          foreground: "hsl(var(--quantenary-foreground))",
-        },
-        quinary: {
-          DEFAULT: "hsl(var(--quinary))",
-          foreground: "hsl(var(--quinary-foreground))",
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
-      backgroundImage: (theme) => ({
-        "half-half": "linear-gradient(to bottom, black 100%, white 0%)",
-      }),
     },
   },
-  plugins: [require("tailwindcss-animate"), require("tailwindcss-gradients")],
-} satisfies Config;
+  plugins: [require('tailwindcss-animate'), require('tailwindcss-gradients')],
+} satisfies Config
 
-export default config;
+export default config

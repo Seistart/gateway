@@ -1,68 +1,68 @@
-"use client";
+'use client'
 
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 
+import { ThemeRadioGroup } from './theme/theme-radio-group'
+import { Button } from './ui/button'
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuShortcut,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu'
 
 export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant={"ghost"}
-          size="icon"
-          className="w-10 h-10 rounded-full cursor-pointer"
-        >
+        <Button className='h-10 w-10 rounded-full' size='icon' variant='ghost'>
           <Avatar>
             <AvatarImage
-              src="https://github.com/shadcn.png"
-              className="rounded-full"
+              src='https://github.com/shadcn.png'
+              className='rounded-full'
             />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>
+              <div className='h-10 w-10 animate-pulse rounded-full bg-primary/10'></div>
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">seistart</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              m@seistart.com
-            </p>
+      <DropdownMenuContent
+        className='w-56'
+        align='end'
+        forceMount
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
+        <DropdownMenuLabel>
+          <div className='flex flex-col space-y-1'>
+            <p className='text-sm'>seistart</p>
+            <p className='text-xs text-muted-foreground'>m@seistart.com</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Collection
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>New Project</DropdownMenuItem>
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <span>Theme</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <ThemeRadioGroup></ThemeRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        <DropdownMenuItem>Disconnect Wallet</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

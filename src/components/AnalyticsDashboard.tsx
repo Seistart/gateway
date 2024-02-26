@@ -25,13 +25,14 @@ const Badge = ({ percentage }: { percentage: number }) => {
 
   return (
     <span
-      className={`inline-flex gap-1 items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
+      className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${
         isPositive
           ? positiveClassname
           : isNeutral
-          ? neutralClassname
-          : negativeClassname
-      }`}>
+            ? neutralClassname
+            : negativeClassname
+      }`}
+    >
       {isPositive ? <ArrowUpRight className='h-3 w-3' /> : null}
       {isNeutral ? <ArrowRight className='h-3 w-3' /> : null}
       {isNegative ? <ArrowDownRight className='h-3 w-3' /> : null}
@@ -48,17 +49,17 @@ const AnalyticsDashboard = ({
 }: AnalyticsDashboardProps) => {
   return (
     <div className='flex flex-col gap-6'>
-      <div className='grid w-full mx-auto grid-cols-1 sm:grid-cols-2 gap-6'>
+      <div className='mx-auto grid w-full grid-cols-1 gap-6 sm:grid-cols-2'>
         <Card className='w-full'>
           <p className='text-tremor-default text-dark-tremor-content'>
             Avg. visitors/day
           </p>
-          <p className='text-3xl text-dark-tremor-content-strong font-semibold'>
+          <p className='text-dark-tremor-content-strong text-3xl font-semibold'>
             {avgVisitorsPerDay}
           </p>
         </Card>
         <Card className='w-full'>
-          <p className='flex gap-2.5 items-center text-tremor-default text-dark-tremor-content'>
+          <p className='text-tremor-default text-dark-tremor-content flex items-center gap-2.5'>
             Visitors today
             <Badge
               percentage={
@@ -66,21 +67,24 @@ const AnalyticsDashboard = ({
               }
             />
           </p>
-          <p className='text-3xl text-dark-tremor-content-strong font-semibold'>
+          <p className='text-dark-tremor-content-strong text-3xl font-semibold'>
             {amtVisitorsToday}
           </p>
         </Card>
       </div>
 
-      <Card className='flex flex-col sm:grid grid-cols-4 gap-6'>
-        <h2 className='w-full text-dark-tremor-content-strong text-center sm:left-left font-semibold text-xl'>
+      <Card className='flex grid-cols-4 flex-col gap-6 sm:grid'>
+        <h2 className='text-dark-tremor-content-strong sm:left-left w-full text-center text-xl font-semibold'>
           This weeks top visitors:
         </h2>
-        <div className='col-span-3 flex items-center justify-between flex-wrap gap-8'>
+        <div className='col-span-3 flex flex-wrap items-center justify-between gap-8'>
           {topCountries?.map(([countryCode, number]) => {
             return (
-              <div key={countryCode} className='flex items-center gap-3 text-dark-tremor-content-strong'>
-                <p className='hidden sm:block text-tremor-content'>
+              <div
+                key={countryCode}
+                className='text-dark-tremor-content-strong flex items-center gap-3'
+              >
+                <p className='text-tremor-content hidden sm:block'>
                   {countryCode}
                 </p>
                 <ReactCountryFlag

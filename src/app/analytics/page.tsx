@@ -54,14 +54,16 @@ const Page = async () => {
     }
   }
 
-  const topCountries = [...topCountriesMap.entries()].sort((a ,b) => {
-    if(a[1] > b[1]) return -1
-    else return 1
-  }).slice(0, 5)
+  const topCountries = [...topCountriesMap.entries()]
+    .sort((a, b) => {
+      if (a[1] > b[1]) return -1
+      else return 1
+    })
+    .slice(0, 5)
 
   return (
-    <div className='min-h-screen w-full py-12 flex justify-center items-center'>
-      <div className='relative w-full max-w-6xl mx-auto text-white'>
+    <div className='flex min-h-screen w-full items-center justify-center py-12'>
+      <div className='relative mx-auto w-full max-w-6xl text-white'>
         <AnalyticsDashboard
           avgVisitorsPerDay={avgVisitorsPerDay}
           amtVisitorsToday={amtVisitorsToday}
