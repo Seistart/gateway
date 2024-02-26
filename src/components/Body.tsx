@@ -108,9 +108,7 @@ export const Body = () => {
 
       <div className="flex justify-between items-end">
         <h1 className="text-2xl font-bold mb-3">Highlights</h1>
-        <Button variant="white" className="w-14 font-bold">
-          All
-        </Button>
+        <Button className="w-14 font-bold">All</Button>
       </div>
       <CardComponent
         title="Anthropomorphic Cats"
@@ -127,9 +125,7 @@ export const Body = () => {
 
       <div className="flex justify-between items-end">
         <h1 className="text-2xl font-bold mb-3">Discover</h1>
-        <Button variant="white" className="w-14 font-bold">
-          All
-        </Button>
+        <Button className="w-14 font-bold">All</Button>
       </div>
       <ImageSlider />
     </div>

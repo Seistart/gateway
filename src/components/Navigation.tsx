@@ -100,7 +100,7 @@ export function NavigationMenuPage() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/" legacyBehavior passHref>
+          <Link href="/blog" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Blog
             </NavigationMenuLink>
