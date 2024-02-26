@@ -31,8 +31,8 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function NavigationMenuPage() {
   return (
-    <NavigationMenu className="h-full">
-      <NavigationMenuList className="h-full">
+    <NavigationMenu>
+      <NavigationMenuList className="pt-0">
         <NavigationMenuItem>
           <NavigationMenuTrigger
             onPointerMove={(event) => event.preventDefault()}

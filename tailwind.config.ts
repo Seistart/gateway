@@ -11,10 +11,8 @@ const config = {
   prefix: "",
   theme: {
     container: {
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      padding: "1rem",
+      screens: {},
     },
     extend: {
       animation: {

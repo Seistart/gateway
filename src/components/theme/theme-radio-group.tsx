@@ -1,0 +1,20 @@
+"use client";
+
+import * as React from "react";
+import { useTheme } from "next-themes";
+import {
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
+
+export function ThemeRadioGroup() {
+  const { setTheme, theme } = useTheme();
+
+  return (
+    <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+      <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+      <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+      <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+    </DropdownMenuRadioGroup>
+  );
+}

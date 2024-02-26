@@ -26,9 +26,11 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange
         >
-          <Header></Header>
-          <main>{children}</main>
-          <Footer></Footer>
+          <div className="container mx-auto">
+            <Header></Header>
+            <main>{children}</main>
+            <Footer></Footer>
+          </div>
         </ThemeProvider>
       </body>
     </html>
