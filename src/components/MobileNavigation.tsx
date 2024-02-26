@@ -9,7 +9,8 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import { Cross1Icon, HamburgerMenuIcon } from '@radix-ui/react-icons'
+import { Cross1Icon } from '@radix-ui/react-icons'
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 export function MobileNavigation() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
@@ -41,7 +42,7 @@ export function MobileNavigation() {
           variant='ghost'
           onClick={() => setIsDrawerOpen(true)}
         >
-          <HamburgerMenuIcon width='20' height='20'></HamburgerMenuIcon>
+          <RxHamburgerMenu className='h-6 w-6' />
         </Button>
       </DrawerTrigger>
       <DrawerContent className='fixed bottom-0 left-0 mt-24 flex h-full w-screen flex-col rounded-t-[10px] '>

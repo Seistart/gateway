@@ -13,6 +13,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 import { cn } from '@/lib/utils'
+import { preventDefaultAction } from '@/utils'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -32,17 +33,17 @@ const components: { title: string; href: string; description: string }[] = [
 export function NavigationMenuPage() {
   return (
     <NavigationMenu>
-      <NavigationMenuList className='pt-0'>
+      <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger
-            onPointerMove={(event) => event.preventDefault()}
-            onPointerLeave={(event) => event.preventDefault()}
+            onPointerMove={preventDefaultAction}
+            onPointerLeave={preventDefaultAction}
           >
             Discover
           </NavigationMenuTrigger>
           <NavigationMenuContent
-            onPointerMove={(event) => event.preventDefault()}
-            onPointerLeave={(event) => event.preventDefault()}
+            onPointerMove={preventDefaultAction}
+            onPointerLeave={preventDefaultAction}
           >
             <ul className='grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] '>
               {components.map((component) => (
@@ -59,14 +60,14 @@ export function NavigationMenuPage() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger
-            onPointerMove={(event) => event.preventDefault()}
-            onPointerLeave={(event) => event.preventDefault()}
+            onPointerMove={preventDefaultAction}
+            onPointerLeave={preventDefaultAction}
           >
             Recruit
           </NavigationMenuTrigger>
           <NavigationMenuContent
-            onPointerMove={(event) => event.preventDefault()}
-            onPointerLeave={(event) => event.preventDefault()}
+            onPointerMove={preventDefaultAction}
+            onPointerLeave={preventDefaultAction}
           >
             <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
               <div className='row-span-3'>
