@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { Project, ProjectStatus, ProjectTags } from "@/types/projects";
+import { Project, ProjectStatus, ProjectTags } from '@/types/projects';
+import { create } from 'zustand';
 
 export interface ProjectFilter {
   tag: ProjectTags | null;
@@ -20,7 +20,7 @@ export interface ProjectStore {
 
 export const useProjectStore = create<ProjectStore>((set, get) => ({
   projects: [],
-  searchTerm: "",
+  searchTerm: '',
   filter: {
     tag: null,
     status: null,

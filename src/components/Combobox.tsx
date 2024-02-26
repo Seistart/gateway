@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Command,
@@ -6,17 +6,17 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command";
+} from '@/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from '@/components/ui/popover';
 
-import { Check, ChevronsUpDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { useState } from 'react';
 
 interface ComboBoxProps<T> {
   items: {
@@ -41,18 +41,18 @@ export const ComboBox = <T extends string>({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          role="combobox"
+          variant='outline'
+          role='combobox'
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className='w-[200px] justify-between'
         >
           {value
             ? items.find((item) => item.label === value)?.label
             : selectPlaceHolder}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className='w-[200px] p-0'>
         <Command>
           <CommandInput placeholder={searchPlaceHolder} />
           <CommandEmpty>No framework found.</CommandEmpty>
@@ -60,8 +60,8 @@ export const ComboBox = <T extends string>({
             {items.map((item, index) => (
               <CommandItem
                 key={index}
-                className="text-white"
-                aria-selected="false"
+                className='text-white'
+                aria-selected='false'
                 value={item.value}
                 onSelect={() => {
                   setValue(
@@ -72,8 +72,8 @@ export const ComboBox = <T extends string>({
               >
                 <Check
                   className={cn(
-                    "mr-2 h-4 w-4",
-                    value === item.label ? "opacity-100" : "opacity-0"
+                    'mr-2 h-4 w-4',
+                    value === item.label ? 'opacity-100' : 'opacity-0'
                   )}
                 />
                 {item.label}

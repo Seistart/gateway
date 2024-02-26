@@ -1,8 +1,8 @@
-import { MDX } from "@/components/markdown/mdx";
-import { Button } from "@/components/ui/button";
-import { getBlogPostByName, getSortedBlogPosts } from "@/lib/blog";
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import { MDX } from '@/components/markdown/mdx';
+import { Button } from '@/components/ui/button';
+import { getBlogPostByName, getSortedBlogPosts } from '@/lib/blog';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 const getBlogPost = async (slug: string) => {
   const blogPost = await getBlogPostByName(slug);
@@ -39,9 +39,9 @@ export default async function BlogPost({
 }) {
   const { markdown } = await getBlogPost(params.slug);
   return (
-    <div className="container">
-      <Link href="/blog">
-        <Button variant="link" className="pl-0 mb-4 justify-start">
+    <div className='container'>
+      <Link href='/blog'>
+        <Button variant='link' className='pl-0 mb-4 justify-start'>
           Back
         </Button>
       </Link>

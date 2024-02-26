@@ -1,8 +1,8 @@
 // Adjust the import path as needed
 
-import { MockProjects } from "@/data/projects.mock";
-import { useProjectStore } from "@/state";
-import { useEffect } from "react";
+import { MockProjects } from '@/data/projects.mock';
+import { useProjectStore } from '@/state';
+import { useEffect } from 'react';
 
 export function useProjects() {
   //   const { data, error } = useSWR('/api/projects', fetcher); // Adjust the API endpoint as needed
