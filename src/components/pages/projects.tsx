@@ -3,12 +3,12 @@
 import { ComboBox } from '@/components/ui/combo-box'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useProjects } from '@/hooks'
+import { useProjectStore } from '@/state'
 import { ProjectStatus, ProjectTags } from '@/types'
 import { useEffect } from 'react'
 import { CompleteProject } from '@/lib/db/schema/projects'
 
-export const Projects = async ({
+export const Projects = ({
   projects,
 }: {
   projects: CompleteProject[];
@@ -16,14 +16,14 @@ export const Projects = async ({
     
   const {
     setSearchTerm,
-    filteredProjects,
     searchTerm,
     filter,
     setTagFilter,
     setStatusFilter,
     resetFilter,
-    setProjects
-  } = useProjects()
+    setProjects,
+    filteredProjects
+  } = useProjectStore(state=> ({...state,filteredProjects: state.getFilteredProjects()}))
   const tagValues = Object.values(ProjectTags).map((tag) => ({
     value: tag.toLowerCase(),
     label: tag,
@@ -34,11 +34,11 @@ export const Projects = async ({
   }))
 
   useEffect(() => {
+    setProjects(projects);
     return () => {
-      setProjects(projects);
       resetFilter()
     }
-  }, [resetFilter])
+  }, [resetFilter, projects, setProjects])
 
   return (
     <div className='container mx-auto items-center'>
@@ -71,7 +71,7 @@ export const Projects = async ({
         searchPlaceHolder='Search Status...'
       ></ComboBox>
       <div className='mx-auto grid grid-cols-2 place-items-center'>
-        {projects.map((project, index) => (
+        {filteredProjects.map((project, index) => (
           <Button className='min-w-[400px]' key={index}>
             <div className='flex flex-col'>
               <div>{project.projectName}</div>
