@@ -1,3 +1,4 @@
+import { CompleteProject } from '@/lib/db/schema/projects'
 import { Project, ProjectStatus, ProjectTags } from '@/types/projects'
 import { create } from 'zustand'
 
@@ -7,12 +8,12 @@ export interface ProjectFilter {
 }
 
 export interface ProjectStore {
-  projects: Project[]
+  projects: CompleteProject[]
   searchTerm: string
   filter: ProjectFilter
   setSearchTerm: (term: string) => void
-  setProjects: (projects: Project[]) => void
-  getFilteredProjects: () => Project[]
+  setProjects: (projects: CompleteProject[]) => void
+  getFilteredProjects: () => CompleteProject[]
   setTagFilter: (tag: ProjectTags | null) => void
   setStatusFilter: (status: ProjectStatus | null) => void
   resetFilter: () => void
@@ -32,18 +33,18 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
       .split(/\s+/)
       .filter(Boolean)
     return get().projects.filter(
-      ({ projectName, description, tags, status }) => {
+      ({ projectName, projectDescription, projectType, projectRelease }) => {
         const matchesSearchTerm =
           searchTermsLower.length === 0 ||
           searchTermsLower.every(
             (term) =>
               projectName.toLowerCase().includes(term) ||
               status.toLowerCase().includes(term) ||
-              tags.some((tag) => tag.toLowerCase().includes(term))
+              projectType.split(',').some((tag: string) => tag.toLowerCase().includes(term))
           )
-        const matchesFilterTag = filter.tag ? tags.includes(filter.tag) : true
+        const matchesFilterTag = filter.tag ? projectType.includes(filter.tag) : true
         const matchesFilterStatus = filter.status
-          ? status === filter.status
+          ? projectRelease === filter.status
           : true
         return matchesSearchTerm && matchesFilterTag && matchesFilterStatus
       }

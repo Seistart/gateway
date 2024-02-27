@@ -8,12 +8,13 @@ export function useProjects() {
   //   const { data, error } = useSWR('/api/projects', fetcher); // Adjust the API endpoint as needed
   const data = MockProjects
   const setProjects = useProjectStore((state) => state.setProjects)
+  const projects = useProjectStore((state) => state.projects)
 
-  useEffect(() => {
-    if (data) {
-      setProjects(data)
-    }
-  }, [data, setProjects])
+  // useEffect(() => {
+  //   if (data && !projects) {
+  //     setProjects(data)
+  //   }
+  // }, [data, setProjects])
 
   return {
     projects: useProjectStore((state) => state.projects),
@@ -24,6 +25,7 @@ export function useProjects() {
     setTagFilter: useProjectStore((state) => state.setTagFilter),
     setStatusFilter: useProjectStore((state) => state.setStatusFilter),
     resetFilter: useProjectStore((state) => state.resetFilter),
+    setProjects,
     // isLoading: !error && !data,
     // isError: error,
   }

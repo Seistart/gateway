@@ -6,8 +6,14 @@ import { Input } from '@/components/ui/input'
 import { useProjects } from '@/hooks'
 import { ProjectStatus, ProjectTags } from '@/types'
 import { useEffect } from 'react'
+import { CompleteProject } from '@/lib/db/schema/projects'
 
-export const Projects = () => {
+export const Projects = async ({
+  projects,
+}: {
+  projects: CompleteProject[];
+}) => {
+    
   const {
     setSearchTerm,
     filteredProjects,
@@ -16,6 +22,7 @@ export const Projects = () => {
     setTagFilter,
     setStatusFilter,
     resetFilter,
+    setProjects
   } = useProjects()
   const tagValues = Object.values(ProjectTags).map((tag) => ({
     value: tag.toLowerCase(),
@@ -28,6 +35,7 @@ export const Projects = () => {
 
   useEffect(() => {
     return () => {
+      setProjects(projects);
       resetFilter()
     }
   }, [resetFilter])
@@ -63,12 +71,12 @@ export const Projects = () => {
         searchPlaceHolder='Search Status...'
       ></ComboBox>
       <div className='mx-auto grid grid-cols-2 place-items-center'>
-        {filteredProjects.map((project, index) => (
+        {projects.map((project, index) => (
           <Button className='min-w-[400px]' key={index}>
             <div className='flex flex-col'>
               <div>{project.projectName}</div>
-              <div> {project.tags.toString()}</div>
-              <div> {project.status}</div>
+              <div> {project.projectType.toString()}</div>
+              <div> {project.projectRelease}</div>
             </div>
           </Button>
         ))}
