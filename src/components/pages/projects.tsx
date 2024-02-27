@@ -1,20 +1,27 @@
 'use client'
 
-import { ComboBox } from '@/components/ui/combo-box'
 import { Button } from '@/components/ui/button'
+import { ComboBox } from '@/components/ui/combo-box'
 import { Input } from '@/components/ui/input'
-import { ProjectStatus, ProjectTags } from '@/types'
 import { CompleteProject } from '@/lib/db/schema/projects'
 import { useProjectStore } from '@/state'
+import { ProjectStatus, ProjectTags } from '@/types'
+import { useEffect } from 'react'
 
-export const Projects = ({
-  projects,
-}: {
-  projects: CompleteProject[];
-}) => {
-    
-  const {setProjects, searchTerm, filter, setTagFilter, setStatusFilter, setSearchTerm} = useProjectStore()
-  
+export const Projects = ({ projects }: { projects: CompleteProject[] }) => {
+  const {
+    setSearchTerm,
+    searchTerm,
+    filter,
+    setTagFilter,
+    setStatusFilter,
+    resetFilter,
+    setProjects,
+    filteredProjects,
+  } = useProjectStore((state) => ({
+    ...state,
+    filteredProjects: state.getFilteredProjects(),
+  }))
   const tagValues = Object.values(ProjectTags).map((tag) => ({
     value: tag.toLowerCase(),
     label: tag,
@@ -23,6 +30,13 @@ export const Projects = ({
     value: status.toLowerCase(),
     label: status,
   }))
+
+  useEffect(() => {
+    setProjects(projects)
+    return () => {
+      resetFilter()
+    }
+  }, [resetFilter, projects, setProjects])
 
   return (
     <div className='container mx-auto items-center'>
@@ -55,7 +69,7 @@ export const Projects = ({
         searchPlaceHolder='Search Status...'
       ></ComboBox>
       <div className='mx-auto grid grid-cols-2 place-items-center'>
-        {projects.map((project, index) => (
+        {filteredProjects.map((project, index) => (
           <Button className='min-w-[400px]' key={index}>
             <div className='flex flex-col'>
               <div>{project.projectName}</div>
