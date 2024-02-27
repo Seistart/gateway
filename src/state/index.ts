@@ -1,1 +1,1 @@
-export * from './useProjectStore'
+export * from './use-project-store'

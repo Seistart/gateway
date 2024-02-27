@@ -1,7 +1,5 @@
 'use client'
 
-import * as React from 'react'
-
 import { Button } from '@/components/ui/button'
 import {
   Drawer,
@@ -9,28 +7,20 @@ import {
   DrawerContent,
   DrawerTrigger,
 } from '@/components/ui/drawer'
-import { Cross1Icon } from '@radix-ui/react-icons'
-import { RxHamburgerMenu } from 'react-icons/rx'
+import { useEffect, useState } from 'react'
+import { RxCross2, RxHamburgerMenu } from 'react-icons/rx'
 
-export function MobileNavigation() {
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
+export const MobileNavigation = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
-  // Listen for viewport changes and close the drawer if the viewport
-  // width exceeds the breakpoint (e.g., 768px).
-  React.useEffect(() => {
+  useEffect(() => {
     function handleResize() {
       if (window.innerWidth > 768) {
-        setIsDrawerOpen(false) // Close the drawer
+        setIsDrawerOpen(false)
       }
     }
-
-    // Add resize event listener
     window.addEventListener('resize', handleResize)
-
-    // Call the resize function initially in case the initial viewport width is above the breakpoint
     handleResize()
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
@@ -53,7 +43,7 @@ export function MobileNavigation() {
               variant='ghost'
               onClick={() => setIsDrawerOpen(false)}
             >
-              <Cross1Icon height='20' width='20'></Cross1Icon>
+              <RxCross2 className='h-6 w-6'></RxCross2>
             </Button>
           </DrawerClose>
         </div>

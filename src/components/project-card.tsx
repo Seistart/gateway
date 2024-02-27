@@ -1,9 +1,10 @@
 'use client'
 
-import React from 'react'
+import { UserIcon } from 'lucide-react'
+import Image from 'next/image'
 import { Button } from './ui/button'
 
-interface CardProps {
+interface ProjectCardProps {
   title: string
   subtitle: string
   count: number
@@ -12,17 +13,14 @@ interface CardProps {
   buttonLabel: string
 }
 
-import { UserIcon } from 'lucide-react'
-import Image from 'next/image'
-
-const ProjectCard: React.FC<CardProps> = ({
+export const ProjectCard = ({
   title,
   subtitle,
   count,
   imgSrc,
   smallImgSrcs,
   buttonLabel,
-}) => {
+}: ProjectCardProps) => {
   return (
     <div className='flex space-x-4'>
       {Array(4)
@@ -74,5 +72,3 @@ const ProjectCard: React.FC<CardProps> = ({
     </div>
   )
 }
-
-export default ProjectCard

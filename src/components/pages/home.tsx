@@ -1,10 +1,10 @@
 import { Paintbrush2Icon } from 'lucide-react'
-import ImageSlider from './ImageSlider'
-import CardComponent from './ProjectCard'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Button } from './ui/button'
+import { ImageSlider } from '../image-slider'
+import { ProjectCard } from '../project-card'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
 
-export const Body = () => {
+export const Home = () => {
   return (
     <div className='flex flex-col p-6'>
       <div className='mb-6 flex justify-between'>
@@ -110,7 +110,7 @@ export const Body = () => {
         <h1 className='mb-3 text-2xl font-bold'>Highlights</h1>
         <Button className='w-14 font-bold'>All</Button>
       </div>
-      <CardComponent
+      <ProjectCard
         title='Anthropomorphic Cats'
         subtitle='Subtitle'
         count={2400}

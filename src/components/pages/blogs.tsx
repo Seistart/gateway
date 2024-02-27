@@ -8,15 +8,7 @@ import {
 import { getSortedBlogPosts } from '@/lib/blog'
 import Link from 'next/link'
 
-export function generateMetadata() {
-  return {
-    title: 'Blog',
-    description: '',
-    keywords: [],
-  }
-}
-
-export default async function Blogs() {
+export const Blogs = async () => {
   const blogPosts = await getSortedBlogPosts()
   return (
     <>

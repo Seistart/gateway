@@ -1,8 +1,8 @@
-import AnalyticsDashboard from '@/components/AnalyticsDashboard'
+import AnalyticsDashboard from '@/components/analytics-dashboard'
 import { getDate } from '@/utils'
 import { analytics } from '@/utils/analytics'
 
-const Page = async () => {
+export const Analytics = async () => {
   const TRACKING_DAYS = 7
 
   const pageviews = await analytics.retrieveDays('pageview', TRACKING_DAYS)
@@ -74,5 +74,3 @@ const Page = async () => {
     </div>
   )
 }
-
-export default Page

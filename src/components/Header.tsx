@@ -1,15 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaBell, FaSearch } from 'react-icons/fa'
-import { MobileNavigation } from './MobileNavigation'
-import { NavigationMenuPage } from './Navigation'
-import { UserNav } from './UserNav'
+import { MobileNavigation } from './navigation/mobile-navigation'
+import { NavigationMenuPage } from './navigation/navigation'
+import { UserNavigation } from './navigation/user-navigation'
 import { Button } from './ui/button'
 
-/**
- * Header component that renders a header with logo, navigation,
- * and action buttons like connect wallet.
- */
 export const Header = () => {
   return (
     <header className='flex items-center justify-between border-b-2 border-primary/10'>
@@ -36,7 +32,7 @@ export const Header = () => {
             <FaBell className='h-4 w-4' />
           </Button>
         </div>
-        <UserNav />
+        <UserNavigation />
       </div>
     </header>
   )

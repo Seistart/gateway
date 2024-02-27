@@ -1,13 +1,13 @@
 'use client'
 
-import { ComboBox } from '@/components/Combobox'
+import { ComboBox } from '@/components/combo-box'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useProjects } from '@/hooks'
 import { ProjectStatus, ProjectTags } from '@/types'
 import { useEffect } from 'react'
 
-export default function Categories() {
+export const Projects = () => {
   const {
     setSearchTerm,
     filteredProjects,
