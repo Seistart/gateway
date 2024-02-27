@@ -1,19 +1,14 @@
 'use client'
 
-import { ComboBox } from '@/components/ui/combo-box'
 import { Button } from '@/components/ui/button'
+import { ComboBox } from '@/components/ui/combo-box'
 import { Input } from '@/components/ui/input'
+import { CompleteProject } from '@/lib/db/schema/projects'
 import { useProjectStore } from '@/state'
 import { ProjectStatus, ProjectTags } from '@/types'
-import { CompleteProject } from '@/lib/db/schema/projects'
 import { useEffect } from 'react'
 
-export const Projects = ({
-  projects,
-}: {
-  projects: CompleteProject[];
-}) => {
-    
+export const Projects = ({ projects }: { projects: CompleteProject[] }) => {
   const {
     setSearchTerm,
     searchTerm,
@@ -22,8 +17,11 @@ export const Projects = ({
     setStatusFilter,
     resetFilter,
     setProjects,
-    filteredProjects
-  } = useProjectStore(state=> ({...state,filteredProjects: state.getFilteredProjects()}))
+    filteredProjects,
+  } = useProjectStore((state) => ({
+    ...state,
+    filteredProjects: state.getFilteredProjects(),
+  }))
   const tagValues = Object.values(ProjectTags).map((tag) => ({
     value: tag.toLowerCase(),
     label: tag,
@@ -34,7 +32,7 @@ export const Projects = ({
   }))
 
   useEffect(() => {
-    setProjects(projects);
+    setProjects(projects)
     return () => {
       resetFilter()
     }
