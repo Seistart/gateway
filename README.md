@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Seistart
 
-## Getting Started
+This is a starter template for a Next.js project configured with Tailwind CSS for styles, PostCSS for processing, and Framer Motion for page transitions animations.
 
+Getting Started
 First, run the development server:
 
-```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Open http://localhost:3000 with your browser to see the result.
 
-## Learn More
+You can start editing the page by modifying pages/index.js. The page auto-updates as you edit the file.
 
-To learn more about Next.js, take a look at the following resources:
+Project Structure
+my-app
+├── README.md
+├── node_modules
+├── package.json
+├── pages
+│   └── index.js
+├── styles
+│   └── index.css
+├── tailwind.config.js
+├── postcss.config.js
+└── .babelrc
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+pages/index.js - The main page component using Framer Motion for transitions.
+styles/index.css - Global styles and Tailwind CSS imports.
+tailwind.config.js - Tailwind CSS configuration.
+postcss.config.js - PostCSS configuration for processing Tailwind CSS.
+.babelrc - Babel config for Framer Motion.
+Built Using
+Next.js
+Tailwind CSS
+PostCSS
+Framer Motion
+Learn More
+To learn more about the libraries used in this project, take a look at these resources:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Next.js Documentation
+Tailwind Documentation
+PostCSS Documentation
+Framer Motion Documentation
+You can check out the GitHub repository for each:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Next.js
+Tailwind CSS
+PostCSS
+Framer Motion
+Deploy on Vercel
+You can deploy this Next.js app configured with Tailwind CSS and Framer Motion on Vercel in minutes.
