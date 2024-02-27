@@ -1,8 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-import * as React from 'react'
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,6 +11,8 @@ import {
 } from '@/components/ui/navigation-menu'
 import { cn } from '@/lib/utils'
 import { preventDefaultAction } from '@/utils'
+import Link from 'next/link'
+import { ReactNode } from 'react'
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -30,7 +29,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ]
 
-export function NavigationMenuPage() {
+export const NavigationMenuPage = () => {
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -89,9 +88,9 @@ export function NavigationMenuPage() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href='/' legacyBehavior passHref>
+          <Link href='/analytics' legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Activity
+              Analytics
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
@@ -111,7 +110,7 @@ interface ListItemProps {
   className?: string
   title: string
   href: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 const ListItem = ({ className, title, children, href }: ListItemProps) => {

@@ -1,7 +1,5 @@
 'use client'
 
-import React from 'react'
-
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
@@ -58,10 +56,9 @@ const images: ImageData[] = [
     subtitle: 'Subtitle 6',
     tags: ['Tag1', 'Tag2', 'Tag3'],
   },
-  // Add more images as needed
 ]
 
-const ImageSlider: React.FC = () => {
+export const ImageSlider = () => {
   return (
     <div className='relative flex flex-col justify-center overflow-hidden'>
       <div className='mx-auto w-full max-w-full px-4 py-2 md:px-6'>
@@ -134,30 +131,6 @@ const ImageSlider: React.FC = () => {
                   </Link>
                 </li>
               ))}
-              {/* <li>
-                <img src="/svg/facebook.svg" alt="Facebook" />
-              </li>
-              <li>
-                <img src="/svg/disney.svg" alt="Disney" />
-              </li>
-              <li>
-                <img src="/svg/airbnb.svg" alt="Airbnb" />
-              </li>
-              <li>
-                <img src="/svg/apple.svg" alt="Apple" />
-              </li>
-              <li>
-                <img src="/svg/spark.svg" alt="Spark" />
-              </li>
-              <li>
-                <img src="/svg/samsung.svg" alt="Samsung" />
-              </li>
-              <li>
-                <img src="/svg/quora.svg" alt="Quora" />
-              </li>
-              <li>
-                <img src="/svg/sass.svg" alt="Sass" />
-              </li> */}
             </ul>
           </div>
         </div>
@@ -165,5 +138,3 @@ const ImageSlider: React.FC = () => {
     </div>
   )
 }
-
-export default ImageSlider

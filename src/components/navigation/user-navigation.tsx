@@ -2,8 +2,8 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 
-import { ThemeRadioGroup } from './theme/theme-radio-group'
-import { Button } from './ui/button'
+import { ThemeRadioGroup } from '../theme/theme-radio-group'
+import { Button } from '../ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,9 +16,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
+} from '../ui/dropdown-menu'
 
-export function UserNav() {
+export const UserNavigation = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
