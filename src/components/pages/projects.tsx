@@ -3,27 +3,18 @@
 import { ComboBox } from '@/components/ui/combo-box'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useProjects } from '@/hooks'
 import { ProjectStatus, ProjectTags } from '@/types'
-import { useEffect } from 'react'
 import { CompleteProject } from '@/lib/db/schema/projects'
+import { useProjectStore } from '@/state'
 
-export const Projects = async ({
+export const Projects = ({
   projects,
 }: {
   projects: CompleteProject[];
 }) => {
     
-  const {
-    setSearchTerm,
-    filteredProjects,
-    searchTerm,
-    filter,
-    setTagFilter,
-    setStatusFilter,
-    resetFilter,
-    setProjects
-  } = useProjects()
+  const {setProjects, searchTerm, filter, setTagFilter, setStatusFilter, setSearchTerm} = useProjectStore()
+  
   const tagValues = Object.values(ProjectTags).map((tag) => ({
     value: tag.toLowerCase(),
     label: tag,
@@ -32,13 +23,6 @@ export const Projects = async ({
     value: status.toLowerCase(),
     label: status,
   }))
-
-  useEffect(() => {
-    return () => {
-      setProjects(projects);
-      resetFilter()
-    }
-  }, [resetFilter])
 
   return (
     <div className='container mx-auto items-center'>
