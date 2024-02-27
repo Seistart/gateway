@@ -11,9 +11,9 @@ export function useBackPath(currentResource: string) {
   const pathname = usePathname();
   const segmentCount = pathname.slice(1).split("/");
   const backPath =
-    segmentCount.length > 2
+    segmentCount.length < 2
       ? pathname.slice(0, pathname.indexOf(currentResource) - 1)
-      : pathname.slice(0, pathname.indexOf(segmentCount[1]));
+      : pathname.slice(0, pathname.indexOf(segmentCount[2]) - 1);
   return backPath;
 }
 
@@ -24,6 +24,7 @@ export function BackButton({
   currentResource: string;
 }) {
   const backPath = useBackPath(currentResource);
+  
   return (
     <Button variant={"ghost"} asChild>
       <Link href={backPath}>

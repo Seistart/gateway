@@ -113,7 +113,7 @@ const ProjectForm = ({
   };
 
   return (
-    <form action={handleSubmit} onChange={handleChange} className={"space-y-8"}>
+    <form action={handleSubmit} onChange={handleChange} className={"space-y-8 h-[50vh] overflow-scroll"}>
       {/* Schema fields start */}
       <div>
         <Label
@@ -509,7 +509,7 @@ const ProjectForm = ({
             });
           }}
         >
-          Delet{isDeleting ? "ing..." : "e"}
+          Delete{isDeleting ? "ing..." : "e"}
         </Button>
       ) : null}
     </form>

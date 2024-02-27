@@ -35,7 +35,7 @@ export default function ProjectList({
       <Modal
         open={open}
         setOpen={setOpen}
-        title={activeProject ? "Edit Project" : "Create Project"}
+        title={activeProject ? "Edit Project" : "Add Project"}
       >
         <ProjectForm
           project={activeProject}
@@ -102,11 +102,11 @@ const EmptyState = ({ openModal }: { openModal: TOpenModal }) => {
         No projects
       </h3>
       <p className="mt-1 text-sm text-muted-foreground">
-        Get started by creating a new project.
+        Get started by adding a new project.
       </p>
       <div className="mt-6">
         <Button onClick={() => openModal()}>
-          <PlusIcon className="h-4" /> New Projects{" "}
+          <PlusIcon className="h-4" /> Add Project
         </Button>
       </div>
     </div>
