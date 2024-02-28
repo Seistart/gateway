@@ -1,57 +1,54 @@
-## Seistart
+## SeiStart: Lighting Up the Sei Network Ecosystem
 
-This is a starter template for a Next.js project configured with Tailwind CSS for styles, PostCSS for processing, and Framer Motion for page transitions animations.
+SeiStart would serve as a comprehensive directory and gateway to the myriad of projects being built on the Sei Network. It aims to demystify the network's offerings, making it accessible for enthusiasts, developers, and investors alike to explore and engage with. Picture it as your digital atlas, charting the unexplored territories of the Sei Network, where each project represents a star in the ever-expanding galaxy of blockchain innovation.
 
-Getting Started
-First, run the development server:
+![image](https://seistart.com/img/logo_850.png)
 
-npm run dev
-# or
-yarn dev
+Key Features:
 
+- 🔍 Exploring projects
 
+### Prerequisites
 
-Open http://localhost:3000 with your browser to see the result.
+**Node version 18.18.x**
 
-You can start editing the page by modifying pages/index.js. The page auto-updates as you edit the file.
+### Cloning the repository
 
-Project Structure
-my-app
-├── README.md
-├── node_modules
-├── package.json
-├── pages
-│   └── index.js
-├── styles
-│   └── index.css
-├── tailwind.config.js
-├── postcss.config.js
-└── .babelrc
+```shell
+git clone git@github.com:Seistart/gateway.git
+```
 
+### Install packages
 
+```shell
+bun i
+```
 
-pages/index.js - The main page component using Framer Motion for transitions.
-styles/index.css - Global styles and Tailwind CSS imports.
-tailwind.config.js - Tailwind CSS configuration.
-postcss.config.js - PostCSS configuration for processing Tailwind CSS.
-.babelrc - Babel config for Framer Motion.
-Built Using
-Next.js
-Tailwind CSS
-PostCSS
-Framer Motion
-Learn More
-To learn more about the libraries used in this project, take a look at these resources:
+### Setup .env file
 
-Next.js Documentation
-Tailwind Documentation
-PostCSS Documentation
-Framer Motion Documentation
-You can check out the GitHub repository for each:
+```js
+DATABASE_URL=
+REDIS_KEY=
+```
 
-Next.js
-Tailwind CSS
-PostCSS
-Framer Motion
-Deploy on Vercel
-You can deploy this Next.js app configured with Tailwind CSS and Framer Motion on Vercel in minutes.
+### Setup Postgres with Drizzle
+
+```shell
+bun db:generate
+bun db:migrate
+```
+
+### Start the app
+
+```shell
+bun run dev
+```
+
+## Available commands
+
+Running commands with npm `bun run [command]`
+
+| command | description                              |
+| :------ | :--------------------------------------- |
+| `dev`   | Starts a development instance of the app |
+| `tst`   | Starts a test instance of the app        |
