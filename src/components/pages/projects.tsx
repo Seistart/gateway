@@ -1,11 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { ComboBox } from '@/components/ui/combo-box'
 import { Input } from '@/components/ui/input'
 import { CompleteProject } from '@/lib/db/schema/projects'
 import { useProjectStore } from '@/state'
-import { ProjectStatus, ProjectTags } from '@/types'
 import { useEffect } from 'react'
 
 export const Projects = ({ projects }: { projects: CompleteProject[] }) => {
@@ -22,14 +20,15 @@ export const Projects = ({ projects }: { projects: CompleteProject[] }) => {
     ...state,
     filteredProjects: state.getFilteredProjects(),
   }))
-  const tagValues = Object.values(ProjectTags).map((tag) => ({
-    value: tag.toLowerCase(),
-    label: tag,
-  }))
-  const statusValues = Object.values(ProjectStatus).map((status) => ({
-    value: status.toLowerCase(),
-    label: status,
-  }))
+  // TODO: Create any arrays needed for combobox filters
+  // const tagValues = Object.values(ProjectTags).map((tag) => ({
+  //   value: tag.toLowerCase(),
+  //   label: tag,
+  // }))
+  // const statusValues = Object.values(ProjectStatus).map((status) => ({
+  //   value: status.toLowerCase(),
+  //   label: status,
+  // }))
 
   useEffect(() => {
     setProjects(projects)
@@ -54,26 +53,20 @@ export const Projects = ({ projects }: { projects: CompleteProject[] }) => {
         type='text'
         value={searchTerm}
       ></Input>
+      {/* TODO: Use combobox for filters
       <ComboBox
         items={tagValues}
         value={filter.tag}
         setValue={setTagFilter}
         selectPlaceHolder='Select Tag...'
         searchPlaceHolder='Search Tag...'
-      ></ComboBox>
-      <ComboBox
-        items={statusValues}
-        value={filter.status}
-        setValue={setStatusFilter}
-        selectPlaceHolder='Select Status...'
-        searchPlaceHolder='Search Status...'
-      ></ComboBox>
+      ></ComboBox> */}
       <div className='mx-auto grid grid-cols-2 place-items-center'>
         {filteredProjects.map((project, index) => (
           <Button className='min-w-[400px]' key={index}>
             <div className='flex flex-col'>
               <div>{project.projectName}</div>
-              <div> {project.projectType.toString()}</div>
+              <div> {project.tags.toString()}</div>
               <div> {project.projectRelease}</div>
             </div>
           </Button>

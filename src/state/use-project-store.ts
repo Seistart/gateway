@@ -1,10 +1,9 @@
 import { CompleteProject } from '@/lib/db/schema/projects'
-import { Project, ProjectStatus, ProjectTags } from '@/types/projects'
 import { create } from 'zustand'
 
 export interface ProjectFilter {
-  tag: ProjectTags | null
-  status: ProjectStatus | null
+  tag: string | null
+  status: string | null
 }
 
 export interface ProjectStore {
@@ -14,8 +13,8 @@ export interface ProjectStore {
   setSearchTerm: (term: string) => void
   setProjects: (projects: CompleteProject[]) => void
   getFilteredProjects: () => CompleteProject[]
-  setTagFilter: (tag: ProjectTags | null) => void
-  setStatusFilter: (status: ProjectStatus | null) => void
+  setTagFilter: (tag: string | null) => void
+  setStatusFilter: (status: string | null) => void
   resetFilter: () => void
 }
 
@@ -27,28 +26,26 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
     status: null,
   },
   getFilteredProjects: () => {
-    const { searchTerm, filter } = get()
+    const { searchTerm } = get()
     const searchTermsLower = searchTerm
       .toLowerCase()
       .split(/\s+/)
       .filter(Boolean)
-    return get().projects.filter(
-      ({ projectName, projectDescription, projectType, projectRelease }) => {
-        const matchesSearchTerm =
-          searchTermsLower.length === 0 ||
-          searchTermsLower.every(
-            (term) =>
-              projectName.toLowerCase().includes(term) ||
-              status.toLowerCase().includes(term) ||
-              projectType.split(',').some((tag: string) => tag.toLowerCase().includes(term))
-          )
-        const matchesFilterTag = filter.tag ? projectType.includes(filter.tag) : true
-        const matchesFilterStatus = filter.status
-          ? projectRelease === filter.status
-          : true
-        return matchesSearchTerm && matchesFilterTag && matchesFilterStatus
-      }
-    )
+    return get().projects.filter(({ projectName, tags }) => {
+      const matchesSearchTerm =
+        searchTermsLower.length === 0 ||
+        searchTermsLower.every(
+          (term) =>
+            projectName.toLowerCase().includes(term) ||
+            tags.some((tag: string) => tag.toLowerCase().includes(term))
+          // TODO: Add any fields we want to be able to search by term
+        )
+      // TODO: Add any fields we want to be able to search by filter
+      // const matchesFilterTag = filter.tag
+      //   ? projectType.includes(filter.tag)
+      //   : true
+      return matchesSearchTerm
+    })
   },
   setSearchTerm: (term) => set(() => ({ searchTerm: term })),
   setProjects: (projects) => set(() => ({ projects })),
