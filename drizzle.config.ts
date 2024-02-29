@@ -1,11 +1,11 @@
-import type { Config } from "drizzle-kit";
-import { env } from "@/lib/env.mjs";
+import { env } from "@/env.mjs"
+import type { Config } from "drizzle-kit"
 
 export default {
-  schema: "./src/lib/db/schema",
-  out: "./src/lib/db/migrations",
+  schema: "./database/schemas",
+  out: "./database/migrations",
   driver: "pg",
   dbCredentials: {
     connectionString: env.DATABASE_URL,
-  }
-} satisfies Config;
+  },
+} satisfies Config
