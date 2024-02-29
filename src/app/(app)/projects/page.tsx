@@ -1,7 +1,6 @@
-import { appMetadata } from '@/config';
 import { Projects } from '@/components/pages'
-import { getProjects } from '@/lib/api/projects/queries';
-import { mockProjects } from '@/lib/mock-data';
+import { appMetadata } from '@/config'
+import { getProjects } from '@/lib/api/projects/queries'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -9,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ProjectsPage() {
-  const { projects } = await getProjects();
-  
-  return <Projects projects={mockProjects} />
+  const { projects } = await getProjects()
+
+  return <Projects projects={projects} />
 }
