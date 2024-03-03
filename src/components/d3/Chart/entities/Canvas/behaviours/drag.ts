@@ -38,11 +38,6 @@ const isValidDragSelectTarget = (datum: CanvasDatum) =>
   !datum.state.hovered &&
   !datum.state.dragged
 
-const isLinkTarget = (datum: CanvasDatum) => {
-  const targetType = datum.state.hovered?.info.type
-  return targetType !== undefined && ['project'].includes(targetType)
-}
-
 const createDragNodeContext = function (
   simulation: Simulation
 ): DragNodeContext {
@@ -292,12 +287,12 @@ const onDragNodeEnd = function (
         moveNodeAction(
           node,
           entry,
-          context.nodeStartPositions[entry.info.id].x,
-          context.nodeStartPositions[entry.info.id].y,
+          context.nodeStartPositions[entry.info.id]?.x,
+          context.nodeStartPositions[entry.info.id]?.y,
           entry.x as number,
           entry.y as number,
-          context.nodeStartPositions[entry.info.id].fx,
-          context.nodeStartPositions[entry.info.id].fy,
+          context.nodeStartPositions[entry.info.id]?.fx,
+          context.nodeStartPositions[entry.info.id]?.fy,
           entry.fx,
           entry.fy
         )
@@ -446,10 +441,6 @@ export const attachDragBehaviour = function (
     event: D3DragEvent<HTMLCanvasElement, CanvasDatum, null>,
     datum: CanvasDatum
   ) {
-    if (isLinkTarget(selection.datum())) {
-      return
-    }
-
     context = createDragContext(selection, simulation)
 
     switch (context.type) {
@@ -467,10 +458,6 @@ export const attachDragBehaviour = function (
     event: D3DragEvent<HTMLCanvasElement, CanvasDatum, null>,
     datum: CanvasDatum
   ) {
-    if (isLinkTarget(selection.datum())) {
-      return
-    }
-
     if (!context) {
       throw new Error('dragged was called but no context could be resolved')
     }
@@ -490,10 +477,6 @@ export const attachDragBehaviour = function (
     event: D3DragEvent<HTMLCanvasElement, CanvasDatum, null>,
     datum: CanvasDatum
   ) {
-    if (isLinkTarget(selection.datum())) {
-      return
-    }
-
     if (!context) {
       throw new Error('dragged was called but no context could be resolved')
     }

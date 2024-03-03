@@ -1,6 +1,6 @@
 import { forceCollide, forceManyBody } from 'd3-force'
 
-import { getNodesFromLocalStorage, nodeCluster } from './entities/Node'
+import { getNodesFromLocalStorage } from './entities/Node'
 import {
   ChartData,
   CreateCanvasFn,
@@ -77,7 +77,6 @@ export function ForceGraph(
     .distanceMax(500)
 
   const collideForce = forceCollide(nodeCollisionRadius).iterations(5) // Tune this down for more performance but more chaotic node positioning (default = 1).
-  const clusterForce = nodeCluster // Tune this down for more performance but more chaotic node positioning (default = 1).
 
   nodeForce.strength(nodeStrength)
 

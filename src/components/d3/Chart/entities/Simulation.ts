@@ -22,17 +22,46 @@ const INITIAL_VELOCITY_DECAY = 0.1
 const INTERACTION_ALPHA_AIMED_ITERATIONS = 30
 const INTERACTION_VELOCITY_DECAY = 0.4
 
+// function calculateClusterCenters(data: NodeDatum[]) {
+//   const width = window.innerWidth
+//   const height = window.innerHeight
+
+//   const centers = {}
+//   data.forEach((d) => {
+//     const tag = d.info.tag
+//     if (!centers[tag]) {
+//       // Randomly position cluster centers for simplicity
+//       centers[tag] = { x: Math.random() * width, y: Math.random() * height } // width and height should be your canvas dimensions
+//     }
+//   })
+
+//   return centers
+// }
+
+// function forceCluster(centers, data: NodeDatum[]) {
+//   return function (alpha) {
+//     for (const node of data) {
+//       const center = centers[node.info.tag]
+//       node.vx += (center.x - node.x) * alpha
+//       node.vy += (center.y - node.y) * alpha
+//     }
+//   }
+// }
+
 export const createSimulation: CreateSimulationFn = function (
   simulationNodeData,
   nodeForce,
   collideForce
 ) {
+  // const clusterCenters = calculateClusterCenters(simulationNodeData)
+
   const simulation: Simulation = forceSimulation<NodeDatum>(simulationNodeData)
     .velocityDecay(INITIAL_VELOCITY_DECAY)
     .alphaMin(ALPHA_MIN)
     .alphaDecay(1 - Math.pow(ALPHA_MIN, 1 / INITIAL_ALPHA_AIMED_ITERATIONS))
     .force('charge', nodeForce)
     .force('collide', collideForce)
+    // .force('cluster', forceCluster(clusterCenters, simulationNodeData))
     .on('tick', ticked)
     .on('end', end)
 
@@ -45,7 +74,6 @@ export const destroySimulation = function (simulation: Simulation) {
     .on('end', null)
     .force('collide', null)
     .force('charge', null)
-    .force('link', null)
     .stop()
 }
 

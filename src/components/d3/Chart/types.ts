@@ -206,11 +206,6 @@ export type NodeCollisionRadiusFn = (
   i: number,
   data: NodeDatum[]
 ) => number
-export type NodeClusterFn = (
-  datum: NodeDatum,
-  i: number,
-  data: NodeDatum[]
-) => number
 export type NodeValueFn<T extends BaseType, R> = ValueFn<T, NodeDatum, R>
 export type NodeStrengthFn = (
   datum: NodeDatum,
