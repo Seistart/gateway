@@ -58,7 +58,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
     <aside
       className={`absolute right-0 top-0 h-full w-96 bg-white p-4 shadow-lg transition-transform duration-300 ${details.show ? 'translate-x-0' : 'translate-x-full'}`}
     >
-      <div className='flex flex-col text-gray-600'>
+      <div className='flex h-full flex-col overflow-scroll text-gray-600'>
         <Button
           variant={'ghost'}
           size='icon'
