@@ -1,61 +1,42 @@
-function forceCluster(
-  nodes: d3.SimulationNodeDatum[],
-  centroidCalculator: (nodes: Node[]) => { x: number; y: number }
-) {
-  const strength = 0.2
-  let centroids: Map<number, { x: number; y: number }>
+import * as d3 from 'd3'
 
-  function force(alpha: number) {
-    centroids = new Map(
-      d3.rollup(nodes as Node[], centroidCalculator, (d) => d.group)
-    )
-    for (const d of nodes as Node[]) {
-      const { x: cx, y: cy } = centroids.get(d.group)
-      d.vx -= (d.x - cx) * alpha * strength
-      d.vy -= (d.y - cy) * alpha * strength
-    }
-  }
+export const forceCollide = (
+  nodes: any[],
+  padding1: number = 2,
+  padding2: number = 6
+) => {
+  const alpha = 0.4 // You might want to use a dynamic alpha value from the simulation
 
-  force.initialize = function () {
-    // Initialization logic if needed
-  }
+  const maxRadius =
+    d3.max(nodes, (node) => node.value) + Math.max(padding1, padding2)
 
-  return force
-}
-
-function forceCollide() {
-  const alpha = 0.4 // Adjust rigidity
-  const padding1 = 2 // Separation between same-group nodes
-  const padding2 = 6 // Separation between different-group nodes
-  let maxRadius: number
-
-  function force(nodes: d3.SimulationNodeDatum[]) {
+  function force() {
     const quadtree = d3.quadtree(
       nodes,
       (d) => d.x,
       (d) => d.y
     )
-    for (const d of nodes as Node[]) {
-      const r = d.r + maxRadius
-      const nx1 = d.x - r,
-        ny1 = d.y - r
-      const nx2 = d.x + r,
-        ny2 = d.y + r
+    for (const node of nodes) {
+      const r = node.value + maxRadius
+      const nx1 = node.x - r,
+        ny1 = node.y - r
+      const nx2 = node.x + r,
+        ny2 = node.y + r
       quadtree.visit((q, x1, y1, x2, y2) => {
         if (!q.length)
           do {
-            if (q.data !== d) {
+            if (q.data !== node) {
               const r =
-                d.r +
-                q.data.r +
-                (d.group === q.data.group ? padding1 : padding2)
-              let x = d.x - q.data.x,
-                y = d.y - q.data.y,
-                l = Math.hypot(x, y)
+                node.value +
+                q.data.value +
+                (node.type === q.data.type ? padding1 : padding2)
+              let x = node.x - q.data.x
+              let y = node.y - q.data.y
+              let l = Math.hypot(x, y)
               if (l < r) {
                 l = ((l - r) / l) * alpha
-                d.x -= x *= l
-                d.y -= y *= l
+                node.x -= x *= l
+                node.y -= y *= l
                 q.data.x += x
                 q.data.y += y
               }
@@ -66,28 +47,40 @@ function forceCollide() {
     }
   }
 
-  force.initialize = function (nodes: Node[]) {
-    maxRadius = d3.max(nodes, (d) => d.r) + Math.max(padding1, padding2)
-  }
+  force.initialize = function () {}
 
   return force
 }
 
-function drag(simulation: d3.Simulation<d3.SimulationNodeDatum, undefined>) {
-  return d3
-    .drag<SVGCircleElement, Node>()
-    .on('start', (event, d) => {
-      if (!event.active) simulation.alphaTarget(0.3).restart()
-      d.fx = d.x
-      d.fy = d.y
-    })
-    .on('drag', (event, d) => {
-      d.fx = event.x
-      d.fy = event.y
-    })
-    .on('end', (event, d) => {
-      if (!event.active) simulation.alphaTarget(0)
-      d.fx = null
-      d.fy = null
-    })
+export const forceCluster = (nodes: any[], strength: number = 0.2) => {
+  // Calculate cluster centers
+  const clusters = new Map()
+
+  nodes.forEach((node) => {
+    const cluster = clusters.get(node.type)
+    if (cluster) {
+      cluster.x += node.x
+      cluster.y += node.y
+      cluster.count += 1
+    } else {
+      clusters.set(node.type, { x: node.x, y: node.y, count: 1 })
+    }
+  })
+
+  clusters.forEach((cluster) => {
+    cluster.x /= cluster.count
+    cluster.y /= cluster.count
+  })
+
+  function force(alpha: number) {
+    for (const node of nodes) {
+      const cluster = clusters.get(node.type)
+      node.vx -= (node.x - cluster.x) * strength * alpha
+      node.vy -= (node.y - cluster.y) * strength * alpha
+    }
+  }
+
+  force.initialize = function () {}
+
+  return force
 }

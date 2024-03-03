@@ -2,6 +2,8 @@
 
 import * as d3 from 'd3'
 import { useEffect, useRef, useState } from 'react'
+import { Badge } from '../ui/badge'
+import { Button } from '../ui/button'
 
 interface ProjectNode {
   id: string
@@ -128,22 +130,39 @@ const ForceGraph = () => {
     setPreviousSelectedNode(event.currentTarget)
     setSelectedNode(d) // Update state with clicked node data
 
+    console.log(event.currentTarget.getAttribute('r'))
+
+    // For rectangles, directly get the width and height
+    const width = event.currentTarget.getAttribute('width')
+    const height = event.currentTarget.getAttribute('height')
+
+    const xPosition = event.currentTarget
+      .querySelector('circle')
+      .getAttribute('x')
+    const yPosition = event.currentTarget
+      .querySelector('circle')
+      .getAttribute('y')
+
     // Highlight the clicked node
     // d3.select(event.currentTarget)
-    //   .select('circle')
+    //   .append('circle')
+    //   .attr('cx', xPosition)
+    //   .attr('cy', yPosition)
+    //   .attr('r', event.currentTarget.getAttribute('r'))
+    //   .attr('width', width)
+    //   .attr('height', height)
     //   .style('stroke', 'white')
-    //   .style('stroke-width', '2px')
+    //   .style('strokeWidth', '2px')
 
-    console.log(event.currentTarget)
-    const newX = 100 // New X position
-    const newY = 100 // New Y position
+    // const newX = 100 // New X position
+    // const newY = 100 // New Y position
 
-    // Update the node's fixed position
-    d.fx = newX
-    d.fy = newY
+    // // Update the node's fixed position
+    // d.fx = newX
+    // d.fy = newY
 
-    // Optionally, update the node's visual position immediately
-    d3.select(event.currentTarget).attr('cx', d.fx).attr('cy', d.fy)
+    // // Optionally, update the node's visual position immediately
+    // d3.select(event.currentTarget).attr('cx', d.fx).attr('cy', d.fy)
   }
 
   useEffect(() => {
@@ -315,9 +334,14 @@ const ForceGraph = () => {
         className={`absolute right-0 top-0 h-full w-96 bg-white p-4 shadow-lg transition-transform duration-300 ${selectedNode ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className='flex items-center justify-between'>
-          <h2 className='text-lg font-semibold text-gray-900'>
-            Project Details
-          </h2>
+          <div className='flex flex-col'>
+            <h2 className='text-xl font-semibold text-gray-900'>
+              {selectedNode?.id} Details
+            </h2>
+            <h3 className='text-md font-normal text-gray-500'>
+              {selectedNode?.name}
+            </h3>
+          </div>
           <button
             onClick={() => setSelectedNode(null)}
             className='text-gray-500 hover:text-gray-700'
@@ -336,6 +360,43 @@ const ForceGraph = () => {
               />
             </svg>
           </button>
+        </div>
+        <div className='flex justify-between'>
+          <Button
+            variant='ghost'
+            className='h-4 w-[50%] border border-2 border-gray-700 py-5 font-semibold text-gray-700'
+          >
+            Content
+          </Button>
+          <Button
+            variant='ghost'
+            className='h-4 w-[50%] border border-2 border-gray-200 py-5  font-semibold text-gray-500'
+          >
+            Details
+          </Button>
+        </div>
+        <div>
+          <span className='text-md text-gray-500'>Labels</span>
+          <div>
+            <Badge
+              variant='outline'
+              className='rounded-md bg-blue-200 text-blue-600'
+            >
+              Dex
+            </Badge>
+            <Badge
+              variant='outline'
+              className='rounded-md bg-green-200 text-green-600'
+            >
+              Finance
+            </Badge>
+            <Badge
+              variant='outline'
+              className='rounded-md bg-orange-200 text-orange-600'
+            >
+              NFT
+            </Badge>
+          </div>
         </div>
         <div className='mt-4'>
           <p className='text-sm text-gray-600'>

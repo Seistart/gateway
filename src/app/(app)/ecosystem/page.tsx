@@ -1,7 +1,6 @@
-import ForceGraph from '@/components/d3/ForceGraph'
-import { Button } from '@/components/ui/button'
 import { appMetadata } from '@/config'
 import { Metadata } from 'next'
+import RelationsContainer from './RelationsContainer'
 
 export const metadata: Metadata = {
   ...appMetadata.projects,
@@ -20,8 +19,8 @@ const projectTypes: ProjectType[] = [
 
 export default async function ProjectsPage() {
   return (
-    <div className='relative h-full w-full items-center justify-center overflow-hidden bg-opacity-20 bg-[url("/images/Union.png")] bg-center bg-no-repeat '>
-      <div className='border-red-200-md  absolute rounded border-2 bg-secondary p-4'>
+    <div className='relative h-[100vh] w-[100vw] items-center justify-center overflow-hidden bg-opacity-20 bg-[url("/images/Union.png")] bg-center bg-no-repeat '>
+      {/* <div className='border-red-200-md  absolute rounded border-2 bg-secondary p-4'>
         <h1>Legends</h1>
         <div className='flex flex-col'>
           {projectTypes.map((type, index) => {
@@ -37,8 +36,8 @@ export default async function ProjectsPage() {
             )
           })}
         </div>
-      </div>
-      <ForceGraph />
+      </div> */}
+      <RelationsContainer />
     </div>
   )
 }

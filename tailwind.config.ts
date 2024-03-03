@@ -10,6 +10,9 @@ const config = {
   ],
   prefix: '',
   theme: {
+    fontFamily: {
+      body: ['space-grotesk', 'ui-sans-serif', 'system-ui'],
+    },
     container: {
       padding: '1rem',
       screens: {},
