@@ -50,7 +50,6 @@ export const Chart = memo<Props>(
           nodeIdResolver,
           nodeStrength,
           nodeCollisionRadius,
-
           generateMaskColor,
           mapEntityToColor,
 

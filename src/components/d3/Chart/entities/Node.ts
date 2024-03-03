@@ -410,7 +410,7 @@ export const nodeFill: NodeValueFn<BaseType, string> = function (datum) {
   if (isNodeDatumWithInfoType(datum, 'project')) {
     const { info, state } = datum
 
-    if (info.type) {
+    if (info.tag === 'Gamefi') {
       if (isHovered) {
         if (state.selected) {
           return '#5c0000'
@@ -424,7 +424,21 @@ export const nodeFill: NodeValueFn<BaseType, string> = function (datum) {
       }
     }
 
-    if (info.type === 'Geen tegenrekening') {
+    if (info.tag === 'DAO') {
+      if (isHovered) {
+        if (state.selected) {
+          return '#5c0000'
+        }
+        return '#8b0000'
+      } else {
+        if (state.selected) {
+          return '#8b0000'
+        }
+        return '#d0021b'
+      }
+    }
+
+    if (info.tag === 'NFT') {
       if (isHovered) {
         if (state.selected) {
           return '#333333'

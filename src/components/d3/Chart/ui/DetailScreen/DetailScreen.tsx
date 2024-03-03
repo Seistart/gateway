@@ -1,4 +1,6 @@
-import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Cross1Icon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useRelationChartState } from '../../hooks/useRelationChartState'
 import { NodeInfo } from '../../types'
@@ -21,8 +23,6 @@ export type TProps = {
 export const DetailScreen = ({ nodes }: TProps) => {
   const { selection, details, setShowDetails, ready } = useRelationChartState()
 
-  console.log(nodes)
-
   const items = React.useMemo(() => nodes, [nodes])
 
   const [selectedItems] = React.useMemo(() => {
@@ -42,24 +42,95 @@ export const DetailScreen = ({ nodes }: TProps) => {
 
   React.useEffect(() => {
     if (!selection.length) {
+      setShowDetails(false)
+    } else {
       setShowDetails(true)
     }
   }, [selection, setShowDetails])
 
   React.useEffect(() => {
     if (!ready) {
-      setShowDetails(true)
+      setShowDetails(false)
     }
   }, [ready, setShowDetails])
 
   return (
-    <div className='transition-max-width relative right-0 z-20 h-full max-w-[380px] flex-auto basis-1/3 overflow-hidden bg-primary shadow-md duration-300 ease-out'>
-      <Card className='min-h-full min-w-min rounded-none pr-7 shadow-none'>
-        <button className='h-5 w-5' onClick={onClose} type='button' />
+    <aside
+      className={`absolute right-0 top-0 h-full w-96 bg-white p-4 shadow-lg transition-transform duration-300 ${details.show ? 'translate-x-0' : 'translate-x-full'}`}
+    >
+      <div className='flex flex-col text-gray-600'>
+        <Button
+          variant={'ghost'}
+          size='icon'
+          className='m-0 h-12 w-12 self-start p-2'
+          onClick={onClose}
+        >
+          <Cross1Icon className='h4 w-4' />
+        </Button>
         {selectedItems.map((item: NodeInfo) => (
-          <div key={item.id}>test </div>
+          <div key={item.id}>
+            <div className='flex items-center justify-between'>
+              <div className='flex flex-col'>
+                <h2 className='text-xl font-semibold text-gray-900'>
+                  {item.id} Details
+                </h2>
+                <h3 className='text-md font-normal text-gray-500'>
+                  {item.name}
+                </h3>
+              </div>
+            </div>
+            <div className='flex justify-between'>
+              <Button
+                variant='ghost'
+                className='h-4 w-[50%] border-2 border-gray-700 py-5 font-semibold text-gray-700'
+              >
+                Content
+              </Button>
+              <Button
+                variant='ghost'
+                className='h-4 w-[50%] border-2 border-gray-200 py-5  font-semibold text-gray-500'
+              >
+                Details
+              </Button>
+            </div>
+            <div>
+              <span className='text-md text-gray-500'>Labels</span>
+              <div>
+                <Badge
+                  variant='outline'
+                  className='rounded-md bg-blue-200 text-blue-600'
+                >
+                  Dex
+                </Badge>
+                <Badge
+                  variant='outline'
+                  className='rounded-md bg-green-200 text-green-600'
+                >
+                  Finance
+                </Badge>
+                <Badge
+                  variant='outline'
+                  className='rounded-md bg-orange-200 text-orange-600'
+                >
+                  NFT
+                </Badge>
+              </div>
+            </div>
+            <div className='mt-4'>
+              <p className='text-sm text-gray-600'>
+                <strong>Id:</strong> {item.id}
+              </p>
+              <p className='text-sm text-gray-600'>
+                <strong>Name:</strong> {item.name}
+              </p>
+              <p className='text-sm text-gray-600'>
+                <strong>Marketcap:</strong> {item.marketCap}
+              </p>
+              {/* Add more node details here */}
+            </div>
+          </div>
         ))}
-      </Card>
-    </div>
+      </div>
+    </aside>
   )
 }

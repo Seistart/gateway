@@ -29,6 +29,7 @@ export const ChartContainer = ({
       acc.push({
         id: entry.id,
         type: 'project',
+        tag: entry.tag,
         name: entry.name,
         marketCap: entry.marketCap,
       })

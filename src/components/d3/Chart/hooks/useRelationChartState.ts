@@ -1,73 +1,73 @@
-import { create } from 'zustand';
+import { create } from 'zustand'
 
-import type { ForceGraph } from '../ForceGraph';
-import { CanvasCursorMode, LinkDatum, NodeDatum } from '../types';
+import type { ForceGraph } from '../ForceGraph'
+import { CanvasCursorMode, NodeDatum } from '../types'
 
-type ForceGraphInstance = ReturnType<typeof ForceGraph>;
-export type ToolTipEntity = NodeDatum | LinkDatum | null;
+type ForceGraphInstance = ReturnType<typeof ForceGraph>
+export type ToolTipEntity = NodeDatum | null
 export type ToolTipEntityPosition = {
-  x: number | undefined;
-  y: number | undefined;
-};
+  x: number | undefined
+  y: number | undefined
+}
 export type ToolTip = {
-  entity: ToolTipEntity;
-  entityPosition: ToolTipEntityPosition;
-};
+  entity: ToolTipEntity
+  entityPosition: ToolTipEntityPosition
+}
 type Cursor = {
-  mode: CanvasCursorMode;
-};
+  mode: CanvasCursorMode
+}
 type Zoom = {
-  minZoomLevel: number;
-  maxZoomLevel: number;
-  currentZoomLevel: number;
-};
+  minZoomLevel: number
+  maxZoomLevel: number
+  currentZoomLevel: number
+}
 type History = {
-  length: number;
-  pointer: number;
-  canUndo: boolean;
-  canRedo: boolean;
-};
+  length: number
+  pointer: number
+  canUndo: boolean
+  canRedo: boolean
+}
 type Details = {
-  show: boolean;
-};
+  show: boolean
+}
 interface RelationChartState {
-  chart: ForceGraphInstance | null;
-  setChart: (chart: ForceGraphInstance | null) => void;
+  chart: ForceGraphInstance | null
+  setChart: (chart: ForceGraphInstance | null) => void
 
-  ready: boolean;
-  setReady: (ready: boolean) => void;
+  ready: boolean
+  setReady: (ready: boolean) => void
 
-  performanceMode: boolean;
-  setPerformanceMode: (enabled: boolean) => void;
+  performanceMode: boolean
+  setPerformanceMode: (enabled: boolean) => void
 
-  selection: NodeDatum[];
-  setSelection: (selection: NodeDatum[]) => void;
+  selection: NodeDatum[]
+  setSelection: (selection: NodeDatum[]) => void
 
-  toolTip: ToolTip;
+  toolTip: ToolTip
   setToolTip: (
     entity: ToolTipEntity,
     entityPosition: ToolTipEntityPosition
-  ) => void;
+  ) => void
 
   contextMenu: {
-    show: boolean;
-    x: number;
-    y: number;
-  };
-  setShowContextMenu: (showContextMenu: boolean) => void;
-  setPositionContextMenu: (x: number, y: number) => void;
+    show: boolean
+    x: number
+    y: number
+  }
+  setShowContextMenu: (showContextMenu: boolean) => void
+  setPositionContextMenu: (x: number, y: number) => void
 
-  details: Details;
-  setShowDetails: (show: boolean) => void;
+  details: Details
+  setShowDetails: (show: boolean) => void
 
-  cursor: Cursor;
-  setCursorMode: (mode: CanvasCursorMode) => void;
+  cursor: Cursor
+  setCursorMode: (mode: CanvasCursorMode) => void
 
-  zoom: Zoom;
-  setZoom: (zoom: Zoom) => void;
+  zoom: Zoom
+  setZoom: (zoom: Zoom) => void
 
-  history: History;
-  setHistory: (history: History) => void;
+  history: History
+  setHistory: (history: History) => void
 }
 
 export const useRelationChartState = create<RelationChartState>()((set) => ({
@@ -135,4 +135,4 @@ export const useRelationChartState = create<RelationChartState>()((set) => ({
     canRedo: false,
   },
   setHistory: (history) => set(() => ({ history })),
-}));
+}))

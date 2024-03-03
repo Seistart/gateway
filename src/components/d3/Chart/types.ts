@@ -13,6 +13,7 @@ export interface NodeInfo {
   id: number
   name: string
   type: string
+  tag: string
   marketCap: number
   x?: number
   y?: number
@@ -201,6 +202,11 @@ export type NodeIdResolverFn = (
   data: NodeDatum[]
 ) => number
 export type NodeCollisionRadiusFn = (
+  datum: NodeDatum,
+  i: number,
+  data: NodeDatum[]
+) => number
+export type NodeClusterFn = (
   datum: NodeDatum,
   i: number,
   data: NodeDatum[]

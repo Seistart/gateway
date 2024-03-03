@@ -40,7 +40,7 @@ const isValidDragSelectTarget = (datum: CanvasDatum) =>
 
 const isLinkTarget = (datum: CanvasDatum) => {
   const targetType = datum.state.hovered?.info.type
-  return targetType !== undefined && ['banktransaction'].includes(targetType)
+  return targetType !== undefined && ['project'].includes(targetType)
 }
 
 const createDragNodeContext = function (

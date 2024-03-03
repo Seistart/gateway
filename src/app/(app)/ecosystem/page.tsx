@@ -19,24 +19,7 @@ const projectTypes: ProjectType[] = [
 
 export default async function ProjectsPage() {
   return (
-    <div className='relative h-[100vh] w-[100vw] items-center justify-center overflow-hidden bg-opacity-20 bg-[url("/images/Union.png")] bg-center bg-no-repeat '>
-      {/* <div className='border-red-200-md  absolute rounded border-2 bg-secondary p-4'>
-        <h1>Legends</h1>
-        <div className='flex flex-col'>
-          {projectTypes.map((type, index) => {
-            return (
-              <div key={index} className='flex h-6 items-center'>
-                <Button
-                  variant='ghost'
-                  size='icon'
-                  className={`h-4 w-4 rounded-full ${type.color}`}
-                ></Button>
-                <span className='text-sm'>{type.name}</span>
-              </div>
-            )
-          })}
-        </div>
-      </div> */}
+    <div className='relative h-[80vh] w-[100%] items-center justify-center overflow-hidden bg-opacity-20 bg-[url("/images/Union.png")] bg-center bg-no-repeat '>
       <RelationsContainer />
     </div>
   )

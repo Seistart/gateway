@@ -2,7 +2,12 @@
 
 import * as React from 'react'
 
-import { ContextMenu, NodeInfo, useRelationChartState } from '@/components/d3'
+import {
+  ContextMenu,
+  DetailScreen,
+  NodeInfo,
+  useRelationChartState,
+} from '@/components/d3'
 import Legend from '@/components/d3/Chart/ui/Legend'
 import ChartWrapper from './ChartWrapper'
 
@@ -14,8 +19,6 @@ export type TProps = {
 const RelationsChart = ({ nodes, loading }: TProps) => {
   const [showLegend, setShowLegend] = React.useState(false)
   const { chart, details } = useRelationChartState()
-
-  console.log(chart)
 
   const onClickLegendButtonHandler = React.useCallback(() => {
     setShowLegend(!showLegend)
@@ -36,7 +39,7 @@ const RelationsChart = ({ nodes, loading }: TProps) => {
             show={showLegend}
             onClickLegendButton={onClickLegendButtonHandler}
           />
-          {/* <DetailScreen nodes={nodes} /> */}
+          <DetailScreen nodes={nodes} />
           <ContextMenu />
           {/* <HoverToolTip /> */}
         </>
