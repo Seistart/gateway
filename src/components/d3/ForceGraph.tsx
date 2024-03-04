@@ -22,7 +22,7 @@ interface ProjectNode {
 
 // Mock data generation (replace with your actual data logic)
 const generateMockData = () => ({
-  children: Array.from({ length: 200 }, (_, i) => ({
+  children: Array.from({ length: 500 }, (_, i) => ({
     id: `project-${i}`,
     group: Math.floor(Math.random() * 10),
     value: Math.random() * 100 + 10, // Random value for demonstration

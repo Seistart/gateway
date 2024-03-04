@@ -55,14 +55,14 @@ export const DetailScreen = ({ nodes }: TProps) => {
   }, [ready, setShowDetails])
 
   return (
-    <aside
-      className={`absolute right-0 top-0 h-full w-96 bg-white p-4 shadow-lg transition-transform duration-300 ${details.show ? 'translate-x-0' : 'translate-x-full'}`}
+    <div
+      className={`bg-white transition-all duration-300 ease-out ${details.show ? 'max-w-[380px]' : 'max-w-0'} relative right-0 z-20 flex h-full flex-1 overflow-hidden`}
     >
-      <div className='flex h-full flex-col overflow-scroll text-gray-600'>
+      <div className='mt-2 h-full min-w-[min-content] rounded-none p-6 shadow-none'>
         <Button
           variant={'ghost'}
           size='icon'
-          className='m-0 h-12 w-12 self-start p-2'
+          className='m-0 h-12 w-12 self-start p-2 text-gray-800'
           onClick={onClose}
         >
           <Cross1Icon className='h4 w-4' />
@@ -131,6 +131,6 @@ export const DetailScreen = ({ nodes }: TProps) => {
           </div>
         ))}
       </div>
-    </aside>
+    </div>
   )
 }

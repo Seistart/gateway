@@ -15,6 +15,13 @@
       "when": 1709029452757,
       "tag": "0001_jazzy_starjammers",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1709578853383,
+      "tag": "0002_flippant_mathemanic",
+      "breakpoints": true
     }
   ]
 }

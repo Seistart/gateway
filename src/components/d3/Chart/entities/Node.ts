@@ -321,13 +321,7 @@ export const renderNodeLabel = function <PT extends BaseType>(
       const { info, cache } = datum
       label
         .append('tspan')
-        .text(
-          `${info.name} ${
-            info.name?.length && info.name?.length > 1
-              ? `+ ${info.name?.length - 1}`
-              : ''
-          }`
-        )
+        .text(info.name)
         .attr('x', '0')
         .attr('y', '0')
         .attr('font-weight', 'bold')

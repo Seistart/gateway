@@ -17,7 +17,7 @@ const ChartWrapper = ({ nodes, loading }: Props) => {
   const { ready } = useRelationChartState()
 
   return (
-    <div className='relative flex h-full w-full'>
+    <div className='relative flex h-full w-full flex-1'>
       {!ready && <ChartSkeleton />}
       <ChartContainer
         className='chart-container'

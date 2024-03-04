@@ -32,6 +32,7 @@ export const ChartContainer = ({
         tag: entry.tag,
         name: entry.name,
         marketCap: entry.marketCap,
+        communitySize: entry.communitySize,
       })
       return acc
     }, [])

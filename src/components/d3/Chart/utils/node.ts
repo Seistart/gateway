@@ -31,14 +31,7 @@ export const projectRadius = (datum: NodeDatumType<'project'>) => {
     throw new Error('Node scales have not been defined')
   }
 
-  let totalMarketcap = 0
-  let max
-
-  if (isNodeDatumWithInfoType(datum, 'project')) {
-    ;[, max] = datum.scales.project.nodeSize.domain()
-    totalMarketcap = max / 1.5
-  }
-  return datum.scales.project.nodeSize(totalMarketcap)
+  return datum.scales.project.nodeSize(datum.info.communitySize)
 }
 
 export const projectCollisionRadius = (datum: NodeDatumType<'project'>) => {
@@ -79,6 +72,11 @@ export const projectNodeSizeScaleFactory = () => {
       let min = 0
       let max = 0
 
+      data.forEach((datum) => {
+        min = Math.min(min, datum.info.communitySize)
+        max = Math.max(max, datum.info.communitySize)
+      })
+
       return scaleSqrt().domain([min, max]).range([5, 80])
     },
   }
@@ -93,7 +91,7 @@ export const projectNodeStrengthScaleFactory = () => {
       if (!datum.scales) {
         throw new Error('Node scales have not been defined')
       }
-
+      console.log(datum.scales.project.nodeSize.range())
       ;[min, max] = datum.scales.project.nodeSize.range()
     },
     result: () => {

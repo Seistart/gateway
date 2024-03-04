@@ -33,11 +33,11 @@ export const Legend = ({ onClickLegendButton, show, ...rest }: Props) => {
 
   return (
     <div
-      className={`flex h-64 w-40 flex-col p-6 px-8 ${true ? 'translate-x-0 shadow-md' : 'translate-x-full shadow-none'} absolute left-0 top-0 z-10 bg-primary transition-shadow transition-transform duration-100`}
+      className={`flex h-64 w-40 flex-col p-6 px-8 ${true ? 'translate-x-0 shadow-md' : 'translate-x-full shadow-none'} absolute left-0 top-0 z-10 bg-primary duration-100`}
       {...rest}
     >
       <div className='h-4 text-gray-900' ref={contentRef}>
-        <h4 className='mt-6 font-serif text-base leading-5 first:mt-0'>
+        <h4 className='font-serif mt-6 text-base leading-5 first:mt-0'>
           {LEGEND.NODES}
         </h4>
         <ul className='mt-1 flex flex-col gap-2 p-0 text-sm first:mt-0'>

@@ -31,7 +31,7 @@ const RelationsChart = ({ nodes, loading }: TProps) => {
   }, [details.show])
 
   return (
-    <div className='absolute left-0 top-0 flex h-full w-full overflow-hidden'>
+    <div className='left-0" absolute top-0 flex h-full w-full overflow-hidden bg-[#f3f4f6]'>
       <ChartWrapper nodes={nodes} loading={loading} />
       {chart && (
         <>
