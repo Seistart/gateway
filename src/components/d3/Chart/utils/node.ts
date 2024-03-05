@@ -91,7 +91,6 @@ export const projectNodeStrengthScaleFactory = () => {
       if (!datum.scales) {
         throw new Error('Node scales have not been defined')
       }
-      console.log(datum.scales.project.nodeSize.range())
       ;[min, max] = datum.scales.project.nodeSize.range()
     },
     result: () => {
