@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1709482346435,
+      "tag": "0000_overrated_ikaris",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1709493927403,
+      "tag": "0001_handy_glorian",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1709578853383,
+      "tag": "0002_flippant_mathemanic",
+      "breakpoints": true
+    }
+  ]
+}

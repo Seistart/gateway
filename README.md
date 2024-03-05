@@ -44,7 +44,7 @@ bun db:migrate
 bun run dev
 ```
 
-## Available commands
+## Available commands:
 
 Running commands with npm `bun run [command]`
 
