@@ -1,4 +1,4 @@
-import { appMetadata } from "@/config"
+import { appMetadata } from "@/config/meteada.config"
 import { Metadata } from "next"
 import RelationsContainer from "./RelationsContainer"
 
