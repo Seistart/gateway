@@ -52,12 +52,8 @@ export const createNodeScales = function (data: NodeInfo[]) {
   return {
     // Scales setup methods
     setNodeData: function (nodeData: NodeDatum[]) {
-      nodeData.forEach((datum, index) => {
-        if (index === 0) {
-          projectNodeLabelSizeScale.set(datum)
-          projectNodeStrengthScale.set(datum)
-        }
-      })
+      projectNodeLabelSizeScale.set(nodeData[0])
+      projectNodeStrengthScale.set(nodeData[0])
     },
     updateScales: function () {
       this.project.nodeSize = projectNodeSizeScale.result()
@@ -191,6 +187,14 @@ export const createSimulationNodeData: CreateSimulationNodeDataFn = function (
       default:
         return unexpectedType(type as never)
     }
+  })
+
+  nodeData.forEach((datum) => {
+    if (!datum.scales) {
+      throw new Error("Node scales have not been defined")
+    }
+
+    datum.scales.setNodeData(nodeData)
   })
 
   return nodeData

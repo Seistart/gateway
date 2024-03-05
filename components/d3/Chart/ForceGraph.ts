@@ -74,7 +74,7 @@ export function ForceGraph(
   const nodeForce = forceManyBody<NodeDatum>()
     .theta(0.9)
     .distanceMin(1)
-    .distanceMax(500)
+    .distanceMax(200)
 
   const collideForce = forceCollide(nodeCollisionRadius).iterations(5) // Tune this down for more performance but more chaotic node positioning (default = 1).
 

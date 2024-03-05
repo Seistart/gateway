@@ -88,7 +88,7 @@ export const updateCanvasZoomScaleMax = function (
   const { k: newMax } = zoomTransform
 
   scale.domain([currMin, newMax])
-  canvasDatum.zoom?.scaleExtent([scale.invert(30), scale.invert(0)])
+  canvasDatum.zoom?.scaleExtent([scale.invert(32), scale.invert(0)])
 }
 
 export const getZoomBoundaries = function (canvasSelection: CanvasSelection) {
@@ -166,9 +166,9 @@ export const zoomToBoundaries = function (
   canvasSelection.call(zoom.translateTo, x, y)
 
   if (withTansition) {
-    canvasSelection.transition().call(zoom.scaleTo, zoomScale.invert(30))
+    canvasSelection.transition().call(zoom.scaleTo, zoomScale.invert(40))
   } else {
-    canvasSelection.call(zoom.scaleTo, zoomScale.invert(30))
+    canvasSelection.call(zoom.scaleTo, zoomScale.invert(40))
   }
 }
 

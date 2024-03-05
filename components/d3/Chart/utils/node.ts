@@ -35,7 +35,7 @@ export const projectRadius = (datum: NodeDatumType<"project">) => {
 }
 
 export const projectCollisionRadius = (datum: NodeDatumType<"project">) => {
-  const labelHeight = 55
+  const labelHeight = 60
 
   const { cache } = datum
   let radius = cache.radius ?? (cache.radius = projectRadius(datum))
@@ -77,7 +77,7 @@ export const projectNodeSizeScaleFactory = () => {
         max = Math.max(max, datum.communitySize)
       })
 
-      return scaleSqrt().domain([min, max]).range([25, 250])
+      return scaleSqrt().domain([min, max]).range([30, 200])
     },
   }
 }
@@ -94,7 +94,7 @@ export const projectNodeStrengthScaleFactory = () => {
       ;[min, max] = datum.scales.project.nodeSize.range()
     },
     result: () => {
-      return scaleLog().domain([min, max]).range([-1, -10])
+      return scaleLog().domain([30, 200]).range([-1, -10])
     },
   }
 }
@@ -112,7 +112,7 @@ export const projectLabelSizeScaleFactory = () => {
       ;[min, max] = datum.scales.project.nodeSize.range()
     },
     result: () => {
-      return scaleLog().domain([min, max]).range([5, 35])
+      return scaleLog().domain([30, 200]).range([10, 50])
     },
   }
 }

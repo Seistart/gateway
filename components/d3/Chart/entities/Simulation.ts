@@ -16,37 +16,57 @@ import {
 
 const ALPHA_MIN = 0.01
 
-const INITIAL_ALPHA_AIMED_ITERATIONS = 100
-const INITIAL_VELOCITY_DECAY = 0.1
+const INITIAL_ALPHA_AIMED_ITERATIONS = 250
+// const INITIAL_VELOCITY_DECAY = 0.1
 
 const INTERACTION_ALPHA_AIMED_ITERATIONS = 30
 const INTERACTION_VELOCITY_DECAY = 0.4
 
-// function calculateClusterCenters(data: NodeDatum[]) {
-//   const width = window.innerWidth
-//   const height = window.innerHeight
+const nodeTags = new Map([
+  ["DeFi", 1],
+  ["NFT", 2],
+  ["DAO", 3],
+  ["GameFi", 4],
+])
 
-//   const centers = {}
-//   data.forEach((d) => {
-//     const tag = d.info.tag
-//     if (!centers[tag]) {
-//       // Randomly position cluster centers for simplicity
-//       centers[tag] = { x: Math.random() * width, y: Math.random() * height } // width and height should be your canvas dimensions
-//     }
-//   })
+function forceCluster(nodes: NodeDatum[]) {
+  const clusterStrength = 0.3 // Adjust the strength as needed
 
-//   return centers
-// }
+  // Calculates the centroid for each cluster
+  function calculateCentroids() {
+    const centroids: Map<number, { x: number; y: number; count: number }> =
+      new Map()
+    nodes.forEach((node) => {
+      const cluster = centroids.get(
+        Array.from(nodeTags.keys()).indexOf(node.info.tag)
+      ) || { x: 0, y: 0, count: 0 }
+      cluster.x += node.x || 0
+      cluster.y += node.y || 0
+      cluster.count += 1
+      centroids.set(Array.from(nodeTags.keys()).indexOf(node.info.tag), cluster)
+    })
 
-// function forceCluster(centers, data: NodeDatum[]) {
-//   return function (alpha) {
-//     for (const node of data) {
-//       const center = centers[node.info.tag]
-//       node.vx += (center.x - node.x) * alpha
-//       node.vy += (center.y - node.y) * alpha
-//     }
-//   }
-// }
+    centroids.forEach((centroid) => {
+      centroid.x /= centroid.count
+      centroid.y /= centroid.count
+    })
+
+    return centroids
+  }
+
+  return (alpha: number) => {
+    const centroids = calculateCentroids()
+    nodes.forEach((node) => {
+      const centroid = centroids.get(
+        Array.from(nodeTags.keys()).indexOf(node.info.tag)
+      )
+      if (centroid) {
+        node.vx && (node.vx += (centroid.x - node.x!) * clusterStrength * alpha)
+        node.vy && (node.vy += (centroid.y - node.y!) * clusterStrength * alpha)
+      }
+    })
+  }
+}
 
 export const createSimulation: CreateSimulationFn = function (
   simulationNodeData,
@@ -56,12 +76,12 @@ export const createSimulation: CreateSimulationFn = function (
   // const clusterCenters = calculateClusterCenters(simulationNodeData)
 
   const simulation: Simulation = forceSimulation<NodeDatum>(simulationNodeData)
-    .velocityDecay(INITIAL_VELOCITY_DECAY)
-    .alphaMin(ALPHA_MIN)
+    // .velocityDecay(INITIAL_VELOCITY_DECAY)
+    // .alphaMin(ALPHA_MIN)
     .alphaDecay(1 - Math.pow(ALPHA_MIN, 1 / INITIAL_ALPHA_AIMED_ITERATIONS))
     .force("charge", nodeForce)
     .force("collide", collideForce)
-    // .force('cluster', forceCluster(clusterCenters, simulationNodeData))
+    .force("cluster", forceCluster(simulationNodeData))
     .on("tick", ticked)
     .on("end", end)
 
