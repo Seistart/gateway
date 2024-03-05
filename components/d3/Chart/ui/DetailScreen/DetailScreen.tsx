@@ -62,7 +62,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
         <Button
           variant={"ghost"}
           size="icon"
-          className="m-0 h-12 w-12 self-start p-2 text-gray-800"
+          className="m-0 self-start p-2 text-gray-800"
           onClick={onClose}
         >
           <Cross1Icon className="h4 w-4" />
@@ -82,13 +82,13 @@ export const DetailScreen = ({ nodes }: TProps) => {
             <div className="flex justify-between">
               <Button
                 variant="ghost"
-                className="h-4 w-[50%] border-2 border-gray-700 py-5 font-semibold text-gray-700"
+                className="h-4 w-[50%] border-2 border-gray-700 px-3 py-5 font-semibold text-gray-700"
               >
                 Content
               </Button>
               <Button
                 variant="ghost"
-                className="h-4 w-[50%] border-2 border-gray-200 py-5  font-semibold text-gray-500"
+                className="h-4 w-[50%] border-2 border-gray-200 px-3 py-5 font-semibold text-gray-500"
               >
                 Details
               </Button>

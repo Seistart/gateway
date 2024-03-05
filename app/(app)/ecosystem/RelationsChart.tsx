@@ -21,6 +21,7 @@ const RelationsChart = ({ nodes, loading }: TProps) => {
   const { chart, details } = useRelationChartState()
 
   const onClickLegendButtonHandler = React.useCallback(() => {
+    console.log(!showLegend)
     setShowLegend(!showLegend)
   }, [showLegend])
 

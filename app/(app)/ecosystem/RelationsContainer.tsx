@@ -7,7 +7,7 @@ import RelationsChart from "./RelationsChart"
 export const RelationsContainer = () => {
   const generateMockData = (): NodeInfo[] => {
     const projectTags = ["DeFi", "NFT", "DAO", "GameFi"]
-    const mockData: NodeInfo[] = Array.from({ length: 50 }, (_, i) => ({
+    const mockData: NodeInfo[] = Array.from({ length: 100 }, (_, i) => ({
       id: i,
       name: `Project ${i}`,
       type: "project",

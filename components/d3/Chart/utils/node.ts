@@ -42,6 +42,8 @@ export const projectCollisionRadius = (datum: NodeDatumType<"project">) => {
 
   radius += labelHeight
 
+  console.log("test")
+
   return radius
 }
 

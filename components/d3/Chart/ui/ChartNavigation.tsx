@@ -113,7 +113,7 @@ export const ChartNavigation: FC = () => {
   }, [ready])
 
   return (
-    <div className="absolute bottom-6 right-6 z-30 flex h-[28rem] w-[3rem] flex-col items-center rounded-md bg-white shadow-md">
+    <div className="absolute bottom-6 right-6 z-30 flex h-[21rem] w-[3rem] flex-col items-center bg-white shadow-md">
       <Button
         variant={"navigation"}
         selected={mode === "move"}
