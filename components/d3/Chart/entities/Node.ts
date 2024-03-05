@@ -40,21 +40,22 @@ const unexpectedType = (_: never): never => {
   throw new Error("Unexpected node type")
 }
 
-export const createNodeScales = function () {
+export const createNodeScales = function (data: NodeInfo[]) {
   const projectNodeSizeScale = projectNodeSizeScaleFactory()
   const projectNodeStrengthScale = projectNodeStrengthScaleFactory()
   const projectNodeLabelSizeScale = projectLabelSizeScaleFactory()
+
+  data.forEach((datum: NodeInfo) => {
+    projectNodeSizeScale.add(datum)
+  })
 
   return {
     // Scales setup methods
     setNodeData: function (nodeData: NodeDatum[]) {
       nodeData.forEach((datum, index) => {
-        if (isNodeDatumWithInfoType(datum, "project")) {
-          projectNodeSizeScale.add(datum)
-          if (index === 0) {
-            projectNodeLabelSizeScale.set(datum)
-            projectNodeStrengthScale.set(datum)
-          }
+        if (index === 0) {
+          projectNodeLabelSizeScale.set(datum)
+          projectNodeStrengthScale.set(datum)
         }
       })
     },
@@ -76,7 +77,7 @@ export const createSimulationNodeData: CreateSimulationNodeDataFn = function (
   data,
   localStorageData
 ) {
-  const scales = createNodeScales()
+  const scales = createNodeScales(data)
   const nodeData = map<NodeInfo, NodeDatum>(data, (info) => {
     const storedState = localStorageData?.[info.id]
 
@@ -190,14 +191,6 @@ export const createSimulationNodeData: CreateSimulationNodeDataFn = function (
       default:
         return unexpectedType(type as never)
     }
-  })
-
-  nodeData.forEach((datum) => {
-    if (!datum.scales) {
-      throw new Error("Node scales have not been defined")
-    }
-
-    datum.scales.setNodeData(nodeData)
   })
 
   return nodeData
@@ -421,28 +414,42 @@ export const nodeFill: NodeValueFn<BaseType, string> = function (datum) {
     if (info.tag === "DAO") {
       if (isHovered) {
         if (state.selected) {
-          return "#5c0000"
+          return "#ffb805"
         }
-        return "#8b0000"
+        return "#ffa505"
       } else {
         if (state.selected) {
-          return "#8b0000"
+          return "#ffc905"
         }
-        return "#d0021b"
+        return "#ffa505"
       }
     }
 
     if (info.tag === "NFT") {
       if (isHovered) {
         if (state.selected) {
-          return "#333333"
+          return "#ff0000"
         }
-        return "#666666"
+        return "#a70000"
       } else {
         if (state.selected) {
-          return "#666666"
+          return "#ff5252"
         }
-        return "#9fa9ba"
+        return "#a70000"
+      }
+    }
+
+    if (info.tag === "DeFi") {
+      if (isHovered) {
+        if (state.selected) {
+          return "#77ab59"
+        }
+        return "#36802d"
+      } else {
+        if (state.selected) {
+          return "#234d20"
+        }
+        return "#36802d"
       }
     }
 

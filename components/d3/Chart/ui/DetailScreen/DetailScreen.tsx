@@ -98,21 +98,9 @@ export const DetailScreen = ({ nodes }: TProps) => {
               <div>
                 <Badge
                   variant="outline"
-                  className="rounded-md bg-blue-200 text-blue-600"
-                >
-                  Dex
-                </Badge>
-                <Badge
-                  variant="outline"
-                  className="rounded-md bg-green-200 text-green-600"
-                >
-                  Finance
-                </Badge>
-                <Badge
-                  variant="outline"
                   className="rounded-md bg-orange-200 text-orange-600"
                 >
-                  NFT
+                  {item.tag}
                 </Badge>
               </div>
             </div>

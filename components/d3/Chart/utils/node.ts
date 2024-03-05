@@ -64,20 +64,20 @@ export const projectNodeLabelSize = (datum: NodeDatumType<"project">) => {
 }
 
 export const projectNodeSizeScaleFactory = () => {
-  const data: NodeDatumType<"project">[] = []
+  const data: NodeInfoType<"project">[] = []
 
   return {
-    add: (datum: NodeDatumType<"project">) => data.push(datum),
+    add: (datum: NodeInfoType<"project">) => data.push(datum),
     result: () => {
       let min = 0
       let max = 0
 
       data.forEach((datum) => {
-        min = Math.min(min, datum.info.communitySize)
-        max = Math.max(max, datum.info.communitySize)
+        min = Math.min(min, datum.communitySize)
+        max = Math.max(max, datum.communitySize)
       })
 
-      return scaleSqrt().domain([min, max]).range([5, 80])
+      return scaleSqrt().domain([min, max]).range([25, 250])
     },
   }
 }
