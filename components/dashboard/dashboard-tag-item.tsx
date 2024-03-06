@@ -33,6 +33,7 @@ export const DashboardTagItem = ({ tag }: DashboardTagItemProps) => {
         >
           <Input
             type="text"
+            autoFocus
             value={newName}
             className="max-w-[200px] border-primary"
             onChange={(e) => setNewName(e.target.value)}

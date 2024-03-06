@@ -12,7 +12,7 @@ export interface SidebarLink {
   icon: LucideIcon
 }
 
-export const AdminDashboardSidebarItems = () => {
+export const DashboardSidebarItems = () => {
   return (
     <>
       <SidebarLinkGroup links={defaultLinks} />

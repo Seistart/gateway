@@ -1,5 +1,10 @@
-import DashboardCreateProjectForm from "../dashboard/dashboard-create-project-form"
+import { Tag } from "@/database/schemas/tags.schema"
+import CreateProjectForm from "../dashboard/create-project-form"
 
-export const CreateProject = () => {
-  return <DashboardCreateProjectForm></DashboardCreateProjectForm>
+interface CreateProjectProps {
+  tags: Tag[]
+}
+
+export const CreateProject = ({ tags }: CreateProjectProps) => {
+  return <CreateProjectForm tags={tags}></CreateProjectForm>
 }

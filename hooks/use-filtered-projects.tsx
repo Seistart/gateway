@@ -1,10 +1,14 @@
-import { CompleteProject } from "@/database/schemas/projects.schema"
+import { Project } from "@/database/schemas/projects.schema"
 import { useEffect, useState } from "react"
 
-export const useFilteredProjects = (initialProjects: CompleteProject[]) => {
+export const useFilteredProjects = (initialProjects: Project[]) => {
   const [searchTerm, setSearchTerm] = useState("")
   const [projects, setProjects] = useState(initialProjects)
   const [filteredProjects, setFilteredProjects] = useState(initialProjects)
+
+  useEffect(() => {
+    setProjects(initialProjects)
+  }, [initialProjects])
 
   useEffect(() => {
     const searchTermsLower = searchTerm
@@ -12,16 +16,15 @@ export const useFilteredProjects = (initialProjects: CompleteProject[]) => {
       .split(/\s+/)
       .filter(Boolean)
     const newFilteredProjects = projects.filter(({ name, tags }) => {
-      const matchesSearchTerm =
+      return (
         searchTermsLower.length === 0 ||
         searchTermsLower.every(
           (term) =>
             name.toLowerCase().includes(term) ||
-            tags.some((tag) => tag.toLowerCase().includes(term))
+            (tags && tags.some((tag) => tag.toLowerCase().includes(term)))
         )
-      return matchesSearchTerm
+      )
     })
-
     setFilteredProjects(newFilteredProjects)
   }, [searchTerm, projects])
 

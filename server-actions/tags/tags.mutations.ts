@@ -5,6 +5,8 @@ import { db } from "@/database/database"
 import { Tag, tags } from "@/database/schemas/tags.schema"
 import { eq } from "drizzle-orm"
 
+// TODO: Add validation schemas to all inputs
+
 export const updateTagMutation = async (tag: Tag) => {
   const [updatedTag] = await db
     .update(tags)
