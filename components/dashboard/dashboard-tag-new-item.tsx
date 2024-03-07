@@ -23,6 +23,7 @@ export const DashboardTagNewItem = () => {
           className="mb-4 flex w-full items-center justify-between rounded-sm border border-border px-4"
         >
           <Input
+            autoFocus
             type="text"
             value={newName}
             className="max-w-[200px] border-primary"

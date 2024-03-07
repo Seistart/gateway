@@ -3,30 +3,30 @@
 import { getUserAuth } from "@/auth/auth-guard"
 import { db } from "@/database/database"
 import {
+  InsertProjectSchema,
   NewProjectParams,
-  ProjectId,
-  UpdateProjectParams,
-  insertProjectSchema,
-  projectIdSchema,
-  projects,
+  ProjectIdSchema,
+  ProjectsTable,
   updateProjectSchema,
 } from "@/database/schemas/projects.schema"
 import { projectTags } from "@/database/schemas/tags.schema"
 import { and, eq } from "drizzle-orm"
 import { getProjectTagIdsQuery } from "./projects.queries"
 
-export const createProject = async (project: NewProjectParams) => {
+// TODO: Add validation schemas to all inputs
+
+export const createProjectMutation = async (project: NewProjectParams) => {
   const { session } = await getUserAuth()
   const userId = session?.user.id
   try {
     if (!userId) {
       throw "No userId"
     }
-    const newProject = insertProjectSchema.parse({
+    const newProject = InsertProjectSchema.parse({
       ...project,
       userId,
     })
-    const [p] = await db.insert(projects).values(newProject).returning()
+    const [p] = await db.insert(ProjectsTable).values(newProject).returning()
     return { project: p }
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again"
@@ -35,7 +35,32 @@ export const createProject = async (project: NewProjectParams) => {
   }
 }
 
-export const addTagsToProject = async (
+export const updateProjectMutation = async (
+  id: number,
+  project: NewProjectParams
+) => {
+  const { session } = await getUserAuth()
+  const userId = session?.user.id
+  const newProject = updateProjectSchema.parse({
+    ...project,
+    userId,
+    updatedAt: new Date(),
+  })
+  try {
+    const [p] = await db
+      .update(ProjectsTable)
+      .set(newProject)
+      .where(and(eq(ProjectsTable.id, id)))
+      .returning()
+    return { project: p }
+  } catch (err) {
+    const message = (err as Error).message ?? "Error, please try again"
+    console.error(message)
+    throw { error: message }
+  }
+}
+
+export const addTagsToProjectMutation = async (
   projectId: number,
   newTags: number[]
 ) => {
@@ -76,34 +101,12 @@ export const addTagsToProject = async (
   }
 }
 
-export const updateProject = async (
-  id: ProjectId,
-  project: UpdateProjectParams
-) => {
-  const { id: projectId } = projectIdSchema.parse({ id })
-  const newProject = updateProjectSchema.parse({
-    ...project,
-  })
+export const deleteProjectMutation = async (id: number) => {
+  const { id: projectId } = ProjectIdSchema.parse({ id })
   try {
     const [p] = await db
-      .update(projects)
-      .set({ ...newProject, updatedAt: new Date() })
-      .where(and(eq(projects.id, projectId!)))
-      .returning()
-    return { project: p }
-  } catch (err) {
-    const message = (err as Error).message ?? "Error, please try again"
-    console.error(message)
-    throw { error: message }
-  }
-}
-
-export const deleteProject = async (id: ProjectId) => {
-  const { id: projectId } = projectIdSchema.parse({ id })
-  try {
-    const [p] = await db
-      .delete(projects)
-      .where(and(eq(projects.id, projectId!)))
+      .delete(ProjectsTable)
+      .where(and(eq(ProjectsTable.id, projectId!)))
       .returning()
     return { project: p }
   } catch (err) {

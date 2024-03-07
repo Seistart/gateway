@@ -1,55 +1,63 @@
 "use server"
 
+import { authGuard } from "@/auth/auth-guard"
 import {
-  NewProjectParams,
-  ProjectId,
-  UpdateProjectParams,
-  insertProjectParams,
-  projectIdSchema,
-  updateProjectParams,
+  NewProjectSchema,
+  NewProjectWithTagsParams,
 } from "@/database/schemas/projects.schema"
 import { revalidatePath } from "next/cache"
 import {
-  addTagsToProject,
-  createProject,
-  deleteProject,
-  updateProject,
+  addTagsToProjectMutation,
+  createProjectMutation,
+  deleteProjectMutation,
+  updateProjectMutation,
 } from "./projects.mutations"
 import { getAllProjectsQuery, getProjectBySlugQuery } from "./projects.queries"
 
-const revalidateProjects = () => revalidatePath("/projects")
+// TODO: Add validation schemas to all inputs
 
-export const createProjectAction = async (input: NewProjectParams) => {
-  const payload = insertProjectParams.parse(input)
-  await createProject(payload)
-  revalidateProjects()
-}
-
-export const addTagsToProjectAction = async (
-  projectId: number,
-  newTags: number[]
+// Admins, Moderators, and Users can create
+export const createProjectWithTagsAction = async (
+  newProjectWithTagsParams: NewProjectWithTagsParams
 ) => {
-  await addTagsToProject(projectId, newTags)
-  revalidateProjects()
+  await authGuard()
+  const { tags, ...newProject } = newProjectWithTagsParams
+  const payload = NewProjectSchema.parse(newProject)
+  const { project } = await createProjectMutation(payload)
+  await addTagsToProjectMutation(project.id, tags)
+  revalidatePath("/")
+  return project.slug
 }
 
-export const updateProjectAction = async (input: UpdateProjectParams) => {
-  const payload = updateProjectParams.parse(input)
-  await updateProject(payload.id, payload)
-  revalidateProjects()
+// Admins, Moderators, and Users can update. Users can only update their own project
+export const updateProjectWithTagsAction = async (
+  newProjectWithTagsParams: NewProjectWithTagsParams,
+  projectId: number
+) => {
+  await authGuard()
+  const { tags, ...newProject } = newProjectWithTagsParams
+  const payload = NewProjectSchema.parse(newProject)
+  const { project } = await updateProjectMutation(projectId, payload)
+  await addTagsToProjectMutation(project.id, tags)
+  revalidatePath("/")
+  return project.slug
 }
 
-export const deleteProjectAction = async (input: ProjectId) => {
-  const payload = projectIdSchema.parse({ id: input })
-  await deleteProject(payload.id)
-  revalidateProjects()
+// Admins, Moderators, and Users can delete. Users can only delete their own project
+export const deleteProjectAction = async (projectId: number) => {
+  await authGuard()
+  await deleteProjectMutation(projectId)
+  await new Promise((resolve) => setTimeout(resolve, 1000)) // Wait for 1 second (not recommended for production)
+  revalidatePath("/")
 }
 
+// Public
 export const getAllProjectsAction = async () => {
   const projects = await getAllProjectsQuery()
   return projects
 }
 
+// Public
 export const getProjectBySlugAction = async (slug: string) => {
   const project = await getProjectBySlugQuery(slug)
   return project

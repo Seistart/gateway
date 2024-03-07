@@ -1,5 +1,5 @@
 DO $$ BEGIN
- CREATE TYPE "stage" AS ENUM('dev', 'test', 'main', 'pending');
+ CREATE TYPE "stage" AS ENUM('dev', 'test', 'main', 'none');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS "projects" (
 	"twitter" varchar(255),
 	"discord" varchar(255),
 	"telegram" varchar(255),
+	"wechat" varchar(255),
 	"contact_name" varchar(255),
 	"contact_email" varchar(255),
 	"user_id" text NOT NULL,
@@ -73,7 +74,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "project_tags" ADD CONSTRAINT "project_tags_tag_id_tags_id_fk" FOREIGN KEY ("tag_id") REFERENCES "tags"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "project_tags" ADD CONSTRAINT "project_tags_tag_id_tags_id_fk" FOREIGN KEY ("tag_id") REFERENCES "tags"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

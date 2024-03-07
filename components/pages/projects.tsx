@@ -1,15 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { CompleteProject } from "@/database/schemas/projects.schema"
+import { Project } from "@/database/schemas/projects.schema"
 import { useFilteredProjects } from "@/hooks/use-filtered-projects"
 import Link from "next/link"
+import { ProjectsFilter } from "../projects-filter"
 
 export const Projects = ({
   projects: initialProjects,
 }: {
-  projects: CompleteProject[]
+  projects: Project[]
 }) => {
   const { searchTerm, setSearchTerm, filteredProjects } =
     useFilteredProjects(initialProjects)
@@ -25,12 +25,10 @@ export const Projects = ({
           </div>
         </div>
       </div>
-      <Input
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search..."
-        value={searchTerm}
-        type="text"
-      ></Input>
+      <ProjectsFilter
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      ></ProjectsFilter>
       <div className="mx-auto grid grid-cols-2 place-items-center">
         {filteredProjects.map((project) => (
           <Link
