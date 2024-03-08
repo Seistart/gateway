@@ -1,12 +1,5 @@
 import { getProjectBySlugAction } from "@/server-actions/projects/projects.actions"
 
-// export async function generateStaticParams() {
-//   const { projects } = await getAllProjectsAction()
-//   return projects.map((project) => ({
-//     slug: project.slug,
-//   }))
-// }
-
 export async function generateMetadata({
   params,
 }: {
