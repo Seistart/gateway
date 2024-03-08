@@ -23,25 +23,28 @@ export const forceCollide = (
       const nx2 = node.x + r,
         ny2 = node.y + r
       quadtree.visit((q, x1, y1, x2, y2) => {
-        if (!q.length)
-          do {
-            if (q.data !== node) {
-              const r =
-                node.value +
-                q.data.value +
-                (node.type === q.data.type ? padding1 : padding2)
-              let x = node.x - q.data.x
-              let y = node.y - q.data.y
-              let l = Math.hypot(x, y)
-              if (l < r) {
-                l = ((l - r) / l) * alpha
-                node.x -= x *= l
-                node.y -= y *= l
-                q.data.x += x
-                q.data.y += y
-              }
+        if (!q.length) {
+          let qData = null
+          if (q.data) {
+            qData = q.data
+          }
+          if (qData !== node) {
+            const r =
+              node.value +
+              qData.value +
+              (node.type === qData.type ? padding1 : padding2)
+            let x = node.x - qData.x
+            let y = node.y - qData.y
+            let l = Math.hypot(x, y)
+            if (l < r) {
+              l = ((l - r) / l) * alpha
+              node.x -= x *= l
+              node.y -= y *= l
+              qData.x += x
+              qData.y += y
             }
-          } while ((q = q.next))
+          }
+        }
         return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1
       })
     }

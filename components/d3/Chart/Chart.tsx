@@ -110,3 +110,5 @@ export const Chart = memo<Props>(
   },
   (prevProps, nextProps) => prevProps.data === nextProps.data
 )
+
+Chart.displayName = "Project Chart"

@@ -28,19 +28,11 @@ const NodeBody = ({ node }: NodeBodyProps) => {
       {title && (
         <h1>
           {Array.isArray(title)
-            ? title.map((holder) => <div>{holder}</div>)
+            ? title.map((holder, index) => <div key={index}>{holder}</div>)
             : title}
         </h1>
       )}
       {subtitle && <span>{subtitle}</span>}
-      <table>
-        <tbody>
-          <tr>
-            <span>bij: 123</span>
-            <span>af: 123</span>
-          </tr>
-        </tbody>
-      </table>
     </>
   )
 }
