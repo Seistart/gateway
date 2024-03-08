@@ -30,7 +30,7 @@ export const ChartContainer = ({
       acc.push({
         id: entry.id,
         type: "project",
-        tag: entry.projectType!,
+        tag: entry.mainTag,
         labels: entry.tags,
         name: entry.name,
         communitySize: entry.communitySize!,

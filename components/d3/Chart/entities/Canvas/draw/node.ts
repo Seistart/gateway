@@ -30,7 +30,8 @@ const generateIconImage = (
   icon.setAttribute("fill", nodeIcon.attr("fill"))
 
   const attributes = iconSymbolNode.attributes as unknown as Iterable<Attr>
-  for (const attr of attributes) {
+  const attributesArray = Array.from(attributes)
+  for (const attr of attributesArray) {
     if (!["id", "class"].includes(attr.name)) {
       icon.setAttribute(attr.name, attr.value)
     }

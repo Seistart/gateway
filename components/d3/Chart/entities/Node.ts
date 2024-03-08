@@ -231,8 +231,8 @@ export const clearAttributes = function <PT extends BaseType>(
   }
 
   const attributes = node.attributes
-
-  for (const attr of attributes) {
+  const attributesArray = Array.from(attributes)
+  for (const attr of attributesArray) {
     selection.attr(attr.name, null)
   }
 }

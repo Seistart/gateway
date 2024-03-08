@@ -35,8 +35,12 @@ export const ProjectCardDetails = ({ key, item }: Props) => {
       <div>
         <span className="text-md text-gray-500">Labels</span>
         <div>
-          {item.tags.map((label: any) => (
-            <Badge variant="outline" className="bg-orange-200 text-orange-600">
+          {item.tags.map((label: any, index) => (
+            <Badge
+              key={`${index}_tag`}
+              variant="outline"
+              className="bg-orange-200 text-orange-600"
+            >
               {label}
             </Badge>
           ))}
@@ -47,7 +51,7 @@ export const ProjectCardDetails = ({ key, item }: Props) => {
           <strong>Id:</strong> {item.id}
         </p>
         <p className="text-sm text-gray-600">
-          <strong>Type:</strong> {item.projectType}
+          <strong>Type:</strong> {item.mainTag}
         </p>
         <p className="text-sm text-gray-600">
           <strong>Name:</strong> {item.name}
