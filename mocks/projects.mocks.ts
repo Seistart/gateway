@@ -1,6 +1,6 @@
 import {
-  insertProjectSchema,
-  projectsResponseSchema,
+  InsertProjectSchema,
+  ProjectsResponseSchema,
 } from "@/database/schemas/projects.schema"
 import { getMockFn } from "@/utils/mock.utils"
 
@@ -39,7 +39,7 @@ const generateTagsWithNFT = (existingTags = [] as string[]) => {
     )
   )
 }
-export const getMockProjects = getMockFn(projectsResponseSchema)
+export const getMockProjects = getMockFn(ProjectsResponseSchema)
 
 export const mockProjects = getMockProjects({
   length: 5,
@@ -49,7 +49,7 @@ export const mockProjects = getMockProjects({
   },
 })
 
-export const getMockProject = getMockFn(insertProjectSchema)
+export const getMockProject = getMockFn(InsertProjectSchema)
 export const mockProject = getMockProject({
   overrideFn: (entry) => ({
     ...entry,
