@@ -1,16 +1,13 @@
 import { EditProject } from "@/components/pages/edit-project"
-import {
-  getAllProjectsAction,
-  getProjectBySlugAction,
-} from "@/server-actions/projects/projects.actions"
+import { getProjectBySlugAction } from "@/server-actions/projects/projects.actions"
 import { getAllTagsAction } from "@/server-actions/tags/tags.actions"
 
-export async function generateStaticParams() {
-  const { projects } = await getAllProjectsAction()
-  return projects.map((project) => ({
-    slug: project.slug,
-  }))
-}
+// export async function generateStaticParams() {
+//   const { projects } = await getAllProjectsAction()
+//   return projects.map((project) => ({
+//     slug: project.slug,
+//   }))
+// }
 
 export async function generateMetadata({
   params,
