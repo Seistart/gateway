@@ -2,7 +2,7 @@ import { integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core"
 import { createSelectSchema } from "drizzle-zod"
 import { z } from "zod"
 import { users } from "./auth.schema"
-import { projects } from "./projects.schema"
+import { ProjectsTable } from "./projects.schema"
 
 export const tags = pgTable("tags", {
   id: serial("id").primaryKey().notNull(),
@@ -11,7 +11,7 @@ export const tags = pgTable("tags", {
 
 export const projectTags = pgTable("project_tags", {
   projectId: integer("project_id")
-    .references(() => projects.id, {
+    .references(() => ProjectsTable.id, {
       onDelete: "cascade",
     })
     .notNull(),

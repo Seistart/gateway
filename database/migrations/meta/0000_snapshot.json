@@ -1,5 +1,5 @@
 {
-  "id": "c70b4957-7294-4e4d-be93-6bc90a64edfb",
+  "id": "ccac7316-f843-4b8c-a1e8-7e0c5ed97c95",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -177,6 +177,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "wechat": {
+          "name": "wechat",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
         "contact_name": {
           "name": "contact_name",
           "type": "varchar(255)",
@@ -271,7 +277,7 @@
           "tableTo": "tags",
           "columnsFrom": ["tag_id"],
           "columnsTo": ["id"],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "project_tags_user_id_user_id_fk": {
@@ -323,7 +329,7 @@
         "dev": "dev",
         "test": "test",
         "main": "main",
-        "pending": "pending"
+        "none": "none"
       }
     }
   },

@@ -10,30 +10,27 @@ import {
 } from "./tags.mutations"
 import { getAllTagsQuery } from "./tags.queries"
 
-const revalidateTags = () => revalidatePath("/dashboard/tags")
+// TODO: Add validation schemas to all inputs
 
-// Private for admins
+// Private for Admins
 export const updateTagAction = async (tag: Tag) => {
-  // TODO: Only admins can update
   await authGuard()
   await updateTagMutation(tag)
-  revalidateTags()
+  revalidatePath("/")
 }
 
-// Private for admins
+// Private for Admins
 export const createTagAction = async (name: string) => {
-  // TODO: Only admins can update
   await authGuard()
   await createTagMutation(name)
-  revalidateTags()
+  revalidatePath("/")
 }
 
-// Private for admins
+// Private for Admins
 export const deleteTagAction = async (tag: Tag) => {
-  // TODO: Only admins can update
   await authGuard()
   await deleteTagMutation(tag)
-  revalidateTags()
+  revalidatePath("/")
 }
 
 // Public
