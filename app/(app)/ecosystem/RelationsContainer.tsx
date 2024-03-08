@@ -14,6 +14,7 @@ export const RelationsContainer = () => {
       tag: projectTags[Math.floor(Math.random() * projectTags.length)],
       marketCap: Math.round(Math.random() * 1000),
       communitySize: Math.round(Math.random() * 50000),
+      projectImageUrl: `/images/logo_850.png`,
     }))
     return mockData
   }

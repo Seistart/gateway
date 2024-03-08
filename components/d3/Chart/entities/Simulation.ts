@@ -14,7 +14,7 @@ import {
   zoomToBoundaries,
 } from "./Canvas"
 
-const ALPHA_MIN = 0.01
+const ALPHA_MIN = 0.02
 
 const INITIAL_ALPHA_AIMED_ITERATIONS = 250
 // const INITIAL_VELOCITY_DECAY = 0.1
@@ -73,8 +73,6 @@ export const createSimulation: CreateSimulationFn = function (
   nodeForce,
   collideForce
 ) {
-  // const clusterCenters = calculateClusterCenters(simulationNodeData)
-
   const simulation: Simulation = forceSimulation<NodeDatum>(simulationNodeData)
     // .velocityDecay(INITIAL_VELOCITY_DECAY)
     // .alphaMin(ALPHA_MIN)

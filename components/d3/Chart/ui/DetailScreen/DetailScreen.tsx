@@ -4,17 +4,6 @@ import { Cross1Icon } from "@radix-ui/react-icons"
 import * as React from "react"
 import { useRelationChartState } from "../../hooks/useRelationChartState"
 import { NodeInfo } from "../../types"
-import { DetailsItem } from "../types"
-
-function getItem(items: DetailsItem[], nodeId: string) {
-  const result = items.find((node) => node.nodeId === nodeId)
-
-  if (!result) {
-    throw new Error(`Detail item with id "${nodeId}" not found`)
-  }
-
-  return result
-}
 
 export type TProps = {
   nodes: NodeInfo[]
@@ -58,7 +47,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
     <div
       className={`bg-white transition-all duration-300 ease-out ${details.show ? "max-w-[380px]" : "max-w-0"} relative right-0 z-20 flex h-full flex-1 overflow-hidden`}
     >
-      <div className="mt-2 h-full min-w-[min-content] rounded-none p-6 shadow-none">
+      <div className="mt-2 h-full min-w-[min-content] p-6 shadow-none">
         <Button
           variant={"ghost"}
           size="icon"
@@ -98,7 +87,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
               <div>
                 <Badge
                   variant="outline"
-                  className="rounded-md bg-orange-200 text-orange-600"
+                  className="bg-orange-200 text-orange-600"
                 >
                   {item.tag}
                 </Badge>

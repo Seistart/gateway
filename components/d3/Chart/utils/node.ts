@@ -35,14 +35,12 @@ export const projectRadius = (datum: NodeDatumType<"project">) => {
 }
 
 export const projectCollisionRadius = (datum: NodeDatumType<"project">) => {
-  const labelHeight = 60
+  const labelHeight = 55
 
   const { cache } = datum
   let radius = cache.radius ?? (cache.radius = projectRadius(datum))
 
   radius += labelHeight
-
-  console.log("test")
 
   return radius
 }

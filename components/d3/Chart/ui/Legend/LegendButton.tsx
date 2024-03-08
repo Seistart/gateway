@@ -27,7 +27,7 @@ export const LegendButton = ({
 
   return (
     <button
-      className={`absolute top-10 z-20 transition-all duration-300 ease-out ${open ? `left-48 translate-x-[-100%] rotate-180` : ` left-0 rotate-[180deg]`} flex transform bg-secondary p-5  hover:bg-opacity-75 focus:outline-none`}
+      className={`absolute top-10 z-20 transition-all duration-500 ease-out ${open ? `left-48 translate-x-[-100%] rotate-180` : ` left-0 rotate-[180deg]`} flex transform bg-secondary p-5  hover:bg-opacity-75 focus:outline-none`}
       onClick={!disabled ? onClick : undefined}
       {...rest}
     >
