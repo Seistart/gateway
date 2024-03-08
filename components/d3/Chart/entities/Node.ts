@@ -55,6 +55,7 @@ export const createNodeScales = function (data: NodeInfo[]) {
       projectNodeLabelSizeScale.set(nodeData[0])
       projectNodeStrengthScale.set(nodeData[0])
     },
+    // TODO: fix because unused
     updateScales: function () {
       this.project.nodeSize = projectNodeSizeScale.result()
       this.project.nodeStrength = projectNodeStrengthScale.result()
