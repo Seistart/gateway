@@ -3,7 +3,7 @@ import { appMetadata } from "@/config/meteada.config"
 import { getAllProjectsAction } from "@/server-actions/projects/projects.actions"
 import { Metadata } from "next"
 
-export const revalidate = 1
+export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
   ...appMetadata.projects,

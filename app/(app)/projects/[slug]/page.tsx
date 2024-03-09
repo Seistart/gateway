@@ -1,5 +1,7 @@
 import { getProjectBySlugAction } from "@/server-actions/projects/projects.actions"
 
+export const dynamic = "force-dynamic"
+
 export async function generateMetadata({
   params,
 }: {
