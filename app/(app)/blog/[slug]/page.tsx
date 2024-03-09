@@ -1,11 +1,11 @@
 import { getBlogPostByName, getSortedBlogPosts } from "@/blogs/blogs.utils"
 import { MDX } from "@/components/markdown/mdx"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { notFound } from "next/navigation"
+import { Content } from "./content"
 
 const getBlogPost = async (slug: string) => {
   const blogPost = await getBlogPostByName(slug)
+
   if (!blogPost) {
     notFound()
   }
@@ -40,11 +40,7 @@ export default async function BlogPost({
   const { markdown } = await getBlogPost(params.slug)
   return (
     <>
-      <Link href="/blog">
-        <Button variant="link" className="mb-4 pl-0 text-lg">
-          Back
-        </Button>
-      </Link>
+      <Content />
       <MDX markdown={markdown}></MDX>
     </>
   )
