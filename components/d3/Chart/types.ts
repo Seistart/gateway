@@ -1,7 +1,5 @@
 import type {
   BaseType,
-  ForceCollide,
-  ForceManyBody,
   Selection,
   SimulationNodeDatum,
   ValueFn,
@@ -101,8 +99,7 @@ export type MapEntityToColorFn = (
 // Simulation
 export type CreateSimulationFn = (
   simulationNodeData: NodeDatum[],
-  nodeForce: ForceManyBody<NodeDatum>,
-  collideForce: ForceCollide<NodeDatum>
+  minimalIterations?: boolean
 ) => Simulation
 export type Simulation = d3.Simulation<NodeDatum, undefined>
 

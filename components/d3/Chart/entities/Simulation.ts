@@ -70,18 +70,17 @@ function forceCluster(nodes: NodeDatum[]) {
 
 export const createSimulation: CreateSimulationFn = function (
   simulationNodeData,
-  nodeForce,
-  collideForce
+  minimalIterations?: boolean
 ) {
   const simulation: Simulation = forceSimulation<NodeDatum>(simulationNodeData)
-    // .velocityDecay(INITIAL_VELOCITY_DECAY)
-    // .alphaMin(ALPHA_MIN)
-    .alphaDecay(1 - Math.pow(ALPHA_MIN, 1 / INITIAL_ALPHA_AIMED_ITERATIONS))
-    .force("charge", nodeForce)
-    .force("collide", collideForce)
     .force("cluster", forceCluster(simulationNodeData))
-    .on("tick", ticked)
-    .on("end", end)
+    .alphaDecay(
+      1 -
+        Math.pow(
+          ALPHA_MIN,
+          1 / (minimalIterations ? 1 : INITIAL_ALPHA_AIMED_ITERATIONS)
+        )
+    )
 
   return simulation
 }

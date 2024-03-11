@@ -36,7 +36,7 @@ export function getD3LocalStorage(key: string, type: "NODE") {
 }
 
 // storage hash node en link ids
-export const generateStorageKey = function (ids: string[]) {
+export const generateStorageKey = function (ids: number[]) {
   const key = ids.reduce((acc, key) => `${acc}${key}`, "")
   const sha256Hash = CryptoJS.SHA256(key).toString()
 

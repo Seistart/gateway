@@ -15,11 +15,9 @@ import {
 } from "./entities/Node"
 import { createSimulation } from "./entities/Simulation"
 import { createDefs, createNodeGroup, createStage } from "./entities/Stage"
-import { ForceGraph } from "./ForceGraph"
+import { ForceGraph, ForceGraphInstance } from "./ForceGraph"
 import type { RelationChartManagerReturnType } from "./hooks/useRelationChartManager"
 import { ChartData } from "./types"
-
-type ForceGraphInstance = ReturnType<typeof ForceGraph>
 
 export type Props = HTMLAttributes<HTMLDivElement> & {
   data: ChartData
@@ -29,15 +27,16 @@ export type Props = HTMLAttributes<HTMLDivElement> & {
 export const Chart = memo<Props>(
   ({ data, chartManager, ...rest }) => {
     const container = useRef<HTMLDivElement | null>(null)
-    const chart = useRef<ForceGraphInstance | null>(null)
+    const isBusy = useRef<boolean>(false)
     const invalidationTrigger = useRef<(() => void) | null>(null)
 
     useEffect(() => {
       const currentContainer = container.current
       let _graph: ForceGraphInstance | null = null
       // Mount
-      if (currentContainer && !chart.current) {
-        _graph = ForceGraph(data, {
+      if (currentContainer && !isBusy.current) {
+        isBusy.current = true
+        ForceGraph(data, {
           // Injectables
           createCanvas,
           createMask,
@@ -53,32 +52,36 @@ export const Chart = memo<Props>(
           generateMaskColor,
           mapEntityToColor,
 
+          // Callbacks
+          onReady: (graph: ForceGraphInstance) => {
+            _graph = graph
+
+            const canvas = graph.canvas
+            const canvasMask = graph.canvasMask
+            const stage = graph.stage
+
+            canvas && currentContainer.appendChild(canvas)
+            canvasMask && currentContainer.appendChild(canvasMask)
+            stage && currentContainer.appendChild(stage)
+
+            // Init chart state with chart internals
+            const { init } = chartManager
+            init({
+              graph,
+            })
+          },
+
           // Termination
           invalidation: new Promise((resolve) => {
             // Store the resolve function for when the component unmounts to stop the simulation
             invalidationTrigger.current = resolve
           }),
         })
-
-        chart.current = _graph
-
-        const canvas = chart.current.canvas
-        const canvasMask = chart.current.canvasMask
-        const stage = chart.current.stage
-
-        canvas && currentContainer.appendChild(canvas)
-        canvasMask && currentContainer.appendChild(canvasMask)
-        stage && currentContainer.appendChild(stage)
-
-        // Init chart state with chart internals
-        const { init } = chartManager
-        init({
-          graph: _graph,
-        })
       }
 
       // Unmount
       const invTrigger = invalidationTrigger.current
+      const { destroy } = chartManager
 
       return () => {
         if (invTrigger) {
@@ -88,14 +91,13 @@ export const Chart = memo<Props>(
             const canvasMask = _graph.canvasMask
             const stage = _graph.stage
 
-            const { destroy } = chartManager
             destroy()
 
             canvas && currentContainer.removeChild(canvas)
             canvasMask && currentContainer.removeChild(canvasMask)
             stage && currentContainer.removeChild(stage)
           }
-          chart.current = null
+          isBusy.current = false
         }
       }
     })

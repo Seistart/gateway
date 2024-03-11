@@ -54,8 +54,8 @@ export const createNodeScales = function (data: NodeInfo[]) {
     setNodeData: function (nodeData: NodeDatum[]) {
       projectNodeLabelSizeScale.set(nodeData[0])
       projectNodeStrengthScale.set(nodeData[0])
+      this.updateScales()
     },
-    // TODO: fix because unused
     updateScales: function () {
       this.project.nodeSize = projectNodeSizeScale.result()
       this.project.nodeStrength = projectNodeStrengthScale.result()
@@ -193,8 +193,8 @@ export const createSimulationNodeData: CreateSimulationNodeDataFn = function (
   nodeData.forEach((datum) => {
     if (!datum.scales) {
       throw new Error("Node scales have not been defined")
+    } else {
     }
-
     datum.scales.setNodeData(nodeData)
   })
 
@@ -503,22 +503,23 @@ export const nodeLabelSize: NodeLabelSizeFn = function (datum) {
 }
 
 export const nodesToLocalStorage = function (data: NodeDatum[]) {
+  const ids = data.map((entry) => entry.info.id, [])
+  const key = generateStorageKey(ids)
+
   const dataMap = data.reduce<Record<string, NodeDatum["state"]>>(
     (acc, entry) => {
-      acc[`${entry.info.id}`] = entry.state
+      acc[entry.info.id] = entry.state
       return acc
     },
     {}
   )
-  const ids = Object.keys(dataMap).sort()
-  const key = generateStorageKey(ids)
 
   setD3LocalStorage(key, "NODE", dataMap)
 }
 
 export const getNodesFromLocalStorage = function (data: NodeInfo[]) {
   // check if exist in local storage then return localstorage otherwise default state
-  const ids = data.map((entry) => `${entry.id}`, []).sort()
+  const ids = data.map((entry) => entry.id, [])
   const key = generateStorageKey(ids)
 
   return getD3LocalStorage(key, "NODE")
