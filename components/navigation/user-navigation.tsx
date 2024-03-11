@@ -1,6 +1,7 @@
 "use client"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
+import { push } from "@socialgouv/matomo-next"
 import { ThemeRadioGroup } from "../theme/theme-radio-group"
 import { Button } from "../ui/button"
 import {
@@ -21,7 +22,12 @@ export const UserNavigation = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="h-10 w-10 rounded-full" size="icon" variant="ghost">
+        <Button
+          className="h-10 w-10 rounded-full"
+          size="icon"
+          variant="ghost"
+          onClick={() => push(["trackEvent", "user", "user profile click"])}
+        >
           <Avatar>
             <AvatarImage
               src="https://github.com/shadcn.png"

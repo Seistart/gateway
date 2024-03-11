@@ -1,15 +1,8 @@
 "use client"
 
 import Script from "next/script"
-import { useEffect } from "react"
-
-import { init } from "@socialgouv/matomo-next"
 
 export default function Matomo() {
-  useEffect(() => {
-    init({ url: process.env.MATOMO_URL!, siteId: process.env.MATOMO_SITE_ID! })
-  }, [])
-
   return (
     <Script id="matomo" strategy="afterInteractive">
       {`
