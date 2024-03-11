@@ -1,45 +1,61 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Development
-
-# Controls when the workflow will run
+name: Development deployment from Github to AWS
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [development]
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches:
+      - development
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  deploy-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Latest Repo
+        uses: actions/checkout@master
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: siddharth9903/seistart:latest
+
+  deploy-docker-image-to-aws-eb:
+    needs: deploy-docker-image
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [20.10.0]
-
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v4
+      - name: Get timestamp
+        uses: gerred/current-time@v1.0.0
+        id: current-time
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Next.js app
-        run: npm run build
-
-      - name: Generate deployment package
-        run: zip -r deploy.zip '.next' 'package.json' 'public'
-
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v22
+      - name: Run string replace
+        uses: frabert/replace-string-action@v2
+        id: format-time
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: Gateway
-          environment_name: next-blog-dev
-          region: ap-south-1
-          version_label: ver-${{ github.sha }}
-          deployment_package: deploy.zip
-          use_existing_version_if_available: true
+          pattern: '[:\.]+'
+          string: "${{ steps.current-time.outputs.time }}"
+          replace-with: "-"
+          flags: "g"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-skip-session-tagging: true
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          version_label="$GITHUB_SHA-${{ steps.format-time.outputs.outputs.replaced }}"
+          aws elasticbeanstalk create-application-version --application-name Gateway --version-label "$version_label" --source-bundle S3Bucket=docker-login-bucket-seistart,S3Key=Dockerrun.aws.json
+          aws elasticbeanstalk update-environment --application-name Gateway --environment-name seistart-docker-dev --version-label "$version_label"

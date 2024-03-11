@@ -1,0 +1,18 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Authentication": {
+    "bucket": "docker-login-bucket-seistart",
+    "key": "dockercfg"
+  },
+  "Image": {
+    "Name": "siddharth9903/seistart:latest",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 3000,
+      "HostPort": 80
+    }
+  ],
+  "Logging": "/var/log/nginx"
+}
