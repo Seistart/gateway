@@ -2,11 +2,9 @@ import { useEffect, useRef } from "react"
 
 import { FaCircle } from "react-icons/fa"
 import { LEGEND } from "../constants"
-import { LegendButton } from "./LegendButton"
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   show: boolean
-  onClickLegendButton: () => void
 }
 
 const getTypeColor = (type: "Gamefi" | "Finance" | "NFT" | "Dao") => {
@@ -22,7 +20,7 @@ const getTypeColor = (type: "Gamefi" | "Finance" | "NFT" | "Dao") => {
   }
 }
 
-export const Legend = ({ onClickLegendButton, show, ...rest }: Props) => {
+export const Legend = ({ show, ...rest }: Props) => {
   const contentRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -33,11 +31,14 @@ export const Legend = ({ onClickLegendButton, show, ...rest }: Props) => {
 
   return (
     <>
+      {/* <div
+        className={`z-2 transition-padding absolute left-0 flex h-60 flex-1 flex-col overflow-hidden bg-white py-5 transition duration-500 ease-in-out ${show ? "w-[10rem] px-5 " : "w-0 px-5"} `}
+      > */}
       <div
-        className={`flex h-60 flex-col bg-white py-5 transition-all duration-500 ease-out ${show ? "w-34 px-5 " : "w-0 px-0"} absolute left-0 z-20 flex flex-1 overflow-hidden`}
+        className={`mt-6 bg-white py-3 transition-all duration-300 ease-out ${show ? "max-w-[10rem] p-3" : "max-w-0"} relative right-0 z-20 flex h-[14rem] flex-1 overflow-hidden`}
       >
         <div className="h-4 text-gray-900" ref={contentRef}>
-          <h4 className="font-serif mt-6 text-base leading-5 first:mt-0">
+          <h4 className="font-serif mt-6 w-[6rem] text-base leading-5 first:mt-0">
             {LEGEND.NODES}
           </h4>
           <ul className="mt-1 flex flex-col gap-2 p-0 text-sm first:mt-0">
@@ -48,7 +49,6 @@ export const Legend = ({ onClickLegendButton, show, ...rest }: Props) => {
           </ul>
         </div>
       </div>
-      <LegendButton open={show} onClick={onClickLegendButton}></LegendButton>
     </>
   )
 }

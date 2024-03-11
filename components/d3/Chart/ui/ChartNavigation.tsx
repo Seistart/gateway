@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { useRelationChartState } from "../hooks/useRelationChartState"
 import { CanvasCursorMode } from "../types"
@@ -14,13 +14,23 @@ import {
   ZoomInIcon,
   ZoomOutIcon,
 } from "@radix-ui/react-icons"
+import { LuTags } from "react-icons/lu"
 import { TOnStepChangeParams } from "./ChartNavigationSlider"
 
-export const ChartNavigation: FC = () => {
+type Props = {
+  onClickLegendButton: any
+  show: boolean
+}
+
+export const ChartNavigation = ({
+  onClickLegendButton,
+  show,
+  ...rest
+}: Props) => {
   const { chart, cursor, zoom, history, ready } = useRelationChartState()
   const [canReset, setCanReset] = useState(false)
   const { mode } = cursor
-  const { minZoomLevel, maxZoomLevel, currentZoomLevel } = zoom
+  const { currentZoomLevel } = zoom
   const { canUndo, length: historyLength } = history
 
   // Zoom state
@@ -116,11 +126,19 @@ export const ChartNavigation: FC = () => {
     <div className="absolute bottom-6 right-6 z-30 flex h-[23rem] w-[3rem] flex-col items-center justify-between bg-white py-2 shadow-md">
       <Button
         variant={"navigation"}
+        selected={show}
+        size={"icon"}
+        onClick={onClickLegendButton}
+      >
+        <LuTags className="h-8 w-5" />
+      </Button>
+      <Button
+        variant={"navigation"}
         selected={mode === "move"}
         size={"icon"}
         onClick={setCursorModeMoveHandler}
       >
-        <MoveIcon className="h-5 w-5" />
+        <MoveIcon className="h-8 w-5" />
       </Button>
       <Button
         variant={"navigation"}
@@ -128,7 +146,7 @@ export const ChartNavigation: FC = () => {
         size={"icon"}
         onClick={setCursorModeSelectHandler}
       >
-        <CursorArrowIcon className="h-4 w-4" />
+        <CursorArrowIcon className="h-8 w-4" />
       </Button>
       <Button
         variant={"navigation"}
@@ -136,7 +154,7 @@ export const ChartNavigation: FC = () => {
         size={"icon"}
         onClick={zoomIn}
       >
-        <ZoomInIcon className="h-5 w-5" />
+        <ZoomInIcon className="h-8 w-5" />
       </Button>
       <Button
         variant={"navigation"}
@@ -144,7 +162,7 @@ export const ChartNavigation: FC = () => {
         size={"icon"}
         onClick={zoomOut}
       >
-        <ZoomOutIcon className="h-5 w-5" />
+        <ZoomOutIcon className="h-8 w-5" />
       </Button>
       <Button
         variant={"navigation"}
@@ -152,7 +170,7 @@ export const ChartNavigation: FC = () => {
         size={"icon"}
         onClick={resetChart}
       >
-        <ResetIcon className="h-4 w-4" />
+        <ResetIcon className="h-8 w-4" />
       </Button>
       <Button
         variant={"navigation"}
@@ -160,7 +178,7 @@ export const ChartNavigation: FC = () => {
         size={"icon"}
         disabled={!canUndo}
       >
-        <ReloadIcon className="h-4 w-4" />
+        <ReloadIcon className="h-8 w-4" />
       </Button>
     </div>
   )

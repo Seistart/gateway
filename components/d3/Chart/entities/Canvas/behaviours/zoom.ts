@@ -228,7 +228,7 @@ export const getZoomLevelRange = function (
   selection: CanvasSelection = select<HTMLCanvasElement, CanvasDatum>("#canvas")
 ) {
   if (!selection) {
-    return
+    return [30, 30]
   }
 
   const canvasDatum = selection.datum()
