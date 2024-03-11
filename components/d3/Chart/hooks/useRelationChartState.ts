@@ -1,9 +1,8 @@
 import { create } from "zustand"
 
-import type { ForceGraph } from "../ForceGraph"
+import type { ForceGraphInstance } from "../ForceGraph"
 import { CanvasCursorMode, NodeDatum } from "../types"
 
-type ForceGraphInstance = ReturnType<typeof ForceGraph>
 export type ToolTipEntity = NodeDatum | null
 export type ToolTipEntityPosition = {
   x: number | undefined

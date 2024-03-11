@@ -170,7 +170,7 @@ export type NodeDatumMapKey = keyof NodeDatumMap
 export type NodeDatumType<Type extends NodeDatumMapKey> = NodeDatumMap[Type]
 export type CreateSimulationNodeDataFn = (
   data: NodeInfo[],
-  localStorageData?: Record<string, NodeDatumState> | null
+  preparedStateMap?: Record<string, NodeDatumState> | null
 ) => NodeDatum[]
 export type CreateNodesOptions = {
   onClick?: (event: MouseEvent, datum: NodeDatum, element: Element) => void

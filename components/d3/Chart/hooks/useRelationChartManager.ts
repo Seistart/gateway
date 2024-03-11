@@ -59,14 +59,12 @@ import {
   tickSimulationActionBackwardsOnly,
   tickSimulationActionForwardsOnly,
 } from "../entities/Simulation/actions"
-import type { ForceGraph } from "../ForceGraph"
+import type { ForceGraphInstance } from "../ForceGraph"
 import { CanvasCursorMode, CanvasDatum, NodeDatum } from "../types"
 import { isNodeDatum } from "../utils/node"
 
 import { useRelationChartState } from "./useRelationChartState"
 import { useSpaceMove } from "./useSpaceMove"
-
-type ForceGraphInstance = ReturnType<typeof ForceGraph>
 
 export type InitialisationOptions = {
   graph: ForceGraphInstance
@@ -94,9 +92,13 @@ export const useRelationChartManager = function () {
   const canvasRectRef = useRef<DOMRect | null>(null)
   const timerRef = useRef<Timer | null>(null)
 
+  const clearDrawTimer = useCallback(() => {
+    timerRef.current?.stop()
+  }, [])
+
   const resetDrawTimer = useCallback(
-    (chart: ForceGraphInstance) => {
-      timerRef.current?.stop()
+    (chart: ForceGraphInstance | null) => {
+      clearDrawTimer()
 
       if (!chart || !ready || !canvasRectRef.current) {
         return
@@ -106,15 +108,21 @@ export const useRelationChartManager = function () {
       const canvasSelection = chart.getCanvasSelection()
       const canvasMaskSelection = chart.getCanvasMaskSelection()
 
-      timerRef.current = timer(function animate() {
+      function animate(time: number) {
         draw(canvasSelection, canvasMaskSelection, {
           height,
           width,
           performanceMode,
         })
-      })
+      }
+
+      if (timerRef.current) {
+        timerRef.current.restart(animate)
+      } else {
+        timerRef.current = timer(animate)
+      }
     },
-    [ready, performanceMode]
+    [clearDrawTimer, ready, performanceMode]
   )
 
   // Initialization and upkeep
@@ -150,6 +158,7 @@ export const useRelationChartManager = function () {
 
   const destroy = useCallback(
     function () {
+      clearDrawTimer()
       setReady(false)
 
       const canvasSelection = chart?.getCanvasSelection()
@@ -167,7 +176,7 @@ export const useRelationChartManager = function () {
         setChart(null)
       }
     },
-    [chart, setChart, setReady]
+    [chart, setChart, setReady, clearDrawTimer]
   )
 
   const updateSelectedNodes = useCallback(() => {
