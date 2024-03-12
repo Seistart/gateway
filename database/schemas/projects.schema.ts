@@ -13,7 +13,42 @@ import {
 import { createSelectSchema } from "drizzle-zod"
 import { z } from "zod"
 import { users } from "./auth.schema"
-export const stage = pgEnum("stage", ["dev", "test", "main", "none"])
+export const stage = pgEnum("stage", [
+  "Mainnet",
+  "Testnet",
+  "Devnet",
+  "Local/Private",
+])
+
+export const projectTagSchema = z.enum([
+  "AI",
+  "Community",
+  "DeFi",
+  "Developer Tools",
+  "Education",
+  "Exchanges (DEX)",
+  "Gambling",
+  "Gaming",
+  "Governance",
+  "Identity",
+  "Infrastructure",
+  "Insurance",
+  "Launchpad",
+  "Lending & Borrowing",
+  "Marketplaces",
+  "Meme Coins",
+  "Metaverse",
+  "NFT",
+  "Payment",
+  "Social",
+  "Stablecoin",
+  "Tools",
+  "Wallets",
+])
+export type projectTag = z.infer<typeof projectTagSchema>
+
+// Convert the z.enum to an array
+export const tagsList = projectTagSchema.options
 
 export const ProjectsTable = pgTable("projects", {
   id: serial("id").primaryKey(),
@@ -26,12 +61,13 @@ export const ProjectsTable = pgTable("projects", {
   isLive: boolean("is_live").notNull().default(false),
   stage: stage("none").notNull(),
   description: text("description").notNull(),
+  communitySize: integer("community_size"),
+  projectType: varchar("project_type", { length: 255 }),
   website: varchar("website", { length: 255 }),
   whitepaper: varchar("whitepaper", { length: 255 }),
   twitter: varchar("twitter", { length: 255 }),
   discord: varchar("discord", { length: 255 }),
   telegram: varchar("telegram", { length: 255 }),
-  wechat: varchar("wechat", { length: 255 }),
   contactName: varchar("contact_name", { length: 255 }),
   contactEmail: varchar("contact_email", { length: 255 }),
   userId: text("user_id")
@@ -51,6 +87,12 @@ const BaseSchema = createSelectSchema(ProjectsTable).omit(timestamps)
 
 const ProjectWithTagsSchema = BaseSchema.extend({
   tags: z.array(z.string()).max(3),
+  website: z.string().url(),
+  whitepaper: z.string().url(),
+  twitter: z.string().url(),
+  discord: z.string().url(),
+  telegram: z.string().url(),
+  contactEmail: z.string().email(),
 })
 
 export const ProjectsResponseSchema = z.array(ProjectWithTagsSchema)

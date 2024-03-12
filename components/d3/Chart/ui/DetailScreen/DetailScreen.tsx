@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Project } from "@/database/schemas/projects.schema"
 import { Cross1Icon } from "@radix-ui/react-icons"
 import * as React from "react"
 import { useRelationChartState } from "../../hooks/useRelationChartState"
-import { NodeInfo } from "../../types"
 
 export type TProps = {
-  nodes: NodeInfo[]
+  nodes: Project[]
 }
 
 export const DetailScreen = ({ nodes }: TProps) => {
@@ -56,7 +56,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
         >
           <Cross1Icon className="h4 w-4" />
         </Button>
-        {selectedItems.map((item: NodeInfo) => (
+        {selectedItems.map((item: Project) => (
           <div key={item.id}>
             <div className="flex items-center justify-between">
               <div className="flex flex-col">
@@ -85,12 +85,14 @@ export const DetailScreen = ({ nodes }: TProps) => {
             <div>
               <span className="text-md text-gray-500">Labels</span>
               <div>
-                <Badge
-                  variant="outline"
-                  className="bg-orange-200 text-orange-600"
-                >
-                  {item.tag}
-                </Badge>
+                {item.tags.map((label: any) => (
+                  <Badge
+                    variant="outline"
+                    className="bg-orange-200 text-orange-600"
+                  >
+                    {label}
+                  </Badge>
+                ))}
               </div>
             </div>
             <div className="mt-4">
@@ -98,10 +100,13 @@ export const DetailScreen = ({ nodes }: TProps) => {
                 <strong>Id:</strong> {item.id}
               </p>
               <p className="text-sm text-gray-600">
+                <strong>Type:</strong> {item.projectType}
+              </p>
+              <p className="text-sm text-gray-600">
                 <strong>Name:</strong> {item.name}
               </p>
               <p className="text-sm text-gray-600">
-                <strong>Marketcap:</strong> {item.marketCap}
+                <strong>Community size:</strong> {item.communitySize}
               </p>
               {/* Add more node details here */}
             </div>

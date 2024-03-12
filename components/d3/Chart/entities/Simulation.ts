@@ -8,6 +8,8 @@ import type {
   Simulation,
 } from "../types"
 
+import { projectTag } from "@/database/schemas/projects.schema"
+import { projectTagSchema } from "@/utils/colors.utils"
 import {
   getZoomBoundaries,
   updateCanvasZoomScaleMax,
@@ -22,12 +24,11 @@ const INITIAL_ALPHA_AIMED_ITERATIONS = 250
 const INTERACTION_ALPHA_AIMED_ITERATIONS = 30
 const INTERACTION_VELOCITY_DECAY = 0.4
 
-const nodeTags = new Map([
-  ["DeFi", 1],
-  ["NFT", 2],
-  ["DAO", 3],
-  ["GameFi", 4],
-])
+// Convert the z.enum to an array of its values
+const tags = projectTagSchema.options
+
+// Create the Map with each tag associated with a unique integer
+const nodeTags = new Map(tags.map((tag, index) => [tag, index + 1]))
 
 function forceCluster(nodes: NodeDatum[]) {
   const clusterStrength = 0.3 // Adjust the strength as needed
@@ -38,12 +39,15 @@ function forceCluster(nodes: NodeDatum[]) {
       new Map()
     nodes.forEach((node) => {
       const cluster = centroids.get(
-        Array.from(nodeTags.keys()).indexOf(node.info.tag)
+        Array.from(nodeTags.keys()).indexOf(node.info.tag as projectTag)
       ) || { x: 0, y: 0, count: 0 }
       cluster.x += node.x || 0
       cluster.y += node.y || 0
       cluster.count += 1
-      centroids.set(Array.from(nodeTags.keys()).indexOf(node.info.tag), cluster)
+      centroids.set(
+        Array.from(nodeTags.keys()).indexOf(node.info.tag as projectTag),
+        cluster
+      )
     })
 
     centroids.forEach((centroid) => {
@@ -58,7 +62,7 @@ function forceCluster(nodes: NodeDatum[]) {
     const centroids = calculateCentroids()
     nodes.forEach((node) => {
       const centroid = centroids.get(
-        Array.from(nodeTags.keys()).indexOf(node.info.tag)
+        Array.from(nodeTags.keys()).indexOf(node.info.tag as projectTag)
       )
       if (centroid) {
         node.vx && (node.vx += (centroid.x - node.x!) * clusterStrength * alpha)

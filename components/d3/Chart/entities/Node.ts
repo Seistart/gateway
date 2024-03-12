@@ -1,8 +1,10 @@
+import { projectTag } from "@/database/schemas/projects.schema"
 import { map } from "d3-array"
 import type { BaseType, Selection } from "d3-selection"
 import { select } from "d3-selection"
 import { zoom } from "d3-zoom"
 
+import { getColor } from "@/utils/colors.utils"
 import type {
   CanvasDatum,
   CreateNodesFn,
@@ -402,72 +404,15 @@ export const nodeFill: NodeValueFn<BaseType, string> = function (datum) {
   if (isNodeDatumWithInfoType(datum, "project")) {
     const { info, state } = datum
 
-    if (info.tag === "Gamefi") {
-      if (isHovered) {
-        if (state.selected) {
-          return "#5c0000"
-        }
-        return "#8b0000"
-      } else {
-        if (state.selected) {
-          return "#8b0000"
-        }
-        return "#d0021b"
-      }
-    }
+    const tagColor = getColor(info.tag as projectTag)
 
-    if (info.tag === "DAO") {
-      if (isHovered) {
-        if (state.selected) {
-          return "#ffb805"
-        }
-        return "#ffa505"
-      } else {
-        if (state.selected) {
-          return "#ffc905"
-        }
-        return "#ffa505"
-      }
-    }
-
-    if (info.tag === "NFT") {
-      if (isHovered) {
-        if (state.selected) {
-          return "#ff0000"
-        }
-        return "#a70000"
-      } else {
-        if (state.selected) {
-          return "#ff5252"
-        }
-        return "#a70000"
-      }
-    }
-
-    if (info.tag === "DeFi") {
-      if (isHovered) {
-        if (state.selected) {
-          return "#77ab59"
-        }
-        return "#36802d"
-      } else {
-        if (state.selected) {
-          return "#234d20"
-        }
-        return "#36802d"
-      }
-    }
-
-    if (isHovered) {
+    if (tagColor) {
       if (state.selected) {
-        return "#00485e"
+        return tagColor.darkColor
       }
-      return "#006e90"
+      return tagColor.lightColor
     } else {
-      if (state.selected) {
-        return "#006e90"
-      }
-      return "#029ecf"
+      return "#8b0000"
     }
   } else {
     return unexpectedType(datum)

@@ -1,5 +1,5 @@
 {
-  "id": "6cac2c91-de91-447b-a6ac-621a414a846c",
+  "id": "ddebb7e5-6179-4815-bcc8-b821bc8d049a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -146,6 +146,18 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "community_size": {
+          "name": "community_size",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "project_type": {
+          "name": "project_type",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
         },
         "website": {
           "name": "website",
@@ -326,10 +338,10 @@
     "stage": {
       "name": "stage",
       "values": {
-        "dev": "dev",
-        "test": "test",
-        "main": "main",
-        "none": "none"
+        "Mainnet": "Mainnet",
+        "Testnet": "Testnet",
+        "Devnet": "Devnet",
+        "Local/Private": "Local/Private"
       }
     }
   },

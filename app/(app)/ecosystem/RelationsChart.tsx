@@ -1,11 +1,12 @@
 "use client"
 
-import { DetailScreen, NodeInfo, useRelationChartState } from "@/components/d3"
+import { DetailScreen, useRelationChartState } from "@/components/d3"
+import { Project } from "@/database/schemas/projects.schema"
 
 import ChartWrapper from "./ChartWrapper"
 
 export type TProps = {
-  nodes: NodeInfo[]
+  nodes: Project[]
   loading: boolean
 }
 

@@ -12,9 +12,8 @@ export interface NodeInfo {
   name: string
   type: string
   tag: string
-  marketCap: number
+  labels: string[]
   communitySize: number
-  projectImageUrl: string
   x?: number
   y?: number
   radius?: number

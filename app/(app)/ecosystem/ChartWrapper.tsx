@@ -3,15 +3,15 @@
 import {
   ChartContainer,
   ChartNavigation,
-  NodeInfo,
   useRelationChartState,
 } from "@/components/d3"
 import Legend from "@/components/d3/Chart/ui/Legend"
+import { Project } from "@/database/schemas/projects.schema"
 import * as React from "react"
 import { ChartSkeleton } from "./ChartSkeleton"
 
 export type Props = {
-  nodes: NodeInfo[]
+  nodes: Project[]
   loading: boolean
 }
 

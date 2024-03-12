@@ -2,13 +2,14 @@
 
 import { HTMLAttributes, useEffect, useMemo } from "react"
 
+import { Project } from "@/database/schemas/projects.schema"
 import { Chart } from "./Chart"
 import { useRelationChartState } from "./hooks"
 import { useRelationChartManager } from "./hooks/useRelationChartManager"
 import { ChartData, NodeInfo } from "./types"
 
 export type Props = HTMLAttributes<HTMLDivElement> & {
-  nodes: NodeInfo[]
+  nodes: Project[]
   loading: boolean
 }
 
@@ -29,11 +30,10 @@ export const ChartContainer = ({
       acc.push({
         id: entry.id,
         type: "project",
-        tag: entry.tag,
+        tag: entry.projectType!,
+        labels: entry.tags,
         name: entry.name,
-        marketCap: entry.marketCap,
-        communitySize: entry.communitySize,
-        projectImageUrl: entry.projectImageUrl,
+        communitySize: entry.communitySize!,
       })
       return acc
     }, [])
