@@ -1,53 +1,39 @@
 import {
   InsertProjectSchema,
   ProjectsResponseSchema,
+  projectTagSchema,
 } from "@/database/schemas/projects.schema"
 import { getMockFn } from "@/utils/mock.utils"
 
-const mockTags = [
-  "AI",
-  "Community",
-  "DeFi",
-  "Developer Tools",
-  "Education",
-  "Exchanges (DEX)",
-  "Gambling",
-  "Gaming",
-  "Governance",
-  "Identity",
-  "Infrastructure",
-  "Insurance",
-  "Launchpad",
-  "Lending & Borrowing",
-  "Marketplaces",
-  "Meme Coins",
-  "Metaverse",
-  "NFT",
-  "Payment",
-  "Social",
-  "Stablecoin",
-  "Tools",
-  "Wallets",
-]
+// Convert the z.enum to an array
+const tags = projectTagSchema.options
 
-const generateTagsWithNFT = (existingTags = [] as string[]) => {
-  return Array.from(
-    new Set(
-      existingTags.map(
-        (_) => mockTags[Math.floor(Math.random() * mockTags.length)]
-      )
-    )
-  )
+const generateTags = (existingTags = [] as string[], projectType: string) => {
+  const allExcludedTags = [...existingTags, projectType]
+
+  const filteredTags = tags.filter((tag) => !allExcludedTags.includes(tag))
+
+  const shuffledTags = filteredTags.sort(() => 0.5 - Math.random())
+
+  return shuffledTags.slice(0, 2)
 }
+
 export const getMockProjects = getMockFn(ProjectsResponseSchema)
 
-export const mockProjects = getMockProjects({
-  length: 5,
-  overrideFn: (project) => {
-    const newTags = generateTagsWithNFT(project.tags)
-    return { ...project, tags: newTags }
-  },
-})
+export const mockProjects = (size: number) => {
+  return getMockProjects({
+    length: size,
+    overrideFn: (project) => {
+      const _projectType = tags[Math.floor(Math.random() * tags.length)]
+      return {
+        ...project,
+        projectType: _projectType,
+        tags: [_projectType, ...generateTags([], _projectType)],
+        communitySize: Math.round(Math.random() * 100000),
+      }
+    },
+  })
+}
 
 export const getMockProject = getMockFn(InsertProjectSchema)
 export const mockProject = getMockProject({

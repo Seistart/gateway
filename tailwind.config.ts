@@ -10,11 +10,19 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      body: ["space-grotesk", "ui-sans-serif", "system-ui"],
+    },
     container: {
       padding: "1rem",
       screens: {},
     },
     extend: {
+      spacing: {
+        "72": "18rem",
+        "84": "21rem",
+        "96": "24rem",
+      },
       animation: {
         "infinite-scroll": "infinite-scroll 25s linear infinite",
       },

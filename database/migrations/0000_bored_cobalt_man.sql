@@ -1,5 +1,5 @@
 DO $$ BEGIN
- CREATE TYPE "stage" AS ENUM('dev', 'test', 'main', 'none');
+ CREATE TYPE "stage" AS ENUM('Mainnet', 'Testnet', 'Devnet', 'Local/Private');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS "projects" (
 	"is_live" boolean DEFAULT false NOT NULL,
 	"none" "stage" NOT NULL,
 	"description" text NOT NULL,
+	"community_size" integer,
+	"project_type" varchar(255),
 	"website" varchar(255),
 	"whitepaper" varchar(255),
 	"twitter" varchar(255),
