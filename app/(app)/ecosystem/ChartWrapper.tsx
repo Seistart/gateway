@@ -37,7 +37,7 @@ const ChartWrapper = ({ nodes, loading }: Props) => {
         nodes={nodes}
         loading={loading}
       />
-      <Legend show={showLegend} />
+      {ready && <Legend show={showLegend} nodes={nodes} />}
       <ChartNavigation
         show={showLegend}
         onClickLegendButton={onClickLegendButtonHandler}

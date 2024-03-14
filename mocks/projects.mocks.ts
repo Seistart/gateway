@@ -8,10 +8,14 @@ import { getMockFn } from "@/utils/mock.utils"
 // Convert the z.enum to an array
 const tags = projectTagSchema.options
 
-const generateTagsWithNFT = (existingTags = [] as string[]) => {
-  return Array.from(
-    new Set(existingTags.map((_) => tags[Math.floor(Math.random() * 3)]))
-  )
+const generateTags = (existingTags = [] as string[], projectType: string) => {
+  const allExcludedTags = [...existingTags, projectType]
+
+  const filteredTags = tags.filter((tag) => !allExcludedTags.includes(tag))
+
+  const shuffledTags = filteredTags.sort(() => 0.5 - Math.random())
+
+  return shuffledTags.slice(0, 2)
 }
 
 export const getMockProjects = getMockFn(ProjectsResponseSchema)
@@ -20,10 +24,11 @@ export const mockProjects = (size: number) => {
   return getMockProjects({
     length: size,
     overrideFn: (project) => {
+      const _projectType = tags[Math.floor(Math.random() * tags.length)]
       return {
         ...project,
-        tags: [tags[Math.floor(Math.random() * tags.length)]],
-        projectType: tags[Math.floor(Math.random() * tags.length)],
+        projectType: _projectType,
+        tags: [_projectType, ...generateTags([], _projectType)],
         communitySize: Math.round(Math.random() * 100000),
       }
     },
