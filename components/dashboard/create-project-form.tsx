@@ -424,9 +424,9 @@ export default function CreateProjectForm({
                         </FormControl>
                         <SelectContent>
                           <SelectItem value="none">N/A</SelectItem>
-                          <SelectItem value="dev">Devnet</SelectItem>
-                          <SelectItem value="test">Testnet</SelectItem>
-                          <SelectItem value="main">Mainnet</SelectItem>
+                          <SelectItem value="Devnet">Devnet</SelectItem>
+                          <SelectItem value="Testnet">Testnet</SelectItem>
+                          <SelectItem value="Mainnet">Mainnet</SelectItem>
                         </SelectContent>
                       </Select>
                       <div className="h-6">
