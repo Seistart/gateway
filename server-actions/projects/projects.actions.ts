@@ -22,7 +22,12 @@ export const createProjectWithTagsAction = async (
 ) => {
   await authGuard()
   const { tags, ...newProject } = newProjectWithTagsParams
-  const payload = NewProjectSchema.parse(newProject)
+  const tempProject = {
+    ...newProject,
+    communitySize: 20000,
+    projectType: "defaultType",
+  }
+  const payload = NewProjectSchema.parse(tempProject)
   const { project } = await createProjectMutation(payload)
   await addTagsToProjectMutation(project.id, tags)
   revalidatePath("/")

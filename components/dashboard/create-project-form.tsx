@@ -94,7 +94,7 @@ export const ProjectFormDataSchema = z.object({
   description: z.string().min(1, {
     message: "Required",
   }),
-  tokenSupply: z.string().optional(),
+  tokenSupply: z.number().optional(),
   tokenName: z.string().optional(),
   website: z.string().optional(),
   whitepaper: z.string().optional(),

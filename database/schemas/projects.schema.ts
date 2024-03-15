@@ -110,6 +110,8 @@ export const NewProjectSchema = InsertProjectSchema.extend({}).omit({
 
 export const NewProjectWithTagsSchema = InsertProjectSchema.extend({
   tags: z.array(z.number()),
+  communitySize: z.number(),
+  projectType: z.string(),
 })
 
 export const updateProjectSchema = BaseSchema.extend({
