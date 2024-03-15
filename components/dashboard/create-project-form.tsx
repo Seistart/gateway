@@ -98,7 +98,7 @@ export const ProjectFormDataSchema = z.object({
   tokenName: z.string().optional(),
   website: z.string().optional(),
   whitepaper: z.string().optional(),
-  stage: z.enum(["dev", "test", "main", "none"]).optional(),
+  stage: z.enum(["Mainnet", "Testnet", "Devnet", "Local/Private"]).optional(),
   releaseDate: z.date().optional().nullable(),
   isLive: z.boolean().optional(),
   twitter: z.string().optional(),
