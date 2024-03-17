@@ -185,6 +185,7 @@ export default function DashboardCreateProjectForm() {
                     placeholder="Token Supply"
                     {...field}
                     value={field.value || ""}
+                    type="number"
                   />
                 </FormControl>
                 <FormDescription>This is the url</FormDescription>

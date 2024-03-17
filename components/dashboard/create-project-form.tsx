@@ -356,9 +356,12 @@ export default function CreateProjectForm({
                           placeholder="Token Supply"
                           {...field}
                           value={field.value || ""}
+                          type="number"
                           onChange={(e) => {
                             const value = e.target.value.replace(/[^\d]/g, "")
-                            field.onChange(value === "" ? undefined : value)
+                            field.onChange(
+                              value === "" ? undefined : parseInt(value)
+                            )
                           }}
                         />
                       </FormControl>
