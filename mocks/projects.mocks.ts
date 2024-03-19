@@ -4,9 +4,11 @@ import {
   projectTagSchema,
 } from "@/database/schemas/projects.schema"
 import { getMockFn } from "@/utils/mock.utils"
+import { faker } from "@faker-js/faker"
 
 // Convert the z.enum to an array
 const tags = projectTagSchema.options
+const seed = 1337 // Ensuring the use of the same seed for consistency
 
 const generateTags = (existingTags = [] as string[], projectType: string) => {
   const allExcludedTags = [...existingTags, projectType]
@@ -23,13 +25,17 @@ export const getMockProjects = getMockFn(ProjectsResponseSchema)
 export const mockProjects = (size: number) => {
   return getMockProjects({
     length: size,
+    seed: seed, // Explicitly setting the seed
     overrideFn: (project) => {
-      const _projectType = tags[Math.floor(Math.random() * tags.length)]
+      const _projectType =
+        tags[faker.number.int({ min: 0, max: tags.length - 1 })]
       return {
         ...project,
         projectType: _projectType,
         tags: [_projectType, ...generateTags([], _projectType)],
-        communitySize: Math.round(Math.random() * 100000),
+        communitySize: faker.number.int({ min: 0, max: 100000 }),
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
       }
     },
   })
