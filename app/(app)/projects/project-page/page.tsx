@@ -1,11 +1,10 @@
-import { DiscordIcon } from "@/components/icons/DiscordIcon"
-import { LiveIcon } from "@/components/icons/LiveIcon"
-import { OfflineIcon } from "@/components/icons/OfflineIcon"
-import { TelegramIcon } from "@/components/icons/TelegramIcon"
 import { getMockProject } from "@/mocks/projects.mocks"
-import { BookOpen, Twitter } from "lucide-react"
+import { TwitterIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { FaDiscord, FaTelegram } from "react-icons/fa"
+import { GoDotFill } from "react-icons/go"
+import { IoBookOutline } from "react-icons/io5"
 import ProjectLinks from "./ProjectLinks"
 
 const tags = [
@@ -77,13 +76,13 @@ export default function Home() {
         <div className="flex items-center gap-4 sm:mt-5">
           <div className="flex items-center gap-4 rounded-md">
             {project.isLive ? (
-              <div className="flex items-center gap-1 rounded-md border px-2 py-1 text-sm">
-                <LiveIcon />
+              <div className="flex items-center rounded-md border px-2 py-1 text-sm">
+                <GoDotFill color="#00D26A" size={20} />
                 <span>Live</span>
               </div>
             ) : (
-              <div className="flex items-center gap-1 rounded-md border px-2 py-1 text-sm">
-                <OfflineIcon />
+              <div className="flex items-center rounded-md border px-2 py-1 text-sm">
+                <GoDotFill color="red" size={20} />
                 <span>Offline</span>
               </div>
             )}
@@ -93,22 +92,22 @@ export default function Home() {
             <div className="flex gap-4">
               {project.whitepaper && (
                 <ProjectLinks url={project.whitepaper}>
-                  <BookOpen />
+                  <IoBookOutline size={23} />
                 </ProjectLinks>
               )}
               {project.twitter && (
                 <ProjectLinks url={project.twitter}>
-                  <Twitter />
+                  <TwitterIcon size={23} />
                 </ProjectLinks>
               )}
               {project.discord && (
                 <ProjectLinks url={project.discord}>
-                  <DiscordIcon />
+                  <FaDiscord size={23} />
                 </ProjectLinks>
               )}
               {project.telegram && (
                 <ProjectLinks url={project.telegram}>
-                  <TelegramIcon />
+                  <FaTelegram size={23} />
                 </ProjectLinks>
               )}
             </div>
