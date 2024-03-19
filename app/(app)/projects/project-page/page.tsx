@@ -1,4 +1,4 @@
-import { getMockProject } from "@/mocks/projects.mocks"
+import { mockProject } from "@/mocks/projects.mocks"
 import { TwitterIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -6,23 +6,6 @@ import { FaDiscord, FaTelegram } from "react-icons/fa"
 import { GoDotFill } from "react-icons/go"
 import { IoBookOutline } from "react-icons/io5"
 import ProjectLinks from "./ProjectLinks"
-
-const tags = [
-  {
-    name: "Marketplace",
-    url: "/marketplace",
-  },
-
-  {
-    name: "NFT",
-    url: "/nft",
-  },
-
-  {
-    name: "DeFi",
-    url: "/defi",
-  },
-]
 
 const images = [
   {
@@ -39,7 +22,8 @@ const images = [
 ]
 
 export default function Home() {
-  const project = getMockProject()
+  const project = mockProject // Mocked project with predefined data
+
   return (
     <main className=" min-h-screen flex-col px-4 py-6 md:p-24">
       <div className="flex flex-col gap-5 border-b pb-5 sm:pb-10">
@@ -57,17 +41,16 @@ export default function Home() {
               {project.tokenName}
             </h1>
             <h2 className="text-base font-extralight sm:w-2/3 sm:text-lg">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut,
-              molestiae!
+              {project.description}
             </h2>
             <div className="flex gap-2">
-              {tags.map((tag, index) => (
+              {project.tags.map((tag, index) => (
                 <Link
                   key={index}
-                  href={tag.url}
+                  href={tag.toLowerCase()}
                   className="borde rounded-md bg-[#1c1f2a] p-2 text-sm font-medium"
                 >
-                  {tag.name}
+                  {tag}
                 </Link>
               ))}
             </div>

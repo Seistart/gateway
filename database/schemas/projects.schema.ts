@@ -85,7 +85,7 @@ export const ProjectsTable = pgTable("projects", {
 
 const BaseSchema = createSelectSchema(ProjectsTable).omit(timestamps)
 
-const ProjectWithTagsSchema = BaseSchema.extend({
+export const ProjectWithTagsSchema = BaseSchema.extend({
   tags: z.array(z.string()).max(3),
   website: z.string().url(),
   whitepaper: z.string().url(),
