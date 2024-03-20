@@ -1,4 +1,4 @@
-import { getUserAuth } from "@/auth/auth-guard"
+import { getUser } from "@/auth/auth-guard"
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar"
 import { redirect } from "next/navigation"
 
@@ -9,8 +9,8 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { session } = await getUserAuth()
-  if (!session) redirect("/sign-in")
+  const { userId } = await getUser()
+  if (!userId) redirect("/")
   return (
     <>
       <div className="flex h-screen">

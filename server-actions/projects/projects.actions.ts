@@ -1,64 +1,108 @@
 "use server"
 
-import { authGuard } from "@/auth/auth-guard"
+import { getUser } from "@/auth/auth-guard"
 import {
   NewProjectSchema,
   NewProjectWithTagsParams,
 } from "@/database/schemas/projects.schema"
 import { revalidatePath } from "next/cache"
+import { Permission } from "../entitlements/entitlements.models"
 import {
   addTagsToProjectMutation,
   createProjectMutation,
   deleteProjectMutation,
   updateProjectMutation,
 } from "./projects.mutations"
-import { getAllProjectsQuery, getProjectBySlugQuery } from "./projects.queries"
+import {
+  getAllProjectsQuery,
+  getProjectByIdQuery,
+  getProjectBySlugQuery,
+  getProjectsByUserQuery,
+} from "./projects.queries"
 
 // TODO: Add validation schemas to all inputs
+// TODO: Add proper logs and error handling
 
-// Admins, Moderators, and Users can create
+// User must have ProjectSelfWrite
 export const createProjectWithTagsAction = async (
   newProjectWithTagsParams: NewProjectWithTagsParams
 ) => {
-  await authGuard()
-  const { tags, ...newProject } = newProjectWithTagsParams
-  const tempProject = {
-    ...newProject,
-    communitySize: 20000,
-    projectType: "defaultType",
+  const { entitlements, userId } = await getUser()
+  if (
+    !userId ||
+    !entitlements ||
+    !entitlements.permissions[Permission.ProjectSelfWrite]
+  ) {
+    throw "Access Denied"
   }
-  const payload = NewProjectSchema.parse(tempProject)
-  const { project } = await createProjectMutation(payload)
-  await addTagsToProjectMutation(project.id, tags)
+  const { tags, ...newProject } = newProjectWithTagsParams
+  const payload = NewProjectSchema.parse(newProject)
+  const { project } = await createProjectMutation(payload, userId)
+  await addTagsToProjectMutation(project.id, tags, userId)
   revalidatePath("/")
   return project.slug
 }
 
-// Admins, Moderators, and Users can update. Users can only update their own project
+// User must have ProjectSelfEdit and be editing their own project or have ProjectAllEdit
 export const updateProjectWithTagsAction = async (
   newProjectWithTagsParams: NewProjectWithTagsParams,
   projectId: number
 ) => {
-  await authGuard()
-  const { tags, ...newProject } = newProjectWithTagsParams
-  const payload = NewProjectSchema.parse(newProject)
-  const { project } = await updateProjectMutation(projectId, payload)
-  await addTagsToProjectMutation(project.id, tags)
-  revalidatePath("/")
-  return project.slug
+  const { entitlements, userId } = await getUser()
+  if (
+    userId &&
+    entitlements &&
+    ((entitlements.permissions[Permission.ProjectSelfEdit] &&
+      newProjectWithTagsParams.userId === userId) ||
+      entitlements.permissions[Permission.ProjectAllEdit])
+  ) {
+    const { tags, ...newProject } = newProjectWithTagsParams
+    const payload = NewProjectSchema.parse(newProject)
+    const { project } = await updateProjectMutation(projectId, payload, userId)
+    await addTagsToProjectMutation(project.id, tags, userId)
+    revalidatePath("/")
+    return project.slug
+  } else {
+    throw "Access Denied"
+  }
 }
 
-// Admins, Moderators, and Users can delete. Users can only delete their own project
+// User must have ProjectSelfDelete and be deleting their own project or have ProjectAllDelete
 export const deleteProjectAction = async (projectId: number) => {
-  await authGuard()
-  await deleteProjectMutation(projectId)
-  await new Promise((resolve) => setTimeout(resolve, 1000)) // Wait for 1 second (not recommended for production)
-  revalidatePath("/")
+  const { entitlements, userId } = await getUser()
+  if (
+    userId &&
+    entitlements &&
+    (entitlements.permissions[Permission.ProjectAllDelete] ||
+      entitlements.permissions[Permission.ProjectSelfDelete])
+  ) {
+    const project = await getProjectByIdQuery(projectId)
+    console.log(projectId)
+    if (
+      (entitlements.permissions[Permission.ProjectSelfDelete] &&
+        project.userId === userId) ||
+      entitlements.permissions[Permission.ProjectAllDelete]
+    ) {
+      await deleteProjectMutation(projectId)
+      await new Promise((resolve) => setTimeout(resolve, 1000)) // Wait for 1 second (not recommended for production)
+      revalidatePath("/")
+    } else {
+      throw "Access Denied"
+    }
+  } else {
+    throw "Access Denied"
+  }
 }
 
 // Public
 export const getAllProjectsAction = async () => {
   const projects = await getAllProjectsQuery()
+  return projects
+}
+
+// Public
+export const getAllProjectsByUserAction = async (userId: string) => {
+  const projects = await getProjectsByUserQuery(userId)
   return projects
 }
 

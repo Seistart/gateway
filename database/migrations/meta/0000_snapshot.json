@@ -1,5 +1,5 @@
 {
-  "id": "ddebb7e5-6179-4815-bcc8-b821bc8d049a",
+  "id": "e6dc70ea-9c96-4698-b58f-365849b5cc27",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -20,6 +20,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "entitlements": {
+          "name": "entitlements",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "expires_at": {
           "name": "expires_at",
           "type": "timestamp with time zone",
@@ -35,55 +41,41 @@
           "tableTo": "user",
           "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "user": {
-      "name": "user",
+    "user_profile": {
+      "name": "user_profile",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
+        "user_id": {
+          "name": "user_id",
           "type": "text",
           "primaryKey": true,
           "notNull": true
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "hashed_password": {
-          "name": "hashed_password",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "user_email_unique": {
-          "name": "user_email_unique",
-          "nullsNotDistinct": false,
-          "columns": ["email"]
+      "foreignKeys": {
+        "user_profile_user_id_user_id_fk": {
+          "name": "user_profile_user_id_user_id_fk",
+          "tableFrom": "user_profile",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
         }
-      }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     },
-    "projects": {
-      "name": "projects",
+    "project": {
+      "name": "project",
       "schema": "",
       "columns": {
         "id": {
@@ -135,8 +127,8 @@
           "notNull": true,
           "default": false
         },
-        "none": {
-          "name": "none",
+        "stage": {
+          "name": "stage",
           "type": "stage",
           "primaryKey": false,
           "notNull": true
@@ -150,12 +142,6 @@
         "community_size": {
           "name": "community_size",
           "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "project_type": {
-          "name": "project_type",
-          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
         },
@@ -189,12 +175,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "wechat": {
-          "name": "wechat",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false
-        },
         "contact_name": {
           "name": "contact_name",
           "type": "varchar(255)",
@@ -204,6 +184,12 @@
         "contact_email": {
           "name": "contact_email",
           "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "main_tag_id": {
+          "name": "main_tag_id",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
@@ -230,9 +216,18 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "projects_user_id_user_id_fk": {
-          "name": "projects_user_id_user_id_fk",
-          "tableFrom": "projects",
+        "project_main_tag_id_tag_id_fk": {
+          "name": "project_main_tag_id_tag_id_fk",
+          "tableFrom": "project",
+          "tableTo": "tag",
+          "columnsFrom": ["main_tag_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "project_user_id_user_id_fk": {
+          "name": "project_user_id_user_id_fk",
+          "tableFrom": "project",
           "tableTo": "user",
           "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
@@ -242,59 +237,207 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "projects_slug_unique": {
-          "name": "projects_slug_unique",
+        "project_slug_unique": {
+          "name": "project_slug_unique",
           "nullsNotDistinct": false,
           "columns": ["slug"]
         }
       }
     },
-    "project_tags": {
-      "name": "project_tags",
+    "permission": {
+      "name": "permission",
       "schema": "",
       "columns": {
-        "project_id": {
-          "name": "project_id",
-          "type": "integer",
-          "primaryKey": false,
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
           "notNull": true
         },
-        "tag_id": {
-          "name": "tag_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "user_id": {
-          "name": "user_id",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "permission_name_unique": {
+          "name": "permission_name_unique",
+          "nullsNotDistinct": false,
+          "columns": ["name"]
+        }
+      }
+    },
+    "role_permission": {
+      "name": "role_permission",
+      "schema": "",
+      "columns": {
+        "role_id": {
+          "name": "role_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "permission_id": {
+          "name": "permission_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
       "foreignKeys": {
-        "project_tags_project_id_projects_id_fk": {
-          "name": "project_tags_project_id_projects_id_fk",
-          "tableFrom": "project_tags",
-          "tableTo": "projects",
+        "role_permission_role_id_role_id_fk": {
+          "name": "role_permission_role_id_role_id_fk",
+          "tableFrom": "role_permission",
+          "tableTo": "role",
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "role_permission_permission_id_permission_id_fk": {
+          "name": "role_permission_permission_id_permission_id_fk",
+          "tableFrom": "role_permission",
+          "tableTo": "permission",
+          "columnsFrom": ["permission_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "role_permission_role_id_permission_id_pk": {
+          "name": "role_permission_role_id_permission_id_pk",
+          "columns": ["role_id", "permission_id"]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "role": {
+      "name": "role",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "role_name_unique": {
+          "name": "role_name_unique",
+          "nullsNotDistinct": false,
+          "columns": ["name"]
+        }
+      }
+    },
+    "user_role": {
+      "name": "user_role",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role_id": {
+          "name": "role_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_role_user_id_user_id_fk": {
+          "name": "user_role_user_id_user_id_fk",
+          "tableFrom": "user_role",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "user_role_role_id_role_id_fk": {
+          "name": "user_role_role_id_role_id_fk",
+          "tableFrom": "user_role",
+          "tableTo": "role",
+          "columnsFrom": ["role_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_role_role_id_user_id_pk": {
+          "name": "user_role_role_id_user_id_pk",
+          "columns": ["role_id", "user_id"]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "project_tag": {
+      "name": "project_tag",
+      "schema": "",
+      "columns": {
+        "project_id": {
+          "name": "project_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tag_id": {
+          "name": "tag_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_tag_project_id_project_id_fk": {
+          "name": "project_tag_project_id_project_id_fk",
+          "tableFrom": "project_tag",
+          "tableTo": "project",
           "columnsFrom": ["project_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "project_tags_tag_id_tags_id_fk": {
-          "name": "project_tags_tag_id_tags_id_fk",
-          "tableFrom": "project_tags",
-          "tableTo": "tags",
+        "project_tag_tag_id_tag_id_fk": {
+          "name": "project_tag_tag_id_tag_id_fk",
+          "tableFrom": "project_tag",
+          "tableTo": "tag",
           "columnsFrom": ["tag_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "project_tags_user_id_user_id_fk": {
-          "name": "project_tags_user_id_user_id_fk",
-          "tableFrom": "project_tags",
+        "project_tag_user_id_user_id_fk": {
+          "name": "project_tag_user_id_user_id_fk",
+          "tableFrom": "project_tag",
           "tableTo": "user",
           "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
@@ -302,11 +445,16 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "project_tag_project_id_tag_id_user_id_pk": {
+          "name": "project_tag_project_id_tag_id_user_id_pk",
+          "columns": ["project_id", "tag_id", "user_id"]
+        }
+      },
       "uniqueConstraints": {}
     },
-    "tags": {
-      "name": "tags",
+    "tag": {
+      "name": "tag",
       "schema": "",
       "columns": {
         "id": {
@@ -326,10 +474,121 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "tags_name_unique": {
-          "name": "tags_name_unique",
+        "tag_name_unique": {
+          "name": "tag_name_unique",
           "nullsNotDistinct": false,
           "columns": ["name"]
+        }
+      }
+    },
+    "user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "main_wallet": {
+      "name": "main_wallet",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "wallet_id": {
+          "name": "wallet_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "main_wallet_user_id_user_id_fk": {
+          "name": "main_wallet_user_id_user_id_fk",
+          "tableFrom": "main_wallet",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "main_wallet_wallet_id_wallet_id_fk": {
+          "name": "main_wallet_wallet_id_wallet_id_fk",
+          "tableFrom": "main_wallet",
+          "tableTo": "wallet",
+          "columnsFrom": ["wallet_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "main_wallet_user_id_wallet_id_pk": {
+          "name": "main_wallet_user_id_wallet_id_pk",
+          "columns": ["user_id", "wallet_id"]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "wallet": {
+      "name": "wallet",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "wallet_address": {
+          "name": "wallet_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "wallet_user_id_user_id_fk": {
+          "name": "wallet_user_id_user_id_fk",
+          "tableFrom": "wallet",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "wallet_user_id_unique": {
+          "name": "wallet_user_id_unique",
+          "nullsNotDistinct": false,
+          "columns": ["user_id"]
+        },
+        "wallet_wallet_address_unique": {
+          "name": "wallet_wallet_address_unique",
+          "nullsNotDistinct": false,
+          "columns": ["wallet_address"]
         }
       }
     }
