@@ -277,15 +277,15 @@ export const renderNodeIcon = function <PT extends BaseType>(
     const icon = node
       .append("use")
       .attr("class", "nodeIcon")
-      .attr("fill", "#ffffff")
+      .attr("fill", "#fff")
     let radius = 0
 
     if (isNodeDatumWithInfoType(datum, "project")) {
       radius += cache.radius ?? projectRadius(datum) // Match node radius
       icon
-        .attr("width", radius * 1.2)
-        .attr("height", radius * 1.2)
-        .attr("xlink:href", "#icon-project")
+        .attr("width", radius * 2.5)
+        .attr("height", radius * 2.5)
+        .attr("xlink:href", "#icon-nft")
     } else {
       return unexpectedType(datum)
     }
