@@ -27,7 +27,7 @@ export const mockProjects = (size: number) => {
       const _projectType = tags[Math.floor(Math.random() * tags.length)]
       return {
         ...project,
-        projectType: _projectType,
+        mainTag: _projectType,
         tags: [_projectType, ...generateTags([], _projectType)],
         communitySize: Math.round(Math.random() * 100000),
       }
