@@ -2,6 +2,7 @@ import { Project, projectTag } from "@/database/schemas/projects.schema"
 import { getColor } from "@/utils/colors.utils"
 import { getDateMonthYear } from "@/utils/date.utils"
 import { formatNumber } from "@/utils/number.utils"
+import Link from "next/link"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 
@@ -75,12 +76,17 @@ export const ProjectCardDetails = ({ key, item }: Props) => {
           <strong>Status:</strong> {item.stage}
         </p>
         <div className="flex justify-between">
-          <Button
-            variant="ghost"
-            className="h-4 w-[50%] border-2 border-gray-200 px-3 py-5 font-semibold text-gray-500"
+          <Link
+            href={`/projects/${item.id}`}
+            className="w-[50%] border-none font-semibold text-gray-500"
           >
-            Details
-          </Button>
+            <Button
+              variant="ghost"
+              className="border-2 border-gray-200 px-3 py-5 "
+            >
+              Details
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

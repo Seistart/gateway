@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS "permission" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "role_permission" (
-	"role_id" integer,
-	"permission_id" integer,
+	"role_id" integer NOT NULL,
+	"permission_id" integer NOT NULL,
 	CONSTRAINT "role_permission_role_id_permission_id_pk" PRIMARY KEY("role_id","permission_id")
 );
 --> statement-breakpoint
@@ -60,15 +60,15 @@ CREATE TABLE IF NOT EXISTS "role" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user_role" (
-	"user_id" text,
-	"role_id" integer,
+	"user_id" text NOT NULL,
+	"role_id" integer NOT NULL,
 	CONSTRAINT "user_role_role_id_user_id_pk" PRIMARY KEY("role_id","user_id")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "project_tag" (
-	"project_id" integer,
-	"tag_id" integer,
-	"user_id" text,
+	"project_id" integer NOT NULL,
+	"tag_id" integer NOT NULL,
+	"user_id" text NOT NULL,
 	CONSTRAINT "project_tag_project_id_tag_id_user_id_pk" PRIMARY KEY("project_id","tag_id","user_id")
 );
 --> statement-breakpoint
@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS "user" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "main_wallet" (
-	"user_id" text,
-	"wallet_id" integer,
+	"user_id" text NOT NULL,
+	"wallet_id" integer NOT NULL,
 	CONSTRAINT "main_wallet_user_id_wallet_id_pk" PRIMARY KEY("user_id","wallet_id")
 );
 --> statement-breakpoint

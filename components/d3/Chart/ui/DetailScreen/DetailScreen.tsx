@@ -47,7 +47,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
     <div
       className={`relative bg-white transition-all duration-300 ease-out ${details.show ? "max-w-[380px]" : "max-w-0"} relative right-0 z-20 flex h-full flex-1 `}
     >
-      <div className="mt-2 h-full min-w-[min-content] p-6 shadow-none">
+      <div className="mt-2 h-full min-w-[min-content] overflow-y-scroll p-6 shadow-none">
         <Button
           variant={"ghost"}
           size="icon"
@@ -57,7 +57,12 @@ export const DetailScreen = ({ nodes }: TProps) => {
           <DoubleArrowRightIcon className="h4 w-4" />
         </Button>
         {selectedItems.map((item: Project, key) => (
-          <ProjectCardDetails key={key} item={item} />
+          <>
+            <ProjectCardDetails key={key} item={item} />
+            {key !== selectedItems.length - 1 && (
+              <div className="mb-4 border-b-2 border-gray-300" />
+            )}
+          </>
         ))}
       </div>
     </div>
