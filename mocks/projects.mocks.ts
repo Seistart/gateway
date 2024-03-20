@@ -39,6 +39,6 @@ export const getMockProject = getMockFn(InsertProjectSchema)
 export const mockProject = getMockProject({
   overrideFn: (entry) => ({
     ...entry,
-    projectType: "Dex",
+    mainTag: "Dex",
   }),
 })
