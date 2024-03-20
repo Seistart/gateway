@@ -31,7 +31,7 @@ export const mockProjects = (size: number) => {
         tags[faker.number.int({ min: 0, max: tags.length - 1 })]
       return {
         ...project,
-        projectType: _projectType,
+        mainTag: _projectType,
         tags: [_projectType, ...generateTags([], _projectType)],
         communitySize: faker.number.int({ min: 0, max: 100000 }),
         description:
@@ -45,6 +45,6 @@ export const getMockProject = getMockFn(InsertProjectSchema)
 export const mockProject = getMockProject({
   overrideFn: (entry) => ({
     ...entry,
-    projectType: "Dex",
+    mainTag: "Dex",
   }),
 })

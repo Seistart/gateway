@@ -49,8 +49,8 @@ export const Legend = ({ show, nodes, ...rest }: Props) => {
         <ul className="mt-1 flex flex-col gap-2 p-0 text-sm first:mt-0">
           <div>
             {(fullLegend
-              ? sortedTags.slice(0, 15)
-              : sortedTags.slice(0, 5)
+              ? (sortedTags.slice(0, 15) as projectTag[])
+              : (sortedTags.slice(0, 5) as projectTag[])
             ).map((tag) => (
               <LegendItem key={tag} type={tag}>
                 {tag}

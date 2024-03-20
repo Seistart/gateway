@@ -1,67 +1,78 @@
 "use client"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
-import { ThemeRadioGroup } from "../theme/theme-radio-group"
+import { useSelectWallet, useWallet } from "@sei-js/react"
+import { useState } from "react"
+import { useUserStore } from "../../providers/user-provider"
 import { Button } from "../ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import { LoggedInDropdown } from "./logged-in-dropdown"
+import { WalletConnectedDropdown } from "./wallet-connected-dropdown"
 
 export const UserNavigation = () => {
+  const [isDropdownOpen, setDropdownOpen] = useState(false)
+  const userProfile = useUserStore((store) => store.userProfile)
+  const { connectedWallet, disconnect, accounts } = useWallet()
+  const { openModal: connectWallet } = useSelectWallet()
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="h-10 w-10 rounded-full" size="icon" variant="ghost">
-          <Avatar>
-            <AvatarImage
-              src="https://github.com/shadcn.png"
-              className="rounded-full"
-            />
-            <AvatarFallback>
-              <div className="h-10 w-10 animate-pulse rounded-full bg-primary/10"></div>
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-56"
-        align="end"
-        forceMount
-        onCloseAutoFocus={(e) => e.preventDefault()}
-      >
-        <DropdownMenuLabel>
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm">seistart</p>
-            <p className="text-xs text-muted-foreground">m@seistart.com</p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <span>Theme</span>
-            </DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <ThemeRadioGroup></ThemeRadioGroup>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Disconnect Wallet</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      {connectedWallet || userProfile ? (
+        <DropdownMenu
+          open={isDropdownOpen}
+          onOpenChange={() => setDropdownOpen(!isDropdownOpen)}
+        >
+          <DropdownMenuTrigger asChild>
+            <Button
+              className="h-10 w-10 rounded-full"
+              size="icon"
+              variant="ghost"
+            >
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  className="rounded-full"
+                />
+                <AvatarFallback>
+                  <div className="h-10 w-10 animate-pulse rounded-full bg-primary/10"></div>
+                </AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            className="w-56"
+            align="end"
+            forceMount
+            onCloseAutoFocus={(e) => e.preventDefault()}
+          >
+            {userProfile ? (
+              <LoggedInDropdown
+                userProfile={userProfile}
+                setDropdownOpen={setDropdownOpen}
+                disconnect={disconnect}
+                connectWallet={connectWallet}
+                connectedWallet={connectedWallet}
+                walletAddress={accounts[0]?.address}
+              ></LoggedInDropdown>
+            ) : (
+              connectedWallet && (
+                <WalletConnectedDropdown
+                  disconnect={disconnect}
+                  connectedWallet={connectedWallet}
+                  walletAddress={accounts[0].address}
+                  setDropdownOpen={setDropdownOpen}
+                  connectWallet={connectWallet}
+                ></WalletConnectedDropdown>
+              )
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <Button onClick={connectWallet}>Connect Wallet</Button>
+      )}
+    </>
   )
 }

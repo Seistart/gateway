@@ -19,13 +19,12 @@ export const ProjectCardDetails = ({ key, item }: Props) => {
             <h2 className="text-xl font-semibold text-gray-900">{item.id}</h2>
             <span
               style={{
-                backgroundColor: getColor(item.projectType as projectTag)
-                  .darkColor,
+                backgroundColor: getColor(item.mainTag as projectTag).darkColor,
                 color: "white",
               }}
               className={`ml-2 p-1 px-2 text-sm text-white`}
             >
-              {item.projectType}
+              {item.mainTag}
             </span>
           </div>
           <h3 className="text-md font-normal text-gray-500">{item.name}</h3>
@@ -34,14 +33,15 @@ export const ProjectCardDetails = ({ key, item }: Props) => {
 
       <div>
         <div>
-          {item.tags.map((label: string) => (
+          {item.tags.map((label: any, index) => (
             <Badge
               style={{
                 backgroundColor: getColor(label as projectTag).darkColor,
                 color: "white",
               }}
+              key={`${index}_tag`}
               variant="outline"
-              className={` text-white`}
+              className="bg-orange-200 text-orange-600"
             >
               {label}
             </Badge>

@@ -11,7 +11,7 @@ export const RelationsContainer = () => {
     const nodes = generateMockData2
 
     return [nodes] as const
-  }, [])
+  }, [generateMockData2])
 
   return (
     <Suspense fallback={<ChartSkeleton />}>

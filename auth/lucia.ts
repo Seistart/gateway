@@ -1,17 +1,16 @@
 import { adapter } from "@/database/schemas/auth.schema"
+import { Entitlements } from "@/server-actions/entitlements/entitlements.models"
 import { Lucia } from "lucia"
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
-    expires: false,
     attributes: {
       secure: process.env.NODE_ENV === "production",
     },
   },
-  getUserAttributes: (attributes) => {
+  getSessionAttributes: (attributes) => {
     return {
-      email: attributes.email,
-      name: attributes.name,
+      entitlements: JSON.parse(attributes.entitlements) as Entitlements,
     }
   },
 })
@@ -19,11 +18,10 @@ export const lucia = new Lucia(adapter, {
 declare module "lucia" {
   interface Register {
     Lucia: typeof lucia
-    DatabaseUserAttributes: DatabaseUserAttributes
+    DatabaseSessionAttributes: DatabaseSessionAttributes
   }
 }
 
-interface DatabaseUserAttributes {
-  email: string
-  name: string
+interface DatabaseSessionAttributes {
+  entitlements: string
 }

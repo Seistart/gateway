@@ -1,35 +1,31 @@
 "use server"
 
-import { getUserAuth } from "@/auth/auth-guard"
+import { authGuard } from "@/auth/auth-guard"
 import { db } from "@/database/database"
-import { Tag, tags } from "@/database/schemas/tags.schema"
+import { Tag, TagTable } from "@/database/schemas/tags.schema"
 import { eq } from "drizzle-orm"
 
 // TODO: Add validation schemas to all inputs
 
 export const updateTagMutation = async (tag: Tag) => {
   const [updatedTag] = await db
-    .update(tags)
+    .update(TagTable)
     .set(tag)
-    .where(eq(tags.id, tag.id))
+    .where(eq(TagTable.id, tag.id))
     .returning()
   return { tag: updatedTag }
 }
 
 export const deleteTagMutation = async (tag: Tag) => {
-  const { session } = await getUserAuth()
-  const userId = session?.user.id
-  if (!userId) {
-    throw "No userId"
-  }
+  await authGuard()
   const [updatedTag] = await db
-    .delete(tags)
-    .where(eq(tags.id, tag.id))
+    .delete(TagTable)
+    .where(eq(TagTable.id, tag.id))
     .returning()
   return { tag: updatedTag }
 }
 
 export const createTagMutation = async (name: string) => {
-  const [updatedTag] = await db.insert(tags).values({ name: name })
+  const [updatedTag] = await db.insert(TagTable).values({ name: name })
   return { tag: updatedTag }
 }
