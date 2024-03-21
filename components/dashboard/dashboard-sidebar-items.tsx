@@ -1,30 +1,41 @@
 "use client"
 
-import { additionalLinks, defaultLinks } from "@/config/navigation.config"
+import {
+  additionalLinks,
+  defaultLinks,
+  type SidebarLink,
+} from "@/config/navigation.config"
+import { CompletUserProfile } from "@/database/schemas/profiles.schema"
+import { useUserStore } from "@/providers/user-provider"
 import { cn } from "@/utils/tailwind.utils"
-import { LucideIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export interface SidebarLink {
-  title: string
-  href: string
-  icon: LucideIcon
-}
-
 export const DashboardSidebarItems = () => {
+  const { entitlements } = useUserStore(
+    (store) => store.userProfile
+  ) as CompletUserProfile
+
   return (
     <>
       <SidebarLinkGroup links={defaultLinks} />
       {additionalLinks.length > 0
-        ? additionalLinks.map((l) => (
-            <SidebarLinkGroup
-              links={l.links}
-              title={l.title}
-              border
-              key={l.title}
-            />
-          ))
+        ? additionalLinks
+            .filter(({ permissions }) =>
+              permissions
+                ? permissions?.every(
+                    (permission) => entitlements.permissions[permission]
+                  )
+                : true
+            )
+            .map((l) => (
+              <SidebarLinkGroup
+                links={l.links}
+                title={l.title}
+                border
+                key={l.title}
+              />
+            ))
         : null}
     </>
   )
@@ -39,6 +50,9 @@ const SidebarLinkGroup = ({
   title?: string
   border?: boolean
 }) => {
+  const { entitlements } = useUserStore(
+    (store) => store.userProfile
+  ) as CompletUserProfile
   const fullPathname = usePathname()
   const pathname = "/" + fullPathname.split("/")[1]
 
@@ -50,11 +64,19 @@ const SidebarLinkGroup = ({
         </h4>
       ) : null}
       <ul>
-        {links.map((link) => (
-          <li key={link.title}>
-            <SidebarLink link={link} active={pathname === link.href} />
-          </li>
-        ))}
+        {links
+          .filter(({ permissions }) =>
+            permissions
+              ? permissions?.every(
+                  (permission) => entitlements.permissions[permission]
+                )
+              : true
+          )
+          .map((link) => (
+            <li key={link.title}>
+              <SidebarLink link={link} active={pathname === link.href} />
+            </li>
+          ))}
       </ul>
     </div>
   )

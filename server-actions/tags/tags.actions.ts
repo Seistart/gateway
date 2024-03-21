@@ -1,8 +1,9 @@
 "use server"
 
-import { authGuard } from "@/auth/auth-guard"
+import { getUser } from "@/auth/auth-guard"
 import { Tag } from "@/database/schemas/tags.schema"
 import { revalidatePath } from "next/cache"
+import { Role } from "../entitlements/entitlements.models"
 import {
   createTagMutation,
   deleteTagMutation,
@@ -14,21 +15,30 @@ import { getAllTagsQuery } from "./tags.queries"
 
 // Private for Admins
 export const updateTagAction = async (tag: Tag) => {
-  await authGuard()
+  const { entitlements } = await getUser()
+  if (!entitlements || entitlements.role !== Role.Admin) {
+    throw "Access Denied"
+  }
   await updateTagMutation(tag)
   revalidatePath("/")
 }
 
 // Private for Admins
 export const createTagAction = async (name: string) => {
-  await authGuard()
+  const { entitlements } = await getUser()
+  if (!entitlements || entitlements.role !== Role.Admin) {
+    throw "Access Denied"
+  }
   await createTagMutation(name)
   revalidatePath("/")
 }
 
 // Private for Admins
 export const deleteTagAction = async (tag: Tag) => {
-  await authGuard()
+  const { entitlements } = await getUser()
+  if (!entitlements || entitlements.role !== Role.Admin) {
+    throw "Access Denied"
+  }
   await deleteTagMutation(tag)
   revalidatePath("/")
 }
