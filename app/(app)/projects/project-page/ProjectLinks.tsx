@@ -7,5 +7,5 @@ interface ProjectLinksProps {
 }
 
 export default function ProjectLinks({ url, children }: ProjectLinksProps) {
-  return <Link href={url}>{children}</Link>
+  return url ? <Link href={url}>{children}</Link> : <></>
 }
