@@ -1,4 +1,4 @@
-import { DashboardSidebarItems } from "./dashboard-sidebar-item"
+import { DashboardSidebarItems } from "./dashboard-sidebar-items"
 
 export const DashboardSidebar = () => {
   return (

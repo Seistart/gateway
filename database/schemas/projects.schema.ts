@@ -12,7 +12,8 @@ import {
 } from "drizzle-orm/pg-core"
 import { createSelectSchema } from "drizzle-zod"
 import { z } from "zod"
-import { users } from "./auth.schema"
+import { TagTable } from "./tags.schema"
+import { UserTable } from "./users.schema"
 export const stage = pgEnum("stage", [
   "Mainnet",
   "Testnet",
@@ -47,10 +48,9 @@ export const projectTagSchema = z.enum([
 ])
 export type projectTag = z.infer<typeof projectTagSchema>
 
-// Convert the z.enum to an array
 export const tagsList = projectTagSchema.options
 
-export const ProjectsTable = pgTable("projects", {
+export const ProjectTable = pgTable("project", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).unique().notNull(),
@@ -59,10 +59,9 @@ export const ProjectsTable = pgTable("projects", {
   releaseDate: timestamp("release_date"),
   summary: varchar("summary", { length: 255 }).notNull(),
   isLive: boolean("is_live").notNull().default(false),
-  stage: stage("none").notNull(),
+  stage: stage("stage").notNull(),
   description: text("description").notNull(),
   communitySize: integer("community_size"),
-  projectType: varchar("project_type", { length: 255 }),
   website: varchar("website", { length: 255 }),
   whitepaper: varchar("whitepaper", { length: 255 }),
   twitter: varchar("twitter", { length: 255 }),
@@ -70,8 +69,9 @@ export const ProjectsTable = pgTable("projects", {
   telegram: varchar("telegram", { length: 255 }),
   contactName: varchar("contact_name", { length: 255 }),
   contactEmail: varchar("contact_email", { length: 255 }),
+  mainTagId: integer("main_tag_id").references(() => TagTable.id),
   userId: text("user_id")
-    .references(() => users.id, {
+    .references(() => UserTable.id, {
       onDelete: "cascade",
     })
     .notNull(),
@@ -83,10 +83,11 @@ export const ProjectsTable = pgTable("projects", {
     .default(sql`now()`),
 })
 
-const BaseSchema = createSelectSchema(ProjectsTable).omit(timestamps)
+const BaseSchema = createSelectSchema(ProjectTable).omit(timestamps)
 
 export const ProjectWithTagsSchema = BaseSchema.extend({
   tags: z.array(z.string()).max(3),
+  mainTag: z.string(),
   website: z.string().url(),
   whitepaper: z.string().url(),
   twitter: z.string().url(),
@@ -111,7 +112,6 @@ export const NewProjectSchema = InsertProjectSchema.extend({}).omit({
 export const NewProjectWithTagsSchema = InsertProjectSchema.extend({
   tags: z.array(z.number()),
   communitySize: z.number(),
-  projectType: z.string(),
 })
 
 export const updateProjectSchema = BaseSchema.extend({

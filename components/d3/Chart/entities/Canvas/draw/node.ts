@@ -18,7 +18,7 @@ const generateIconImage = (
   nodeIcon: Selection<SVGUseElement, NodeDatum, BaseType, undefined>,
   iconName: NodeInfoMapKey
 ) => {
-  const iconSymbol = select<SVGUseElement, undefined>(`#icon-${iconName}`)
+  const iconSymbol = select<SVGUseElement, undefined>(`#icon-nft`) // Set as static id, should be dynamic
   const iconSymbolNode = iconSymbol.node()
 
   if (!iconSymbolNode) {
@@ -30,7 +30,8 @@ const generateIconImage = (
   icon.setAttribute("fill", nodeIcon.attr("fill"))
 
   const attributes = iconSymbolNode.attributes as unknown as Iterable<Attr>
-  for (const attr of attributes) {
+  const attributesArray = Array.from(attributes)
+  for (const attr of attributesArray) {
     if (!["id", "class"].includes(attr.name)) {
       icon.setAttribute(attr.name, attr.value)
     }
@@ -58,6 +59,7 @@ const getIconImage = (
   nodeIcon: Selection<SVGUseElement, NodeDatum, BaseType, undefined>
 ) => {
   const datum = nodeIcon.datum()
+
   if (isNodeDatumWithInfoType(datum, "project")) {
     return (
       iconImages.project ??
@@ -175,12 +177,13 @@ export const drawNode = function (
       const heightScale = iconWidth / iconImage.width
       const iconHeight = heightScale * iconImage.height // Apply width ratio to height
 
-      const yOffset = heightScale * getIconYOffset(nodeIcon)
+      // const yOffset = heightScale * getIconYOffset(nodeIcon)
+      const yOffset = heightScale * 5.3
 
       context.drawImage(
         iconImage,
         centerX - iconWidth / 2,
-        centerY + yOffset - iconHeight / 2,
+        centerY + yOffset - iconHeight / 2.3,
         iconWidth,
         iconHeight
       )

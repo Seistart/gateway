@@ -1,3 +1,4 @@
+import { UserProfile } from "@/database/schemas/profiles.schema"
 import Image from "next/image"
 import Link from "next/link"
 import { FaBell, FaSearch } from "react-icons/fa"
@@ -6,7 +7,11 @@ import { NavigationMenuPage } from "./navigation/navigation"
 import { UserNavigation } from "./navigation/user-navigation"
 import { Button } from "./ui/button"
 
-export const Header = () => {
+interface HeaderProps {
+  userProfile?: UserProfile
+}
+
+export const Header = async ({}: HeaderProps) => {
   return (
     <header className="flex items-center justify-between border-b-2 border-primary/10">
       <div className="flex flex-shrink-0 items-center justify-center">

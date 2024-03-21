@@ -21,7 +21,7 @@ const buttonVariants = cva(
       },
       selected: { true: "bg-secondary text-primary" },
       size: {
-        default: "h-9 w-32 py-6 my-4 mx-1",
+        default: "h-9 w-32 py-6 my-4 mx-0",
         sm: "h-8 py-3 text-xs",
         lg: "h-10 py-8",
         icon: "h-9 w-9 my-1 mx-2",

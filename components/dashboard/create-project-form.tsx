@@ -94,7 +94,9 @@ export const ProjectFormDataSchema = z.object({
   description: z.string().min(1, {
     message: "Required",
   }),
+  mainTagId: z.number(),
   tokenSupply: z.number().optional(),
+  communitySize: z.number().optional(),
   tokenName: z.string().optional(),
   website: z.string().optional(),
   whitepaper: z.string().optional(),
@@ -104,7 +106,6 @@ export const ProjectFormDataSchema = z.object({
   twitter: z.string().optional(),
   discord: z.string().optional(),
   telegram: z.string().optional(),
-  wechat: z.string().optional(),
   contactName: z.string().optional(),
   contactEmail: z.string().optional(),
   tags: z.array(z.number()).refine((value) => value.some((item) => item), {
@@ -151,14 +152,15 @@ export default function CreateProjectForm({
       releaseDate: project?.releaseDate || null,
       summary: project?.summary || "",
       isLive: project?.isLive || false,
-      stage: project?.stage || "none",
+      stage: project?.stage || "Local/Private",
       description: project?.description || "",
+      communitySize: project?.communitySize || 0,
       website: project?.website || "",
       whitepaper: project?.whitepaper || "",
+      mainTagId: project?.mainTagId,
       twitter: project?.twitter || "",
       discord: project?.discord || "",
       telegram: project?.telegram || "",
-      wechat: project?.wechat || "",
       contactName: project?.contactName || "",
       contactEmail: project?.contactEmail || "",
       tags: mapProjectTagNamesToIds(tags, project?.tags),
@@ -426,7 +428,9 @@ export default function CreateProjectForm({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="none">N/A</SelectItem>
+                          <SelectItem value="Local/Private">
+                            Local/Private
+                          </SelectItem>
                           <SelectItem value="Devnet">Devnet</SelectItem>
                           <SelectItem value="Testnet">Testnet</SelectItem>
                           <SelectItem value="Mainnet">Mainnet</SelectItem>
@@ -565,25 +569,6 @@ export default function CreateProjectForm({
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="wechat"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>WeChat (optional)</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Discord"
-                          {...field}
-                          value={field.value || ""}
-                        />
-                      </FormControl>
-                      <div className="h-6">
-                        <FormMessage />
-                      </div>
-                    </FormItem>
-                  )}
-                />
               </div>
 
               <div className="flex flex-row items-center justify-center space-x-4">
@@ -638,52 +623,65 @@ export default function CreateProjectForm({
               <FormField
                 control={form.control}
                 name="tags"
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <div className="mb-4">
-                      <FormLabel className="sr-only text-base">
-                        Sidebar
-                      </FormLabel>
+                      <FormLabel className="sr-only text-base">Tags</FormLabel>
                     </div>
                     {tags.map((tag) => (
-                      <FormField
+                      <div
                         key={tag.id}
-                        control={form.control}
-                        name="tags"
-                        render={({ field }) => {
-                          return (
-                            <FormItem
-                              key={tag.id}
-                              className="flex flex-row items-start space-x-3 space-y-0"
-                            >
-                              <FormControl>
-                                <Checkbox
-                                  checked={field.value?.includes(tag.id)}
-                                  onCheckedChange={(checked) => {
-                                    if (checked) {
-                                      // Add the item if less than 3 are already selected
-                                      if (field.value.length < 3) {
-                                        field.onChange([...field.value, tag.id])
-                                      }
-                                    } else {
-                                      // Remove the item from the selection
-                                      field.onChange(
-                                        field.value.filter(
-                                          (value) => value !== tag.id
-                                        )
-                                      )
-                                    }
-                                  }}
-                                />
-                              </FormControl>
-                              <FormLabel className="font-normal">
-                                {tag.name}
-                              </FormLabel>
-                            </FormItem>
-                          )
-                        }}
-                      />
+                        className="flex flex-row items-start space-x-3"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(tag.id)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                // Add the tag if less than 3 are already selected
+                                if (field.value.length < 3) {
+                                  field.onChange([...field.value, tag.id])
+                                }
+                              } else {
+                                // Remove the tag from the selection
+                                field.onChange(
+                                  field.value.filter(
+                                    (value) => value !== tag.id
+                                  )
+                                )
+                              }
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          {tag.name}
+                        </FormLabel>
+                      </div>
                     ))}
+                    {/* Additional dropdown to select the main tag from the selected tags */}
+                    {field.value && field.value.length > 0 && (
+                      <FormItem>
+                        <FormLabel>Main Tag:</FormLabel>
+                        <select
+                          value={String(form.watch("mainTagId"))}
+                          onChange={(e) =>
+                            form.setValue("mainTagId", Number(e.target.value))
+                          }
+                        >
+                          <option value="">Select the main tag</option>
+                          {field.value.map((selectedTagId) => {
+                            const tag = tags.find(
+                              (tag) => tag.id === selectedTagId
+                            )
+                            return (
+                              <option key={tag?.id} value={tag?.id}>
+                                {tag?.name}
+                              </option>
+                            )
+                          })}
+                        </select>
+                      </FormItem>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}

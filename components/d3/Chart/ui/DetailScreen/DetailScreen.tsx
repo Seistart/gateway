@@ -1,7 +1,7 @@
 import { ProjectCardDetails } from "@/components/project-card"
 import { Button } from "@/components/ui/button"
 import { Project } from "@/database/schemas/projects.schema"
-import { Cross1Icon } from "@radix-ui/react-icons"
+import { DoubleArrowRightIcon } from "@radix-ui/react-icons"
 import * as React from "react"
 import { useRelationChartState } from "../../hooks/useRelationChartState"
 
@@ -45,19 +45,24 @@ export const DetailScreen = ({ nodes }: TProps) => {
 
   return (
     <div
-      className={`bg-white transition-all duration-300 ease-out ${details.show ? "max-w-[380px]" : "max-w-0"} relative right-0 z-20 flex h-full flex-1 overflow-hidden`}
+      className={`relative bg-white transition-all duration-300 ease-out ${details.show ? "max-w-[380px]" : "max-w-0"} relative right-0 z-20 flex h-full flex-1 `}
     >
-      <div className="mt-2 h-full min-w-[min-content] p-6 shadow-none">
+      <div className="mt-2 h-full min-w-[min-content] overflow-y-scroll p-6 shadow-none">
         <Button
           variant={"ghost"}
           size="icon"
-          className="m-0 self-start p-2 text-gray-800"
+          className={`absolute left-[-2.25rem] z-10 m-0 self-start bg-gray-800 p-2 text-white ${details ? `visible` : `hidden`}`}
           onClick={onClose}
         >
-          <Cross1Icon className="h4 w-4" />
+          <DoubleArrowRightIcon className="h4 w-4" />
         </Button>
         {selectedItems.map((item: Project, key) => (
-          <ProjectCardDetails key={key} item={item} />
+          <>
+            <ProjectCardDetails key={key} item={item} />
+            {key !== selectedItems.length - 1 && (
+              <div className="mb-4 border-b-2 border-gray-300" />
+            )}
+          </>
         ))}
       </div>
     </div>

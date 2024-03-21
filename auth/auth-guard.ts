@@ -9,18 +9,10 @@ export const authGuard = async () => {
   if (!session) redirect("/sign-in")
 }
 
-export const getUserAuth = async () => {
+export const getUser = async () => {
   const { session, user } = await validateRequest()
-  if (!session) return { session: null }
-  return {
-    session: {
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-      },
-    },
-  }
+  if (!session) return { userId: undefined }
+  return { userId: user.id, entitlements: session.entitlements }
 }
 
 export const validateRequest = cache(
