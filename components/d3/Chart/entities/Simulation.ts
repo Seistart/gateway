@@ -82,7 +82,7 @@ export const createSimulation: CreateSimulationFn = function (
       1 -
         Math.pow(
           ALPHA_MIN,
-          1 / (minimalIterations ? 1 : INITIAL_ALPHA_AIMED_ITERATIONS)
+          1 / (minimalIterations ? 2 : INITIAL_ALPHA_AIMED_ITERATIONS)
         )
     )
 
