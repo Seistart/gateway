@@ -1,5 +1,5 @@
 import {
-  InsertProjectSchema,
+  ProjectWithTagsSchema,
   ProjectsResponseSchema,
   projectTagSchema,
 } from "@/database/schemas/projects.schema"
@@ -41,10 +41,17 @@ export const mockProjects = (size: number) => {
   })
 }
 
-export const getMockProject = getMockFn(InsertProjectSchema)
+export const getMockProject = getMockFn(ProjectWithTagsSchema)
 export const mockProject = getMockProject({
-  overrideFn: (entry) => ({
-    ...entry,
-    mainTag: "Dex",
-  }),
+  overrideFn: (project) => {
+    const _projectType = tags[Math.floor(Math.random() * tags.length)]
+    project.mainTag = _projectType
+    project.tags = [_projectType, ...generateTags([], _projectType)]
+    project.description =
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+
+    return {
+      ...project,
+    }
+  },
 })
