@@ -57,12 +57,12 @@ export const DetailScreen = ({ nodes }: TProps) => {
           <DoubleArrowRightIcon className="h4 w-4" />
         </Button>
         {selectedItems.map((item: Project, key) => (
-          <>
-            <ProjectCardDetails key={key} item={item} />
+          <div key={key}>
+            <ProjectCardDetails index={key} item={item} />
             {key !== selectedItems.length - 1 && (
               <div className="mb-4 border-b-2 border-gray-300" />
             )}
-          </>
+          </div>
         ))}
       </div>
     </div>

@@ -7,13 +7,13 @@ import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 
 type Props = {
-  key: number
+  index: number
   item: Project
 }
 
-export const ProjectCardDetails = ({ key, item }: Props) => {
+export const ProjectCardDetails = ({ index, item }: Props) => {
   return (
-    <div key={key} className="text-gray-600">
+    <div key={index} className="text-gray-600">
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
           <div className="flex items-center">
@@ -40,7 +40,7 @@ export const ProjectCardDetails = ({ key, item }: Props) => {
                 backgroundColor: getColor(label as projectTag).darkColor,
                 color: "white",
               }}
-              key={`${index}_tag`}
+              key={`${label}_tag_${index}`}
               variant="outline"
               className="bg-orange-200 text-orange-600"
             >
