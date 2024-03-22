@@ -43,4 +43,7 @@ next-env.d.ts
 # open-next
 .open-next
 
+#storybook
 *storybook.log
+
+database/migrations

@@ -11,14 +11,8 @@ export type UserActions = {
 
 export type UserStore = UserState & UserActions
 
-export const defaultInitState: UserState = {
+export const userStore = create<UserStore>((set) => ({
   userProfile: null,
-}
-
-export const createUserStore = (initState: UserState = defaultInitState) => {
-  return create<UserStore>((set) => ({
-    ...initState,
-    setUserProfile: (userProfile: CompletUserProfile | null) =>
-      set({ userProfile }),
-  }))
-}
+  setUserProfile: (userProfile: CompletUserProfile | null) =>
+    set({ userProfile }),
+}))

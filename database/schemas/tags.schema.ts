@@ -3,13 +3,11 @@ import {
   pgTable,
   primaryKey,
   serial,
-  text,
   varchar,
 } from "drizzle-orm/pg-core"
 import { createSelectSchema } from "drizzle-zod"
 import { z } from "zod"
 import { ProjectTable } from "./projects.schema"
-import { UserTable } from "./users.schema"
 
 export const TagTable = pgTable("tag", {
   id: serial("id").primaryKey(),
@@ -29,15 +27,10 @@ export const ProjectTagTable = pgTable(
         onDelete: "cascade",
       })
       .notNull(),
-    userId: text("user_id")
-      .references(() => UserTable.id, {
-        onDelete: "cascade",
-      })
-      .notNull(),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.projectId, table.tagId, table.userId] }),
+      pk: primaryKey({ columns: [table.projectId, table.tagId] }),
     }
   }
 )

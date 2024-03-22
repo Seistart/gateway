@@ -1,8 +1,8 @@
 "use client"
 
+import { debounce } from "@/utils/debounce"
 import { D3DragEvent } from "d3-drag"
 import { Timer, timer } from "d3-timer"
-import debounce from "lodash/debounce"
 import { useCallback, useEffect, useMemo, useRef } from "react"
 
 import {

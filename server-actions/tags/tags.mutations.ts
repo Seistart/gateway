@@ -1,6 +1,5 @@
 "use server"
 
-import { authGuard } from "@/auth/auth-guard"
 import { db } from "@/database/database"
 import { Tag, TagTable } from "@/database/schemas/tags.schema"
 import { eq } from "drizzle-orm"
@@ -17,7 +16,6 @@ export const updateTagMutation = async (tag: Tag) => {
 }
 
 export const deleteTagMutation = async (tag: Tag) => {
-  await authGuard()
   const [updatedTag] = await db
     .delete(TagTable)
     .where(eq(TagTable.id, tag.id))
@@ -26,6 +24,9 @@ export const deleteTagMutation = async (tag: Tag) => {
 }
 
 export const createTagMutation = async (name: string) => {
-  const [updatedTag] = await db.insert(TagTable).values({ name: name })
+  const [updatedTag] = await db
+    .insert(TagTable)
+    .values({ name: name })
+    .returning()
   return { tag: updatedTag }
 }
