@@ -10,7 +10,6 @@ export const SessionTable = pgTable("session", {
     .references(() => UserTable.id, { onDelete: "cascade" }),
   entitlements: text("entitlements").notNull(),
   expiresAt: timestamp("expires_at", {
-    withTimezone: true,
     mode: "date",
   }).notNull(),
 })

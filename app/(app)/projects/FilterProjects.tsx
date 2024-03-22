@@ -1,4 +1,5 @@
 "use client"
+import { ProjectsFilter } from "@/components/projects-filter"
 import { buttonVariants } from "@/components/ui/button"
 import {
   Sheet,
@@ -30,10 +31,10 @@ export default function FilterProjects({
         <SheetHeader>
           <SheetTitle>Filter</SheetTitle>
           <SheetDescription>Discover Our Various Tags</SheetDescription>
-          {/* <ProjectsFilter
+          <ProjectsFilter
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
-          ></ProjectsFilter> */}
+          ></ProjectsFilter>
           <div className="grid grid-cols-2">
             {/* {tags.map((tag) => (
               <Link
