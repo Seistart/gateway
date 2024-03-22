@@ -55,3 +55,13 @@ export const mockProject = getMockProject({
     }
   },
 })
+
+export const getMockTags = getMockFn(projectTagSchema)
+
+export const mockTags = getMockTags({
+  overrideFn: (tags: any) => {
+    return {
+      ...tags,
+    }
+  },
+})

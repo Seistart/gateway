@@ -1,9 +1,10 @@
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { appMetadata } from "@/config/meteada.config"
-import { getMockProjects } from "@/mocks/projects.mocks"
+import { mockProjects } from "@/mocks/projects.mocks"
+import { getAllProjectsAction } from "@/server-actions/projects/projects.actions"
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import FilterProjects from "./FilterProjects"
 
 export const dynamic = "force-dynamic"
 
@@ -12,8 +13,8 @@ export const metadata: Metadata = {
 }
 
 export default async function ProjectsPage() {
-  //const { projects } = await getAllProjectsAction()
-  const projects = getMockProjects()
+  const { projects } = await getAllProjectsAction()
+  const projectsList = mockProjects(10)
   return (
     <div className="sm:p-12">
       {/* <div className="mb-5 text-center text-4xl">
@@ -23,32 +24,33 @@ export default async function ProjectsPage() {
           fast growing ecosystem
         </div>
       </div> */}
-      <div className="flex w-full flex-col justify-between sm:flex-row sm:items-center">
+      <div className="flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center">
         <h1 className="text-lg sm:text-2xl">
           Discover SEI&#39;s most innovating projects
         </h1>
-        <FilterProjects />
+        {/* <FilterProjects projects={projects}/> */}
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-        {projects.map((project) => (
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {projectsList.map((project) => (
           <Link
             key={project.id}
             href={`/porjects/${project.slug}`}
             className="flex flex-col rounded-md shadow-xl"
           >
-            <Image
-              src={"/images/image1.png"}
-              alt={project.name}
-              width={300}
-              height={300}
-              className="rounded-t-md"
-            />
+            <AspectRatio ratio={1}>
+              <Image
+                src={"/images/image1.png"}
+                alt={project.name}
+                fill
+                className="rounded-t-md"
+              />
+            </AspectRatio>
             <div className="flex items-center gap-4 bg-neutral-800 px-4 py-2 text-center">
               <Image
                 src={"/images/sei.jpg"}
                 alt={project.name}
-                width={45}
-                height={45}
+                width={30}
+                height={30}
                 className="rounded-full"
               />
               <p className="text-sm font-medium">{project.name}</p>

@@ -1,3 +1,4 @@
+"use client"
 import { buttonVariants } from "@/components/ui/button"
 import {
   Sheet,
@@ -7,23 +8,34 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Project } from "@/database/schemas/projects.schema"
+import { useFilteredProjects } from "@/hooks/use-filtered-projects"
+import { mockTags } from "@/mocks/projects.mocks"
 import { cn } from "@/utils/tailwind.utils"
-import Link from "next/link"
 
-const tags = ["NFT", "Games", "Marketplace"]
-
-export default function FilterProjects() {
+export default function FilterProjects({
+  projects: initialProjects,
+}: {
+  projects: Project[]
+}) {
+  const tags = mockTags
+  const { searchTerm, setSearchTerm, filteredProjects } =
+    useFilteredProjects(initialProjects)
   return (
     <Sheet>
       <SheetTrigger className={cn(buttonVariants({ variant: "default" }))}>
-        Open
+        Filter
       </SheetTrigger>
       <SheetContent className="border-none">
         <SheetHeader>
           <SheetTitle>Filter</SheetTitle>
-          <SheetDescription>This action cannot be undone.</SheetDescription>
+          <SheetDescription>Discover Our Various Tags</SheetDescription>
+          {/* <ProjectsFilter
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+          ></ProjectsFilter> */}
           <div className="grid grid-cols-2">
-            {tags.map((tag) => (
+            {/* {tags.map((tag) => (
               <Link
                 key={tag}
                 href={`?tag=${tag}`}
@@ -31,7 +43,7 @@ export default function FilterProjects() {
               >
                 {tag}
               </Link>
-            ))}
+            ))} */}
           </div>
         </SheetHeader>
       </SheetContent>
