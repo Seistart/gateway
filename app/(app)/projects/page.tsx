@@ -5,7 +5,7 @@ import { getAllProjectsAction } from "@/server-actions/projects/projects.actions
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import FilterProjects from "./FilterProjects"
+import FilterProjects from "./ProjectsFilter"
 
 export const dynamic = "force-dynamic"
 
@@ -29,7 +29,7 @@ export default async function ProjectsPage() {
         {projectsList.map((project) => (
           <Link
             key={project.id}
-            href={`/porjects/${project.slug}`}
+            href={`/projects/${project.slug}`}
             className="flex flex-col rounded-md shadow-xl"
           >
             <AspectRatio ratio={1} className="relative">
