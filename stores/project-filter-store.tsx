@@ -1,25 +1,61 @@
 import { Project } from "@/database/schemas/projects.schema"
 import { create } from "zustand"
 
-interface ProjectState {
+export interface FilterState {
   projects: Project[]
   filteredProjects: Project[]
-  filter: string
+  searchFilter: string
+  mainTagFilter: string[]
+  isLoading: boolean
   setProjects: (projects: Project[]) => void
-  setFilter: (filter: string) => void
+  setSearchFilter: (search: string) => void
+  setMainTagFilter: (mainTag: string) => void
+  resetFilters: () => void
 }
 
-export const useProjectStore = create<ProjectState>((set) => ({
+export const useFilterStore = create<FilterState>((set) => ({
   projects: [],
   filteredProjects: [],
-  filter: "",
-  setProjects: (projects) => set({ projects }),
-  setFilter: (filter: string) => {
+  searchFilter: "",
+  mainTagFilter: [],
+  isLoading: true,
+  setProjects: (projects) =>
+    set({ projects, filteredProjects: projects, isLoading: false }),
+  setSearchFilter: (searchFilter) =>
     set((state) => ({
-      filter,
-      filteredProjects: state.projects.filter((project) =>
-        project.name.toLowerCase().includes(filter.toLowerCase())
-      ),
-    }))
-  },
+      searchFilter,
+      filteredProjects: state.projects.filter((project) => {
+        const matchesSearchFilter = project.name
+          .toLowerCase()
+          .includes(searchFilter.toLowerCase())
+        const matchesMainTagFilter =
+          state.mainTagFilter.length === 0 ||
+          state.mainTagFilter.includes(project.mainTag)
+        return matchesSearchFilter && matchesMainTagFilter
+      }),
+    })),
+  setMainTagFilter: (tag) =>
+    set((state) => {
+      const newTags = state.mainTagFilter.includes(tag)
+        ? state.mainTagFilter.filter((t) => t !== tag)
+        : [...state.mainTagFilter, tag]
+
+      return {
+        mainTagFilter: newTags,
+        filteredProjects: state.projects.filter((project) => {
+          const matchesSearchFilter = project.name
+            .toLowerCase()
+            .includes(state.searchFilter.toLowerCase())
+          const matchesMainTagFilter =
+            newTags.length === 0 || newTags.includes(project.mainTag)
+          return matchesSearchFilter && matchesMainTagFilter
+        }),
+      }
+    }),
+  resetFilters: () =>
+    set((state) => ({
+      mainTagFilter: [],
+      filteredProjects: state.projects,
+      searchFilter: "",
+    })),
 }))

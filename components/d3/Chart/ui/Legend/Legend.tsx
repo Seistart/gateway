@@ -57,9 +57,11 @@ export const Legend = ({ show, nodes, ...rest }: Props) => {
               </LegendItem>
             ))}
           </div>
-          <button onClick={() => setFullLegend(!fullLegend)}>
-            {fullLegend ? "Show Less" : "Show More"}
-          </button>
+          {sortedTags.length > 5 && (
+            <button onClick={() => setFullLegend(!fullLegend)}>
+              {fullLegend ? "Show Less" : "Show More"}
+            </button>
+          )}
         </ul>
       </div>
     </div>
