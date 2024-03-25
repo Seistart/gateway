@@ -18,10 +18,10 @@ export default function FilterProjects({
 }) {
   const {
     projects,
-    searchFilter,
-    setSearchFilter,
+    filter,
     resetFilters,
     setProjects,
+    updateFilter,
     filteredProjects,
     isLoading,
   } = useFilterStore()
@@ -34,7 +34,7 @@ export default function FilterProjects({
   }, [setProjects])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchFilter(event.target.value)
+    updateFilter({ searchTerm: event.target.value })
   }
 
   if (isLoading) {
@@ -47,7 +47,7 @@ export default function FilterProjects({
         <Input
           type="text"
           placeholder="Search projects..."
-          value={searchFilter}
+          value={filter.searchTerm}
           onChange={handleInputChange}
           className="input h-12 rounded-none"
         />
