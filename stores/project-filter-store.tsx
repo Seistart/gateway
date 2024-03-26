@@ -5,7 +5,7 @@ interface FilterCriteria {
   searchTerm: string
   mainTag: string[]
   tags: string[]
-  stage: string
+  stage: string[]
 }
 
 interface FilterState {
@@ -16,6 +16,7 @@ interface FilterState {
   setProjects: (projects: Project[]) => void
   updateFilter: (criteria: Partial<FilterCriteria>) => void
   toggleMainTagFilter: (tag: string) => void
+  toggleStageFilter: (tag: string) => void
   resetFilters: () => void
 }
 
@@ -24,7 +25,7 @@ export const useFilterStore = create<FilterState>((set) => ({
   filteredProjects: [],
   filter: {
     tags: [],
-    stage: "",
+    stage: [],
     mainTag: [],
     searchTerm: "",
   },
@@ -63,11 +64,27 @@ export const useFilterStore = create<FilterState>((set) => ({
       return { ...state, filter: newFilter, filteredProjects }
     }),
 
+  // Action to toggle a stage in the filter
+  toggleStageFilter: (stage: string) =>
+    set((state) => {
+      const newStageFilter = state.filter.stage.includes(stage)
+        ? state.filter.stage.filter((t) => t !== stage) // Remove the tag
+        : [...state.filter.stage, stage] // Add the tag
+
+      // Update the filter and re-apply it
+      const newFilter = { ...state.filter, stage: newStageFilter }
+      const filteredProjects = state.projects.filter((project) =>
+        projectMatchesFilter(project, newFilter)
+      )
+
+      return { ...state, filter: newFilter, filteredProjects }
+    }),
+
   resetFilters: () =>
     set((state) => ({
       filter: {
         tags: [],
-        stage: "",
+        stage: [],
         mainTag: [],
         searchTerm: "",
       },
@@ -84,7 +101,8 @@ function projectMatchesFilter(
     .includes(filter.searchTerm.toLowerCase())
   const matchesTags =
     filter.tags.length === 0 || filter.tags.includes(project.mainTag)
-  const matchesStage = !filter.stage || project.stage === filter.stage
+  const matchesStage =
+    filter.stage.length === 0 || filter.stage.includes(project.stage)
   const matchesMainTag =
     filter.mainTag.length === 0 || filter.mainTag.includes(project.mainTag)
 
