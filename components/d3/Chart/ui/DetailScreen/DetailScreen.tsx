@@ -58,7 +58,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
         </Button>
         {selectedItems.map((item: Project, key) => (
           <>
-            <ProjectCardDetails key={key} item={item} />
+            <ProjectCardDetails item={item} />
             {key !== selectedItems.length - 1 && (
               <div className="mb-4 border-b-2 border-gray-300" />
             )}
