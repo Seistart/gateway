@@ -63,6 +63,7 @@ import type { ForceGraphInstance } from "../ForceGraph"
 import { CanvasCursorMode, CanvasDatum, NodeDatum } from "../types"
 import { isNodeDatum } from "../utils/node"
 
+import { useFilterStore } from "@/stores/project-filter-store"
 import { useRelationChartState } from "./useRelationChartState"
 import { useSpaceMove } from "./useSpaceMove"
 
@@ -87,6 +88,7 @@ export const useRelationChartManager = function () {
     setHistory,
     setToolTip,
   } = useRelationChartState()
+  const { filteredProjects } = useFilterStore()
 
   const contentRectRef = useRef<DOMRect | null>(null)
   const canvasRectRef = useRef<DOMRect | null>(null)
@@ -277,7 +279,7 @@ export const useRelationChartManager = function () {
     [chart, resetDrawTimer]
   )
   const debouncedOnUpdateDimensions = useMemo(() => {
-    return debounce(onUpdateDimensions, 10)
+    return debounce(onUpdateDimensions, 20)
   }, [onUpdateDimensions])
   const resizeObserver = useRef(
     typeof ResizeObserver !== "undefined"
