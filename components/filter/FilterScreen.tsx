@@ -31,11 +31,11 @@ export const FilterScreen = ({ close }: Props) => {
 
   const ready = true // changed uppon loading graph
 
-  // Tags - Assuming projectTagSchema is imported and used similarly
+  // Tags - Derived from the tags schema
   const tags = projectTagSchema.options
 
   // Stages - Derived from the stage schema
-  const stages = stageSchema.options // Adjust according to the actual property
+  const stages = stageSchema.options
 
   React.useEffect(() => {
     if (!ready) {
@@ -63,7 +63,11 @@ export const FilterScreen = ({ close }: Props) => {
 
   const handleResetFilters = () => {
     resetFilters()
-    methods.reset()
+    methods.reset({
+      searchTerm: "",
+      tags: [],
+      stage: [],
+    })
     close && setShowFilters(false)
   }
 
