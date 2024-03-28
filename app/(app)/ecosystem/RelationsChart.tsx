@@ -18,7 +18,7 @@ const RelationsChart = ({ nodes, loading }: TProps) => {
     <div className='left-0" absolute top-0 flex h-full w-full overflow-hidden bg-[#f3f4f6]'>
       {chart! && (
         <>
-          <FilterScreen />
+          <FilterScreen close={true} />
         </>
       )}
       <ChartWrapper nodes={nodes} loading={loading} />

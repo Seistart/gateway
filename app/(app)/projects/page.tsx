@@ -15,9 +15,9 @@ export default async function ProjectsPage() {
   const projectsList = mockProjects(50)
 
   return (
-    <div className="relative sm:p-12">
+    <div className="relative sm:p-6">
       <div className="flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center">
-        <h1 className="text-lg sm:text-2xl">
+        <h1 className="py-6 pb-12 text-lg sm:text-2xl">
           Journey Through the SEI Ecosystem
         </h1>
       </div>

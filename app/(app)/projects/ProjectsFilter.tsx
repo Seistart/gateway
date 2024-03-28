@@ -1,15 +1,13 @@
 "use client"
 
+import { FilterScreen } from "@/components/filter"
 import Spinner from "@/components/spinner"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Project } from "@/database/schemas/projects.schema"
 import { useFilterStore } from "@/stores/project-filter-store"
 import Image from "next/image"
 import Link from "next/link"
 import React, { useEffect } from "react"
-import TagFilter from "./TagFilter"
 
 export default function FilterProjects({
   initialProjects,
@@ -42,24 +40,10 @@ export default function FilterProjects({
   }
 
   return (
-    <div>
-      <div className="flex items-center gap-4">
-        <Input
-          type="text"
-          placeholder="Search projects..."
-          value={filter.searchTerm}
-          onChange={handleInputChange}
-          className="input h-12 rounded-none"
-        />
-        <Button
-          variant="outline"
-          className="justify center h-12 items-center bg-white p-0 text-neutral-800"
-          onClick={resetFilters}
-        >
-          Restet Filters
-        </Button>
+    <div className="flex h-[85vh] gap-4 overflow-hidden">
+      <div className="flex w-[22rem] items-center gap-4">
+        <FilterScreen close={false} />
       </div>
-      <TagFilter />
 
       {filteredProjects.length === 0 ? (
         <div className="mt-10 flex w-full justify-center">
@@ -67,7 +51,7 @@ export default function FilterProjects({
         </div>
       ) : (
         <div className="projects-grid">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-4 overflow-hidden md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filteredProjects.map((project) => (
               <Link
                 key={project.id}

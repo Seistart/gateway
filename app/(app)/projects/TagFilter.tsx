@@ -5,6 +5,8 @@ import { useFilterStore } from "@/stores/project-filter-store"
 const TagFilter = () => {
   const { filter, toggleMainTagFilter } = useFilterStore()
 
+  console.log("filter", filter)
+
   return (
     <div className="flex h-44 w-full flex-wrap gap-2 leading-none">
       {projectTagSchema.options.map((tag) => (

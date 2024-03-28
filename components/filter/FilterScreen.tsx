@@ -10,27 +10,24 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "../ui/button"
-import { Checkbox } from "../ui/checkbox"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form"
+import { FilterFormField } from "./FilterFormField"
+
+type Props = {
+  close: boolean
+}
 
 // Define form schema
-const FormSchema = z.object({
+export const FormSchema = z.object({
   searchTerm: z.string().optional(),
-  tags: z.array(z.string()), // Assuming this matches your actual schema
-  stage: z.string(), // Assuming this matches your actual schema
+  tags: z.array(z.string()),
+  stage: z.array(z.string()),
 })
 
-export const FilterScreen = () => {
+export const FilterScreen = ({ close }: Props) => {
   const { filter, filteredProjects, resetFilters, updateFilter } =
     useFilterStore()
-  const [showFilters, setShowFilters] = useState(true)
+  const [showFilters, setShowFilters] = useState<boolean>(true)
 
   const ready = true // changed uppon loading graph
 
@@ -49,103 +46,89 @@ export const FilterScreen = () => {
   const methods = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      searchTerm: "",
-      tags: [],
-      stage: "",
+      searchTerm: filter.searchTerm,
+      tags: filter.mainTag,
+      stage: filter.stage,
     },
   })
 
-  const onSubmit = (data: any) => {
-    updateFilter(data)
-    setShowFilters(false)
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    updateFilter({
+      searchTerm: data.searchTerm,
+      mainTag: data.tags,
+      stage: data.stage,
+    })
+    close && setShowFilters(false)
   }
 
   const handleResetFilters = () => {
     resetFilters()
-
-    setShowFilters(false)
+    methods.reset()
+    close && setShowFilters(false)
   }
 
   return (
     <div
-      className={`relative bg-white text-sm transition-all duration-300 ease-out ${showFilters ? "max-w-[280px]" : "max-w-0"} relative left-0 z-20 flex h-full flex-1 flex-col `}
+      className={`relative bg-white text-sm transition-all duration-300 ease-out ${showFilters ? "max-w-[18rem]" : "max-w-0"} z-1 relative left-0 flex h-full flex-1 flex-col `}
     >
-      <Button
-        onClick={() => setShowFilters(!showFilters)}
-        variant="outline"
-        className={`absolute right-[-2.25rem] top-6 z-10 m-0 h-9 w-9 bg-gray-800 p-2.5 text-white transition-transform duration-300 ${showFilters ? "rotate-180" : "rotate-0"}`}
-      >
-        <DoubleArrowRightIcon className="h-4 w-4" />
-      </Button>
+      {close && (
+        <Button
+          onClick={() => setShowFilters(!showFilters)}
+          variant="outline"
+          className={`absolute right-[-2.21rem] top-6 z-10 m-0 h-9 w-9 bg-gray-800 p-2.5 text-white transition-transform duration-300 ${showFilters ? "rotate-180" : "rotate-0"}`}
+        >
+          <DoubleArrowRightIcon className="h-4 w-4" />
+        </Button>
+      )}
+
       <div
-        className={`scrollbar-left w-full overflow-y-scroll p-2 text-neutral-800  ${showFilters ? "visible" : "hidden"}`}
+        className={`scrollbar-left w-full overflow-y-scroll px-2 text-neutral-800  ${showFilters ? "visible" : "hidden"}`}
       >
-        <div className="flex w-full items-center justify-between p-4">
-          <div className="text-center text-lg">
-            Projects: {filteredProjects.length}
+        <div className="flex w-full items-center justify-between py-4">
+          <div className="text-left text-sm text-neutral-800">
+            Visible projects: {filteredProjects.length}
           </div>
-          <Button
-            onClick={handleResetFilters}
-            variant={"outline"}
-            className="text-white"
-          >
-            Reset
-          </Button>
         </div>
         <Form {...methods}>
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
-            className={`flex min-w-12 flex-col space-y-4  p-4 `}
+            className={`flex min-w-12 flex-col space-y-4`}
           >
             <FormField
               control={methods.control}
-              name="tags"
+              name="searchTerm"
               render={() => (
-                <FormItem>
-                  {tags.map((tag) => (
-                    <FormField
-                      key={tag}
-                      control={methods.control}
-                      name="tags"
-                      render={({ field }) => {
-                        return (
-                          <FormItem
-                            key={tag}
-                            className="flex flex-row items-start space-x-3 space-y-0 text-neutral-800"
-                          >
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(tag as never)}
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([...field.value, tag])
-                                    : field.onChange(
-                                        field.value?.filter(
-                                          (value) => value !== tag
-                                        )
-                                      )
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm font-normal">
-                              {tag}
-                            </FormLabel>
-                          </FormItem>
-                        )
-                      }}
-                    />
-                  ))}
-                  <FormMessage />
-                </FormItem>
+                <>
+                  <FormLabel className="text-sm font-bold">Search</FormLabel>
+                  <FormControl>
+                    <FormItem className="flex flex-col">
+                      <input
+                        id="searchTerm"
+                        {...methods.register("searchTerm")}
+                        className="relative border bg-white px-3 py-2 text-sm text-gray-600 placeholder-gray-300 shadow outline-none focus:outline-none focus:ring"
+                        placeholder="Enter search term..."
+                      />
+                    </FormItem>
+                  </FormControl>
+                </>
               )}
             />
-            <div className="flex space-x-2">
+            <FilterFormField name="tags" methods={methods} items={tags} />
+            <FilterFormField name="stage" methods={methods} items={stages} />
+
+            <div className="absolute bottom-0 ml-[-.5rem] flex justify-between">
+              <Button variant={"outline"} className="text-white">
+                Apply
+              </Button>
               <Button
-                onClick={onSubmit}
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleResetFilters()
+                }}
                 variant={"outline"}
                 className="text-white"
               >
-                Apply
+                Reset
               </Button>
             </div>
           </form>

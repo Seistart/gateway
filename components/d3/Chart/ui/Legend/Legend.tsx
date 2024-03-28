@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
+import { Button } from "@/components/ui/button"
 import { Project, projectTag } from "@/database/schemas/projects.schema"
 import { getColor, projectTagSchema } from "@/utils/colors.utils"
 import { FaCircle } from "react-icons/fa"
@@ -40,7 +41,7 @@ export const Legend = ({ show, nodes, ...rest }: Props) => {
 
   return (
     <div
-      className={`ml-4 mt-6 bg-white py-3 shadow-md transition-all duration-300 ease-out ${show ? "max-w-[10rem] p-3" : "max-w-0"} relative right-0 z-20 flex ${fullLegend ? "h-[42.5rem]" : "h-[18rem]"} flex-1 overflow-hidden`}
+      className={`absolute bottom-0 mb-4 ml-4 bg-white py-3 shadow-md transition-all duration-300 ease-out ${show ? "max-w-[10rem] p-3" : "max-w-0"} left-0 z-20 flex ${fullLegend ? "h-[43rem]" : "h-[18rem]"} flex-1 overflow-hidden`}
     >
       <div className="h-4 text-gray-900" ref={contentRef}>
         <h4 className="mt-6 w-[6rem] text-base leading-5 first:mt-0">
@@ -58,9 +59,13 @@ export const Legend = ({ show, nodes, ...rest }: Props) => {
             ))}
           </div>
           {sortedTags.length > 5 && (
-            <button onClick={() => setFullLegend(!fullLegend)}>
+            <Button
+              onClick={() => setFullLegend(!fullLegend)}
+              className="m-0 self-center p-0 font-bold"
+              variant="ghost"
+            >
               {fullLegend ? "Show Less" : "Show More"}
-            </button>
+            </Button>
           )}
         </ul>
       </div>

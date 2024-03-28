@@ -15,8 +15,6 @@ interface FilterState {
   isLoading: boolean
   setProjects: (projects: Project[]) => void
   updateFilter: (criteria: Partial<FilterCriteria>) => void
-  toggleMainTagFilter: (tag: string) => void
-  toggleStageFilter: (tag: string) => void
   resetFilters: () => void
 }
 
@@ -46,38 +44,6 @@ export const useFilterStore = create<FilterState>((set) => ({
         projectMatchesFilter(project, newFilter)
       )
       return { filter: newFilter, filteredProjects }
-    }),
-
-  // Action to toggle a mainTag in the filter
-  toggleMainTagFilter: (tag: string) =>
-    set((state) => {
-      const newMainTagFilter = state.filter.mainTag.includes(tag)
-        ? state.filter.mainTag.filter((t) => t !== tag) // Remove the tag
-        : [...state.filter.mainTag, tag] // Add the tag
-
-      // Update the filter and re-apply it
-      const newFilter = { ...state.filter, mainTag: newMainTagFilter }
-      const filteredProjects = state.projects.filter((project) =>
-        projectMatchesFilter(project, newFilter)
-      )
-
-      return { ...state, filter: newFilter, filteredProjects }
-    }),
-
-  // Action to toggle a stage in the filter
-  toggleStageFilter: (stage: string) =>
-    set((state) => {
-      const newStageFilter = state.filter.stage.includes(stage)
-        ? state.filter.stage.filter((t) => t !== stage) // Remove the tag
-        : [...state.filter.stage, stage] // Add the tag
-
-      // Update the filter and re-apply it
-      const newFilter = { ...state.filter, stage: newStageFilter }
-      const filteredProjects = state.projects.filter((project) =>
-        projectMatchesFilter(project, newFilter)
-      )
-
-      return { ...state, filter: newFilter, filteredProjects }
     }),
 
   resetFilters: () =>
