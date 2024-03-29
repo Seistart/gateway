@@ -23,9 +23,9 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning className="light">
       <body className={cn(spaceGrotesk.className)}>
         <AppProvider initialUserProfile={userProfile}>
-          <div className="min-h-100vh container mx-auto flex flex-col supports-[height:100cqh]:min-h-[100cqh] supports-[height:100dvh]:min-h-[100dvh] supports-[height:100svh]:min-h-[100svh]">
+          <div className="min-h-100vh container mx-auto flex flex-col p-0 supports-[height:100dvh]:min-h-[100dvh] supports-[height:100svh]:min-h-[100svh] first-letter:supports-[height:100cqh]:min-h-[100cqh]">
             <Header />
-            <main className="flex-">{children}</main>
+            <main className="flex">{children}</main>
             <Footer />
           </div>
         </AppProvider>

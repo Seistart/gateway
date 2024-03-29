@@ -119,44 +119,30 @@ export default function HomePage() {
   const projects = mockProjects(8)
   return (
     <div>
-      <div className="flex items-center justify-between border-b border-black bg-white px-10">
-        <h1 className="">Seistart</h1>
-        <div>
-          <Button
-            variant={"outline"}
-            className="my-0 border-b-0 border-l border-t-0 bg-white py-8"
-          >
-            Login
-          </Button>
-          <Button className="my-0 py-8">Open Wallet</Button>
-        </div>
-      </div>
-      <div className="min-h-">
-        <div className="flex h-screen items-center justify-between">
-          <div className="flex flex-1 flex-col gap-3 px-5 py-20 sm:px-12">
-            <h1 className="text-3xl font-extrabold sm:text-4xl md:text-6xl">
-              Discover and Explore <br />
-              <span className="bg-[#d0b8d0]">
+      <div className="">
+        <div className="flex max-h-screen min-h-[60vh] items-center justify-between bg-background">
+          <div className="first-letter: flex w-[60vw] flex-col justify-between gap-3 px-5 py-20 text-3xl font-extrabold sm:pl-12 sm:text-4xl md:text-6xl">
+            <h1>Discover and Explore</h1>
+            <div className="flex">
+              <h1 className="bg-[#d0b8d0]">
                 <TypeAnimation
                   sequence={[
                     "Whats Brewing",
-                    1000, // wait 1s before replacing "whats brewing" with "nfts"
-                    "NFTs",
-                    1000,
-                    "DeFi",
-                    1000,
-                    "Gaming",
-                    1000,
+                    2000, // wait 1s before replacing "whats brewing" with "nfts"
+                    "NFTs and DeFi",
+                    2000,
+                    "Gaming and AI",
+                    2000,
                   ]}
                   wrapper="span"
-                  speed={50}
+                  speed={10}
                   repeat={Infinity}
                 />
-              </span>{" "}
-              in the <br />
-              SEI Ecosystem
-            </h1>
-            <h2 className="text-xl">fr like it is the best</h2>
+              </h1>
+              <h1>in the</h1>
+            </div>
+            <h1>SEI Ecosystem</h1>
+            <h2 className="text-xl">Here Starts Your Sei Journey</h2>
             <div className="flex gap-6">
               <Button className="border border-black bg-[#CFE3C3] text-[#000] shadow-bottom-right">
                 Get Started
@@ -169,15 +155,17 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="relative flex-1">
-            <img src={"/images/header.png"} alt="header" />
+          <div className="block h-[22.5rem] w-full flex-1 bg-[url('/images/header-bg.png')] bg-cover bg-center">
+            {/* <img src={"/images/header.png"} className="w-35vw" alt="header" /> */}
           </div>
         </div>
         <Marquee className="bg-[#1a1a1a] px-4 py-4 text-5xl font-bold text-white">
-          Seistart offers various projects that are currently getting built.
+          <span className="ml-2">
+            Seistart offers various projects that are currently getting built.
+          </span>
         </Marquee>
       </div>
-      <div className="min-h-screen px-40 py-2 sm:py-12">
+      <div className="mb-10 px-40 py-2 sm:py-12">
         <h1 className="text-4xl font-semibold">
           <span className="bg-[#E9C0EA]">Most Popular</span> Projects
         </h1>
@@ -212,11 +200,11 @@ export default function HomePage() {
           </Button>
         </div>
       </div>
-      <div className="bg-[#f8efdd] px-40 pb-12">
+      <div className="px-40 pb-12">
         <h1 className="text-4xl font-semibold text-black">
           Trending Sei Projects
         </h1>
-        <div className="flex gap-4 py-4">
+        <div className="flex gap-4">
           <Button className="shadow-faded-bottom-right">Popular</Button>
           <Button variant={"outline"} className="bg-white shadow-bottom-right">
             Trending
@@ -273,17 +261,17 @@ export default function HomePage() {
           </TableBody>
         </Table>
       </div>
-      <div>
+      <div className="bg-[#1A1A1A] py-12 text-white">
         <h1 className="w-full py-6 text-center text-6xl font-bold">FAQs</h1>
         <div className="flex flex-col px-20">
           <Accordion
-            className="grid grid-cols-2 gap-2"
+            className="grid grid-cols-2 gap-x-12"
             type="single"
             collapsible
           >
             {faqs.map((faq, index) => (
               <AccordionItem value={`faq-${index}`} key={index}>
-                <AccordionTrigger className="text-2xl">
+                <AccordionTrigger className="text-left text-2xl">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-xl">

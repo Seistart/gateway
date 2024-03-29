@@ -1,6 +1,5 @@
 "use client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import { useSelectWallet, useWallet } from "@sei-js/react"
 import { useState } from "react"
 import { useUserStore } from "../../providers/user-provider"
@@ -26,21 +25,7 @@ export const UserNavigation = () => {
           onOpenChange={() => setDropdownOpen(!isDropdownOpen)}
         >
           <DropdownMenuTrigger asChild>
-            <Button
-              className="h-10 w-10 rounded-full"
-              size="icon"
-              variant="ghost"
-            >
-              <Avatar>
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  className="rounded-full"
-                />
-                <AvatarFallback>
-                  <div className="h-10 w-10 animate-pulse rounded-full bg-primary/10"></div>
-                </AvatarFallback>
-              </Avatar>
-            </Button>
+            <Button className="my-0 py-8">Profile</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-56"
