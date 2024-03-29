@@ -1,3 +1,4 @@
+"use client"
 import {
   Accordion,
   AccordionContent,
@@ -17,6 +18,8 @@ import {
 } from "@/components/ui/table"
 import { mockProjects } from "@/mocks/projects.mocks"
 import Image from "next/image"
+import Marquee from "react-fast-marquee"
+import { TypeAnimation } from "react-type-animation"
 
 const coinData = [
   {
@@ -113,56 +116,78 @@ const faqs = [
 ]
 
 export default function HomePage() {
-  const projects = mockProjects(10)
+  const projects = mockProjects(8)
   return (
     <div>
-      <div className="flex items-center justify-between border-b border-black bg-[#FFF] px-10 text-black">
+      <div className="flex items-center justify-between border-b border-black bg-white px-10">
         <h1 className="">Seistart</h1>
         <div>
-          <Button className="my-0 border-l border-black bg-white py-8 text-black">
+          <Button
+            variant={"outline"}
+            className="my-0 border-b-0 border-l border-t-0 bg-white py-8"
+          >
             Login
           </Button>
-          <Button className="my-0 bg-black py-8 text-white">Open Wallet</Button>
+          <Button className="my-0 py-8">Open Wallet</Button>
         </div>
       </div>
-      <div className="min-h- bg-[#FFFFFF] text-black">
-        <div className="flex flex-col gap-3 px-5 py-20 sm:px-12">
-          <h1 className="text-3xl font-extrabold sm:w-1/2 sm:text-4xl md:text-6xl">
-            Welcome to Seistart –{" "}
-            <span className="bg-[#d0b8d0]">Your Gateway</span> to the SEI
-            Ecosystem
-          </h1>
-          <h2 className="text-xl">fr like it is the best</h2>
-          <div className="flex gap-6">
-            <Button className="border border-black bg-[#CFE3C3] text-[#000] shadow-bottom-right">
-              Get Started
-            </Button>
-            <Button
-              className="border border-black bg-[#E4D8D5] text-[#000]
+      <div className="min-h-">
+        <div className="flex h-screen items-center justify-between">
+          <div className="flex flex-1 flex-col gap-3 px-5 py-20 sm:px-12">
+            <h1 className="text-3xl font-extrabold sm:text-4xl md:text-6xl">
+              Discover and Explore <br />
+              <span className="bg-[#d0b8d0]">
+                <TypeAnimation
+                  sequence={[
+                    "Whats Brewing",
+                    1000, // wait 1s before replacing "whats brewing" with "nfts"
+                    "NFTs",
+                    1000,
+                    "DeFi",
+                    1000,
+                    "Gaming",
+                    1000,
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
+                />
+              </span>{" "}
+              in the <br />
+              SEI Ecosystem
+            </h1>
+            <h2 className="text-xl">fr like it is the best</h2>
+            <div className="flex gap-6">
+              <Button className="border border-black bg-[#CFE3C3] text-[#000] shadow-bottom-right">
+                Get Started
+              </Button>
+              <Button
+                className="border border-black bg-[#E4D8D5] text-[#000]
              shadow-bottom-right"
-            >
-              Browse
-            </Button>
+              >
+                Browse
+              </Button>
+            </div>
+          </div>
+          <div className="relative flex-1">
+            <img src={"/images/header.png"} alt="header" />
           </div>
         </div>
-        <div className="bg-[#1a1a1a] px-4 py-4 text-5xl font-bold text-white">
-          Seistart offers various projects that are currently getting built
-        </div>
+        <Marquee className="bg-[#1a1a1a] px-4 py-4 text-5xl font-bold text-white">
+          Seistart offers various projects that are currently getting built.
+        </Marquee>
       </div>
-      <div className="min-h-screen bg-white p-2 text-black sm:p-12">
-        <h1 className="text-center text-4xl font-semibold">
+      <div className="min-h-screen px-40 py-2 sm:py-12">
+        <h1 className="text-4xl font-semibold">
           <span className="bg-[#E9C0EA]">Most Popular</span> Projects
         </h1>
-        <h2 className="mt-2 text-center font-medium">
-          Discover Sei's Popular Projects
-        </h2>
-        <div className="grid grid-cols-2 gap-10 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <h2 className="mt-2 font-medium">Discover Sei's Popular Projects</h2>
+        <div className="grid grid-cols-2 gap-10 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {projects.map((project) => (
             <div
               className="border border-b-4 border-r-4 border-black p-4 shadow-faded-bottom-right"
               key={project.id}
             >
-              {/* <Image src={"/images/noimage.webp"} alt="" width={200} height={200} /> */}
               <Image
                 src={"/images/sei.jpg"}
                 alt=""
@@ -173,7 +198,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
                   <p>sth cool</p>
-                  <Badge className="rounded-full bg-[#E9C0EA]">New</Badge>
+                  <Badge className="bg-[#E9C0EA]">New</Badge>
                 </div>
                 <p className="text-sm">Small Description about it</p>
                 <div className="flex items-center gap-2">
@@ -182,30 +207,28 @@ export default function HomePage() {
               </div>
             </div>
           ))}
+          <Button className="border-none text-white shadow-faded-bottom-right">
+            Load More
+          </Button>
         </div>
       </div>
-      <div className="bg-white px-40 pb-12">
-        <h1 className="text-center text-4xl font-semibold text-black">
+      <div className="bg-[#f8efdd] px-40 pb-12">
+        <h1 className="text-4xl font-semibold text-black">
           Trending Sei Projects
         </h1>
-        <div className="flex justify-center gap-4 py-4">
-          <Button
-            variant={"outline"}
-            className="border-none shadow-faded-bottom-right"
-          >
-            Popular
-          </Button>
-          <Button className="border border-black shadow-bottom-right">
+        <div className="flex gap-4 py-4">
+          <Button className="shadow-faded-bottom-right">Popular</Button>
+          <Button variant={"outline"} className="bg-white shadow-bottom-right">
             Trending
           </Button>
-          <Button className="border border-black shadow-bottom-right">
+          <Button variant={"outline"} className="bg-white shadow-bottom-right">
             All Time
           </Button>
           <Button className="border border-black bg-[#E9C0EA] shadow-bottom-right">
             More
           </Button>
         </div>
-        <Table className="bg-[#1A1A1A] shadow-table">
+        <Table className="bg-[#1A1A1A] text-white shadow-table">
           <TableCaption>Current Popular Projects on Sei</TableCaption>
           <TableHeader>
             <TableRow>
