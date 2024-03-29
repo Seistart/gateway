@@ -13,7 +13,7 @@ interface HeaderProps {
 
 export const Header = async ({}: HeaderProps) => {
   return (
-    <header className="flex items-center justify-between border-b-2 border-primary/10">
+    <header className="z-20 flex items-center justify-between border-b-2 border-primary/10">
       <div className="flex flex-shrink-0 items-center justify-center">
         <Link href="/" className="mr-2">
           <Image src="/images/logo_850.png" width="50" height="50" alt="test" />

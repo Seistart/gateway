@@ -41,7 +41,7 @@ export default function FilterProjects({
 
   return (
     <div className="flex h-[85vh] gap-4 overflow-hidden">
-      <div className="flex w-[22rem] items-center gap-4">
+      <div className="flex w-[23.2rem] items-center gap-4">
         <FilterScreen close={false} />
       </div>
 
@@ -50,7 +50,7 @@ export default function FilterProjects({
           No Projects found
         </div>
       ) : (
-        <div className="projects-grid">
+        <div className="projects-grid overflow-y-scroll">
           <div className="grid grid-cols-2 gap-4 overflow-hidden md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filteredProjects.map((project) => (
               <Link

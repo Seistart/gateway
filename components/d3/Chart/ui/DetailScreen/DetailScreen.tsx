@@ -10,7 +10,8 @@ export type TProps = {
 }
 
 export const DetailScreen = ({ nodes }: TProps) => {
-  const { selection, details, setShowDetails, ready } = useRelationChartState()
+  const { selection, setSelection, details, setShowDetails, ready } =
+    useRelationChartState()
 
   const items = React.useMemo(() => nodes, [nodes])
 
@@ -24,10 +25,10 @@ export const DetailScreen = ({ nodes }: TProps) => {
     return [selectedItems] as const
   }, [selection, items])
 
-  const onClose = React.useCallback(
-    () => setShowDetails(false),
-    [setShowDetails]
-  )
+  const onClose = React.useCallback(() => {
+    setShowDetails(false)
+    setSelection([])
+  }, [setShowDetails])
 
   React.useEffect(() => {
     if (!selection.length) {
@@ -42,6 +43,8 @@ export const DetailScreen = ({ nodes }: TProps) => {
       setShowDetails(false)
     }
   }, [ready, setShowDetails])
+
+  console.log("selection", selection)
 
   return (
     <div

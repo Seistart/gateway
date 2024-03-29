@@ -22,9 +22,7 @@ export const Legend = ({ show, nodes, ...rest }: Props) => {
 
   // Count the occurrences of each tag
   const tagCounts = nodes?.reduce<TagCounts>((acc, node) => {
-    node.tags.forEach((tag) => {
-      acc[tag] = (acc[tag] || 0) + 1
-    })
+    acc[node.mainTag] = (acc[node.mainTag] || 0) + 1
     return acc
   }, {})
 
