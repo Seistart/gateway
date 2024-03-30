@@ -1,24 +1,12 @@
 import {
   ProjectWithTagsSchema,
   ProjectsResponseSchema,
-  projectTagSchema,
 } from "@/database/schemas/projects.schema"
 import { getMockFn } from "@/utils/mock.utils"
 import { faker } from "@faker-js/faker"
+import { generateTags, tags } from "./tags.mock"
 
-// Convert the z.enum to an array
-const tags = projectTagSchema.options
 const seed = 1337 // Ensuring the use of the same seed for consistency
-
-const generateTags = (existingTags = [] as string[], projectType: string) => {
-  const allExcludedTags = [...existingTags, projectType]
-
-  const filteredTags = tags.filter((tag) => !allExcludedTags.includes(tag))
-
-  const shuffledTags = filteredTags.sort(() => 0.5 - Math.random())
-
-  return shuffledTags.slice(0, 2)
-}
 
 export const getMockProjects = getMockFn(ProjectsResponseSchema)
 

@@ -87,11 +87,21 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #c5c5c5;
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* styles.css */
+.scrollbar-left {
+  direction: rtl; /* Right to left */
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.scrollbar-left > * {
+  direction: ltr; /* Reset content to left to right */
 }

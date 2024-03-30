@@ -48,6 +48,7 @@ export const NavigationMenuPage = () => {
           <NavigationMenuContent
             onPointerMove={preventDefaultAction}
             onPointerLeave={preventDefaultAction}
+            className="z-20"
           >
             <ul className="grid w-[400px] gap-3 p-0 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (

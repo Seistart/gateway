@@ -7,13 +7,12 @@ import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 
 type Props = {
-  key: number
   item: Project
 }
 
-export const ProjectCardDetails = ({ key, item }: Props) => {
+export const ProjectCardDetails = ({ item }: Props) => {
   return (
-    <div key={key} className="text-gray-600">
+    <div key={item.name} className="text-gray-600">
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
           <div className="flex items-center">

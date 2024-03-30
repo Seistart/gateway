@@ -76,7 +76,7 @@ export const useRelationChartState = create<RelationChartState>()((set) => ({
   ready: false,
   setReady: (ready) => set(() => ({ ready })),
 
-  performanceMode: false,
+  performanceMode: true,
   setPerformanceMode: (enabled: boolean) =>
     set(() => ({ performanceMode: enabled })),
 
