@@ -14,6 +14,14 @@ import { createSelectSchema } from "drizzle-zod"
 import { z } from "zod"
 import { TagTable } from "./tags.schema"
 import { UserTable } from "./users.schema"
+
+export const stageSchema = z.enum([
+  "Mainnet",
+  "Testnet",
+  "Devnet",
+  "Local/Private",
+])
+
 export const stage = pgEnum("stage", [
   "Mainnet",
   "Testnet",

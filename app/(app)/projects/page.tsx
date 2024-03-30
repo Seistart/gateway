@@ -1,19 +1,40 @@
-import { Projects } from "@/components/pages/projects"
+import { Button } from "@/components/ui/button"
 import { appMetadata } from "@/config/meteada.config"
-import { getAllProjectsAction } from "@/server-actions/projects/projects.actions"
+import { mockProjects } from "@/mocks/projects.mocks"
+import { Fullscreen } from "lucide-react"
 import { Metadata } from "next"
-
-export const dynamic = "force-dynamic"
+import Link from "next/link"
+import FilterProjects from "./ProjectsFilter"
 
 export const metadata: Metadata = {
   ...appMetadata.projects,
 }
 
 export default async function ProjectsPage() {
-  const { projects } = await getAllProjectsAction()
+  // const { projects } = await getAllProjectsAction()
+  const projectsList = mockProjects(50)
+
   return (
-    <>
-      <Projects projects={projects}></Projects>
-    </>
+    <div className="relative sm:p-6">
+      <div className="flex w-full flex-col justify-between gap-2 sm:flex-row sm:items-center">
+        <h1 className="py-6 pb-12 text-lg sm:text-2xl">
+          Journey Through the SEI Ecosystem
+        </h1>
+      </div>
+      <div>
+        <FilterProjects initialProjects={projectsList} />
+      </div>
+      <Link href="/ecosystem">
+        <div className="h-18 w-18 fixed bottom-4 right-4 m-4 bg-white p-0">
+          <Button
+            className="z-50 m-0 h-12 w-12 p-0 text-neutral-800"
+            size="sm"
+            variant="ghost"
+          >
+            <Fullscreen />
+          </Button>
+        </div>
+      </Link>
+    </div>
   )
 }

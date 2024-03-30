@@ -14,7 +14,7 @@ export const CHART_DETAILS = {
 
 export const LEGEND = {
   BUTTON_TEXT: "Legend",
-  NODES: "Node Types",
+  NODES: "Projects",
   NODES_DESCRIPTION:
     "The size of the node is calculated based on the total marketcap of the project.",
   NODE_DEFI: "DeFi",

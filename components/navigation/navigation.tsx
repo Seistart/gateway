@@ -43,6 +43,7 @@ export const NavigationMenuPage = () => {
           <NavigationMenuContent
             onPointerMove={preventDefaultAction}
             onPointerLeave={preventDefaultAction}
+            className="z-20"
           >
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
@@ -112,10 +113,7 @@ const ListItem = ({ className, title, children, href }: ListItemProps) => {
       <Link href={href} legacyBehavior passHref>
         <NavigationMenuLink>
           <div
-            className={cn(
-              "rounded-md p-3 transition-colors hover:bg-accent",
-              className
-            )}
+            className={cn("p-3 transition-colors hover:bg-accent", className)}
           >
             <div className="text-sm">{title}</div>
             <p className="text-sm text-muted-foreground">{children}</p>

@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS "session" (
 	"id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"entitlements" text NOT NULL,
-	"expires_at" timestamp with time zone NOT NULL
+	"expires_at" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user_profile" (
