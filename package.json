@@ -14,6 +14,7 @@
     "db:migrate": "tsx database/migrate.ts",
     "db:create-admin": "tsx database/create-admin.ts",
     "db:create-moderator": "tsx database/create-moderator.ts",
+    "db:create-stages": "tsx database/create-stages.ts",
     "db:create-entitlements": "tsx database/create-entitlements.ts",
     "db:drop": "drizzle-kit drop",
     "db:pull": "drizzle-kit introspect:pg",
