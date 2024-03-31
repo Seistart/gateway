@@ -16,7 +16,6 @@ export const UserProfileTable = pgTable("user_profile", {
 const UserProfileBaseSchema = createSelectSchema(UserProfileTable)
 export type UserProfile = z.infer<typeof UserProfileBaseSchema>
 export type CompletUserProfile = {
-  userProfile: UserProfile
   mainWallet: Wallet
   wallets: Wallet[]
   entitlements: Entitlements

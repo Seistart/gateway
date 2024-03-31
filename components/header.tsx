@@ -37,7 +37,7 @@ export const Header = async ({}: HeaderProps) => {
             <FaBell className="h-4 w-4" />
           </Button>
         </div>
-        <UserNavigation />
+        <UserNavigation></UserNavigation>
       </div>
     </header>
   )

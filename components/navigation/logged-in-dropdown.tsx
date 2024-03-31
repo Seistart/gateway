@@ -3,6 +3,7 @@
 import { CompletUserProfile } from "@/database/schemas/profiles.schema"
 import { signOutAction } from "@/server-actions/users/users.actions"
 import { addWalletAction } from "@/server-actions/wallets/wallets.actions"
+import { userStore } from "@/stores/user-store"
 import { preventDefaultAction } from "@/utils/react-event-handlers.utils"
 import { SeiWallet } from "@sei-js/core"
 import { Loader2 } from "lucide-react"
@@ -44,6 +45,7 @@ export const LoggedInDropdown = ({
   const otherWalletLinked = userProfile.wallets.some(
     (wallet) => (wallet.walletAddress = walletAddress)
   )
+  const { setUserProfile } = userStore()
   const [isPending, startTransition] = useTransition()
   const pathname = usePathname()
   return (
@@ -51,7 +53,7 @@ export const LoggedInDropdown = ({
       <DropdownMenuLabel>
         <div className="flex flex-col space-y-1">
           {walletAddress ? (
-            <p className="text-sm">
+            <div className="text-sm">
               {`${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 3)}`}
               <Badge className="ml-2">
                 {mainWalletAddressConnected
@@ -60,7 +62,7 @@ export const LoggedInDropdown = ({
                     ? "Linked"
                     : "Unlinked"}
               </Badge>
-            </p>
+            </div>
           ) : (
             <p className="text-sm">
               {`${mainWalletAddress.substring(0, 6)}...${mainWalletAddress.substring(mainWalletAddress.length - 3)}`}
@@ -72,7 +74,7 @@ export const LoggedInDropdown = ({
       <DropdownMenuItem disabled>
         {walletAddress ? "Connected" : "Not Connected"}
       </DropdownMenuItem>
-      {!otherWalletLinked && walletAddress && (
+      {!otherWalletLinked && walletAddress && !mainWalletAddressConnected && (
         <DropdownMenuItem
           onSelect={async (event) => {
             preventDefaultAction(event)
@@ -139,8 +141,9 @@ export const LoggedInDropdown = ({
       <DropdownMenuItem
         onSelect={(event) => {
           event.preventDefault()
-          startTransition(() => {
-            signOutAction(pathname)
+          startTransition(async () => {
+            await signOutAction()
+            setUserProfile(null)
           })
         }}
       >

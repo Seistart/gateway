@@ -5,20 +5,20 @@ import {
   defaultLinks,
   type SidebarLink,
 } from "@/config/navigation.config"
-import { CompletUserProfile } from "@/database/schemas/profiles.schema"
-import { useUserStore } from "@/providers/user-provider"
+import { Entitlements } from "@/server-actions/entitlements/entitlements.models"
+import { userStore } from "@/stores/user-store"
 import { cn } from "@/utils/tailwind.utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export const DashboardSidebarItems = () => {
-  const { entitlements } = useUserStore(
-    (store) => store.userProfile
-  ) as CompletUserProfile
-
+  const entitlements = userStore().userProfile?.entitlements
+  if (!entitlements) {
+    return <></>
+  }
   return (
     <>
-      <SidebarLinkGroup links={defaultLinks} />
+      <SidebarLinkGroup links={defaultLinks} entitlements={entitlements} />
       {additionalLinks.length > 0
         ? additionalLinks
             .filter(({ permissions }) =>
@@ -30,6 +30,7 @@ export const DashboardSidebarItems = () => {
             )
             .map((l) => (
               <SidebarLinkGroup
+                entitlements={entitlements}
                 links={l.links}
                 title={l.title}
                 border
@@ -45,14 +46,13 @@ const SidebarLinkGroup = ({
   links,
   title,
   border,
+  entitlements,
 }: {
   links: SidebarLink[]
   title?: string
   border?: boolean
+  entitlements: Entitlements
 }) => {
-  const { entitlements } = useUserStore(
-    (store) => store.userProfile
-  ) as CompletUserProfile
   const fullPathname = usePathname()
   const pathname = "/" + fullPathname.split("/")[1]
 

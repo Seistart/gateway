@@ -29,6 +29,6 @@ export default async function EditProjectsPage() {
       </>
     )
   } else {
-    redirect("/dashboard")
+    redirect("/")
   }
 }
