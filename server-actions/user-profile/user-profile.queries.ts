@@ -25,12 +25,12 @@ export async function getUserProfileQuery() {
 }
 
 export async function getCompleteUserProfileQuery() {
-  const { userId } = await getUser()
+  const { userId, entitlements } = await getUser()
   if (!userId) return { userProfile: null }
 
   try {
-    const [userProfileRows, userWalletRows, mainWalletRows, { entitlements }] =
-      await Promise.all([
+    const [userProfileRows, userWalletRows, mainWalletRows] = await Promise.all(
+      [
         db
           .select()
           .from(UserProfileTable)
@@ -41,8 +41,8 @@ export async function getCompleteUserProfileQuery() {
           .from(MainWalletTable)
           .leftJoin(WalletTable, eq(MainWalletTable.walletId, WalletTable.id))
           .where(eq(MainWalletTable.userId, userId)),
-        getUser(),
-      ])
+      ]
+    )
 
     const mainWallet =
       mainWalletRows.length > 0 ? mainWalletRows[0].wallet : null

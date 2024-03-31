@@ -17,8 +17,9 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { Role } from "../entitlements/entitlements.models"
 import { getUserEntitlements } from "../entitlements/entitlements.queries"
+import { getCompleteUserProfileAction } from "../user-profile/user-profile.actions"
 export const setAuthCookie = (cookie: Cookie) => {
-  cookies().set(cookie)
+  cookies().set(cookie.name, cookie.value, cookie.attributes)
 }
 
 interface ActionResult {
@@ -75,7 +76,7 @@ export async function createUserAction(
   return redirect(pathName)
 }
 
-export async function signOutAction(pathName: string) {
+export async function signOutAction() {
   const { session } = await validateRequest()
   if (!session) {
     return {
@@ -85,7 +86,7 @@ export async function signOutAction(pathName: string) {
   await lucia.invalidateSession(session.id)
   const sessionCookie = lucia.createBlankSessionCookie()
   setAuthCookie(sessionCookie)
-  redirect(pathName)
+  return redirect("/")
 }
 
 export async function generateSignedMessageAction(walletAddress: string) {
@@ -108,8 +109,7 @@ export async function generateSignedMessageAction(walletAddress: string) {
 
 export async function singInSignUpAction(
   signedMessage: StdSignature,
-  signedJwtToken: string,
-  pathName: string
+  signedJwtToken: string
 ) {
   const isValidJwt = jwt.verify(signedJwtToken, env.NEXTAUTH_JWT_SECRET)
   if (!isValidJwt) {
@@ -124,6 +124,32 @@ export async function singInSignUpAction(
   if (!verified) {
     throw "Invalid Signature"
   } else {
-    await createUserAction(message.walletAddress, pathName)
+    await signInUserAction(message.walletAddress)
+    const { userProfile } = await getCompleteUserProfileAction()
+    return userProfile
+  }
+}
+
+export async function signInUserAction(walletAddress: string) {
+  let userId
+  try {
+    const existingWallets = await db
+      .select()
+      .from(WalletTable)
+      .where(and(eq(WalletTable.walletAddress, walletAddress)))
+    if (existingWallets[0]?.userId) {
+      userId = existingWallets[0].userId
+
+      const entitlements = await getUserEntitlements(userId)
+      const session = await lucia.createSession(userId, {
+        entitlements: JSON.stringify(entitlements),
+      })
+      const sessionCookie = lucia.createSessionCookie(session.id)
+      setAuthCookie(sessionCookie)
+    } else {
+      throw "No Access"
+    }
+  } catch (e) {
+    console.log(e)
   }
 }

@@ -1,11 +1,18 @@
 import { adapter } from "@/database/schemas/auth.schema"
 import { Entitlements } from "@/server-actions/entitlements/entitlements.models"
-import { Lucia } from "lucia"
+import { Lucia, TimeSpan } from "lucia"
 
 export const lucia = new Lucia(adapter, {
+  sessionExpiresIn: new TimeSpan(30, "d"),
   sessionCookie: {
+    expires: true,
     attributes: {
       secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : undefined,
+      domain:
+        process.env.NODE_ENV === "production"
+          ? "d3qryrn2zooyrh.cloudfront.net"
+          : undefined,
     },
   },
   getSessionAttributes: (attributes) => {

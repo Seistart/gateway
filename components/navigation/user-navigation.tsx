@@ -1,8 +1,9 @@
 "use client"
 
+import { getCompleteUserProfileAction } from "@/server-actions/user-profile/user-profile.actions"
+import { userStore } from "@/stores/user-store"
 import { useSelectWallet, useWallet } from "@sei-js/react"
-import { useState } from "react"
-import { useUserStore } from "../../providers/user-provider"
+import { useEffect, useState } from "react"
 import { Button } from "../ui/button"
 import {
   DropdownMenu,
@@ -13,10 +14,25 @@ import { LoggedInDropdown } from "./logged-in-dropdown"
 import { WalletConnectedDropdown } from "./wallet-connected-dropdown"
 
 export const UserNavigation = () => {
+  const { userProfile, setUserProfile } = userStore()
+  const [isLoading, setIsLoading] = useState(true)
+  useEffect(() => {
+    async function getUserProfile() {
+      setIsLoading(true)
+      const { userProfile } = await getCompleteUserProfileAction()
+      setUserProfile(userProfile)
+      setIsLoading(false)
+    }
+    getUserProfile()
+  }, [setUserProfile])
+
   const [isDropdownOpen, setDropdownOpen] = useState(false)
-  const userProfile = useUserStore((store) => store.userProfile)
   const { connectedWallet, disconnect, accounts } = useWallet()
   const { openModal: connectWallet } = useSelectWallet()
+
+  if (isLoading) {
+    return <>loading...</>
+  }
   return (
     <>
       {connectedWallet || userProfile ? (

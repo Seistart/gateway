@@ -2,15 +2,15 @@ import { getUser } from "@/auth/auth-guard"
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar"
 import { redirect } from "next/navigation"
 
-export const dynamic = "force-dynamic"
-
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   const { userId } = await getUser()
-  if (!userId) redirect("/")
+  if (!userId) {
+    redirect("/")
+  }
   return (
     <>
       <div className="flex h-screen">

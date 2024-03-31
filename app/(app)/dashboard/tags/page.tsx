@@ -5,8 +5,11 @@ import { getAllTagsAction } from "@/server-actions/tags/tags.actions"
 import { redirect } from "next/navigation"
 
 export default async function ProjectsPage() {
-  const { entitlements } = await getUser()
-  if (!entitlements || entitlements.role !== Role.Admin) redirect("/dashboard")
-  const { tags } = await getAllTagsAction()
+  const [{ tags }, { entitlements }] = await Promise.all([
+    getAllTagsAction(),
+    getUser(),
+  ])
+  if (!entitlements || entitlements.role !== Role.Admin) redirect("/")
+
   return <DashboardTags tags={tags}></DashboardTags>
 }

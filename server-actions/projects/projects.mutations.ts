@@ -60,8 +60,7 @@ export const updateProjectMutation = async (
 
 export const addTagsToProjectMutation = async (
   projectId: number,
-  newTags: number[],
-  userId: string
+  newTags: number[]
 ) => {
   try {
     if (newTags.length > 3) {
@@ -76,8 +75,7 @@ export const addTagsToProjectMutation = async (
         .where(
           and(
             eq(ProjectTagTable.projectId, projectId),
-            eq(ProjectTagTable.tagId, tagId),
-            eq(ProjectTagTable.userId, userId)
+            eq(ProjectTagTable.tagId, tagId)
           )
         )
     }
@@ -85,7 +83,7 @@ export const addTagsToProjectMutation = async (
       .filter((tag) => !existingTags.includes(tag))
       .slice(0, 3 - (existingTags.length - tagsToRemove.length))
     for (const tagId of tagsToAdd) {
-      await db.insert(ProjectTagTable).values({ projectId, tagId, userId })
+      await db.insert(ProjectTagTable).values({ projectId, tagId })
     }
     const updatedTags = await getProjectTagIdsQuery(projectId)
     return { updatedTags }

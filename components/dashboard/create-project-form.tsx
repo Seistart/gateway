@@ -15,6 +15,7 @@ import {
   NewProjectWithTagsParams,
   Project,
 } from "@/database/schemas/projects.schema"
+import { Stage } from "@/database/schemas/stages.schema"
 import { Tag } from "@/database/schemas/tags.schema"
 import {
   createProjectWithTagsAction,
@@ -23,7 +24,7 @@ import {
 import { cn } from "@/utils/tailwind.utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -78,6 +79,7 @@ const steps = [
 
 interface CreateProjectFormProps {
   tags: Tag[]
+  stages: Stage[]
   project?: Project
 }
 
@@ -100,7 +102,7 @@ export const ProjectFormDataSchema = z.object({
   tokenName: z.string().optional(),
   website: z.string().optional(),
   whitepaper: z.string().optional(),
-  stage: z.enum(["Mainnet", "Testnet", "Devnet", "Local/Private"]).optional(),
+  stageId: z.number(),
   releaseDate: z.date().optional().nullable(),
   isLive: z.boolean().optional(),
   twitter: z.string().optional(),
@@ -135,10 +137,11 @@ export const mapProjectTagNamesToIds = (
 
 export default function CreateProjectForm({
   tags,
+  stages,
   project,
 }: CreateProjectFormProps) {
   const router = useRouter()
-
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [_, setPreviousStep] = useState(0)
   const [currentStep, setCurrentStep] = useState(0)
   const form = useForm<NewProjectWithTagsParams>({
@@ -152,7 +155,7 @@ export default function CreateProjectForm({
       releaseDate: project?.releaseDate || null,
       summary: project?.summary || "",
       isLive: project?.isLive || false,
-      stage: project?.stage || "Local/Private",
+      stageId: project?.stageId || stages[0].id,
       description: project?.description || "",
       communitySize: project?.communitySize || 0,
       website: project?.website || "",
@@ -168,13 +171,18 @@ export default function CreateProjectForm({
   })
 
   const processForm: SubmitHandler<NewProjectWithTagsParams> = async (data) => {
-    let slug
-    if (project) {
-      slug = await updateProjectWithTagsAction(data, project.id)
-    } else {
-      slug = await createProjectWithTagsAction(data)
+    try {
+      setIsSubmitting(true)
+      let slug
+      if (project) {
+        slug = await updateProjectWithTagsAction(data, project.id)
+      } else {
+        slug = await createProjectWithTagsAction(data)
+      }
+      router.push(`/dashboard/edit-projects`)
+    } catch {
+      setIsSubmitting(false)
     }
-    router.push(`/dashboard/edit-projects`)
   }
 
   type FieldName = keyof NewProjectWithTagsParams
@@ -414,13 +422,13 @@ export default function CreateProjectForm({
                 />
                 <FormField
                   control={form.control}
-                  name="stage"
+                  name="stageId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Stage (optional)</FormLabel>
+                      <FormLabel>Stage</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        onValueChange={(value) => field.onChange(Number(value))}
+                        defaultValue={field.value.toString()}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -428,12 +436,14 @@ export default function CreateProjectForm({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Local/Private">
-                            Local/Private
-                          </SelectItem>
-                          <SelectItem value="Devnet">Devnet</SelectItem>
-                          <SelectItem value="Testnet">Testnet</SelectItem>
-                          <SelectItem value="Mainnet">Mainnet</SelectItem>
+                          {stages.map((stage, index) => (
+                            <SelectItem
+                              value={stage.id.toString()}
+                              key={`${index}_stage`}
+                            >
+                              {stage.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                       <div className="h-6">
@@ -695,7 +705,11 @@ export default function CreateProjectForm({
       <div className="mt-8">
         <div className="flex justify-between">
           {currentStep > 0 ? (
-            <Button type="button" onClick={prev} disabled={currentStep === 0}>
+            <Button
+              type="button"
+              onClick={prev}
+              disabled={currentStep === 0 || isSubmitting}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -714,21 +728,25 @@ export default function CreateProjectForm({
           ) : (
             <div></div>
           )}
-          <Button type="button" onClick={next}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8.25 4.5l7.5 7.5-7.5 7.5"
-              />
-            </svg>
+          <Button type="button" onClick={next} disabled={isSubmitting}>
+            {isSubmitting ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-6 w-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            )}
           </Button>
         </div>
       </div>
