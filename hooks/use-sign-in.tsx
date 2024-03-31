@@ -2,6 +2,7 @@ import {
   generateSignedMessageAction,
   singInSignUpAction,
 } from "@/server-actions/users/users.actions"
+import { userStore } from "@/stores/user-store"
 import { SeiWallet } from "@sei-js/core"
 import { useState } from "react"
 
@@ -10,6 +11,7 @@ function useSignIn(
   walletAddress: string,
   pathName: string
 ) {
+  const { setUserProfile } = userStore()
   const [isSigningIn, setIsSigningIn] = useState(false)
 
   const signIn = async () => {
@@ -24,7 +26,8 @@ function useSignIn(
           JSON.stringify(message)
         )
         if (signature) {
-          await singInSignUpAction(signature, jwt, pathName)
+          const userProfile = await singInSignUpAction(signature, jwt)
+          setUserProfile(userProfile)
         }
       }
     } catch (error) {

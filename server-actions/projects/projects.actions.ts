@@ -5,7 +5,8 @@ import {
   NewProjectSchema,
   NewProjectWithTagsParams,
 } from "@/database/schemas/projects.schema"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
+import { invalidateCloudFrontPaths } from "../cache/invalidateCloudFrontPaths"
 import { Permission } from "../entitlements/entitlements.models"
 import {
   addTagsToProjectMutation,
@@ -38,8 +39,10 @@ export const createProjectWithTagsAction = async (
   const { tags, ...newProject } = newProjectWithTagsParams
   const payload = NewProjectSchema.parse(newProject)
   const { project } = await createProjectMutation(payload, userId)
-  await addTagsToProjectMutation(project.id, tags, userId)
+  await addTagsToProjectMutation(project.id, tags)
+  await invalidateCloudFrontPaths(["/*"])
   revalidatePath("/")
+  revalidateTag("projects")
   return project.slug
 }
 
@@ -59,8 +62,10 @@ export const updateProjectWithTagsAction = async (
     const { tags, ...newProject } = newProjectWithTagsParams
     const payload = NewProjectSchema.parse(newProject)
     const { project } = await updateProjectMutation(projectId, payload, userId)
-    await addTagsToProjectMutation(project.id, tags, userId)
+    await addTagsToProjectMutation(project.id, tags)
+    await invalidateCloudFrontPaths(["/*"])
     revalidatePath("/")
+    revalidateTag("projects")
     return project.slug
   } else {
     throw "Access Denied"
@@ -85,7 +90,9 @@ export const deleteProjectAction = async (projectId: number) => {
     ) {
       await deleteProjectMutation(projectId)
       await new Promise((resolve) => setTimeout(resolve, 1000)) // Wait for 1 second (not recommended for production)
+      await invalidateCloudFrontPaths(["/*"])
       revalidatePath("/")
+      revalidateTag("projects")
     } else {
       throw "Access Denied"
     }
@@ -95,10 +102,14 @@ export const deleteProjectAction = async (projectId: number) => {
 }
 
 // Public
-export const getAllProjectsAction = async () => {
-  const projects = await getAllProjectsQuery()
-  return projects
-}
+export const getAllProjectsAction = unstable_cache(
+  async () => {
+    const projects = await getAllProjectsQuery()
+    return projects
+  },
+  ["projects"],
+  { tags: ["projects"] }
+)
 
 // Public
 export const getAllProjectsByUserAction = async (userId: string) => {

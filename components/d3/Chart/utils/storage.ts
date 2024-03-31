@@ -1,5 +1,3 @@
-import CryptoJS from "crypto-js"
-
 import { NodeDatumState } from "../types"
 
 export const clearD3LocalStorage = function (prefix: string) {
@@ -37,8 +35,6 @@ export function getD3LocalStorage(key: string, type: "NODE") {
 
 // storage hash node en link ids
 export const generateStorageKey = function (ids: number[]) {
-  const key = ids.sort().join("")
-  const sha256Hash = CryptoJS.SHA256(key).toString()
-
-  return sha256Hash
+  const storageKey = crypto.randomUUID()
+  return storageKey
 }

@@ -1,14 +1,12 @@
 "use client"
 
 import { signOutAction } from "@/server-actions/users/users.actions"
-import { usePathname } from "next/navigation"
 import { useFormStatus } from "react-dom"
 import { Button } from "../ui/button"
 
 export default function SignOutBtn() {
-  const pathname = usePathname()
   return (
-    <form action={() => signOutAction(pathname)}>
+    <form action={() => signOutAction()}>
       <Btn />
     </form>
   )

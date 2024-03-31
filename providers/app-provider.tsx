@@ -1,7 +1,5 @@
 import { SeiProvider } from "@/components/sei/sei-provider"
 import { ThemeProvider } from "@/components/theme/theme-provider"
-import { CompletUserProfile } from "@/database/schemas/profiles.schema"
-import { UserStoreProvider } from "@/providers/user-provider"
 import { ReactNode } from "react"
 
 const chainConfiguration = {
@@ -11,9 +9,8 @@ const chainConfiguration = {
 }
 interface AppProviderProps {
   children: ReactNode
-  initialUserProfile: CompletUserProfile | null
 }
-const AppProvider = ({ children, initialUserProfile }: AppProviderProps) => {
+const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ThemeProvider
       attribute="class"
@@ -23,11 +20,8 @@ const AppProvider = ({ children, initialUserProfile }: AppProviderProps) => {
       <SeiProvider
         wallets={["compass"]}
         chainConfiguration={chainConfiguration}
-        autoConnect={"compass"}
       >
-        <UserStoreProvider initialUserProfile={initialUserProfile}>
-          {children}
-        </UserStoreProvider>
+        {children}
       </SeiProvider>
     </ThemeProvider>
   )

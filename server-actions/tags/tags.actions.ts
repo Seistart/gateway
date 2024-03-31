@@ -2,7 +2,7 @@
 
 import { getUser } from "@/auth/auth-guard"
 import { Tag } from "@/database/schemas/tags.schema"
-import { revalidatePath } from "next/cache"
+import { revalidateTag, unstable_cache } from "next/cache"
 import { Role } from "../entitlements/entitlements.models"
 import {
   createTagMutation,
@@ -20,7 +20,7 @@ export const updateTagAction = async (tag: Tag) => {
     throw "Access Denied"
   }
   await updateTagMutation(tag)
-  revalidatePath("/")
+  revalidateTag("tags")
 }
 
 // Private for Admins
@@ -30,7 +30,7 @@ export const createTagAction = async (name: string) => {
     throw "Access Denied"
   }
   await createTagMutation(name)
-  revalidatePath("/")
+  revalidateTag("tags")
 }
 
 // Private for Admins
@@ -40,11 +40,15 @@ export const deleteTagAction = async (tag: Tag) => {
     throw "Access Denied"
   }
   await deleteTagMutation(tag)
-  revalidatePath("/")
+  revalidateTag("tags")
 }
 
 // Public
-export const getAllTagsAction = async () => {
-  const tags = await getAllTagsQuery()
-  return tags
-}
+export const getAllTagsAction = unstable_cache(
+  async () => {
+    const tags = await getAllTagsQuery()
+    return tags
+  },
+  ["tags"],
+  { tags: ["tags"] }
+)

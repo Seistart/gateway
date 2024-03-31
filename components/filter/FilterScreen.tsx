@@ -1,7 +1,4 @@
-import {
-  projectTagSchema,
-  stageSchema,
-} from "@/database/schemas/projects.schema"
+import { projectTagSchema } from "@/database/schemas/projects.schema"
 import { useFilterStore } from "@/stores/project-filter-store"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DoubleArrowRightIcon } from "@radix-ui/react-icons"
@@ -35,7 +32,7 @@ export const FilterScreen = ({ close }: Props) => {
   const tags = projectTagSchema.options
 
   // Stages - Derived from the stage schema
-  const stages = stageSchema.options
+  const stages = ["Local/Private", "Devnet", "Testnet", "Mainnet"]
 
   React.useEffect(() => {
     if (!ready) {

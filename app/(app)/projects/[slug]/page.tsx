@@ -1,5 +1,8 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { getProjectBySlugAction } from "@/server-actions/projects/projects.actions"
+import {
+  getAllProjectsAction,
+  getProjectBySlugAction,
+} from "@/server-actions/projects/projects.actions"
 import { TwitterIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -7,8 +10,6 @@ import { FaDiscord, FaTelegram } from "react-icons/fa"
 import { GoDotFill } from "react-icons/go"
 import { IoBookOutline } from "react-icons/io5"
 import ProjectLinks from "./ProjectLinks"
-
-export const dynamic = "force-dynamic"
 
 export async function generateMetadata({
   params,
@@ -21,6 +22,13 @@ export async function generateMetadata({
     description: project.description,
     keywords: project.tags,
   }
+}
+
+export async function generateStaticParams() {
+  const { projects } = await getAllProjectsAction()
+  return projects.map((project) => ({
+    slug: project.slug,
+  }))
 }
 
 const images = [

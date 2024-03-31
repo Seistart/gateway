@@ -3,7 +3,6 @@ import { sql } from "drizzle-orm"
 import {
   boolean,
   integer,
-  pgEnum,
   pgTable,
   serial,
   text,
@@ -12,22 +11,9 @@ import {
 } from "drizzle-orm/pg-core"
 import { createSelectSchema } from "drizzle-zod"
 import { z } from "zod"
+import { StageTable } from "./stages.schema"
 import { TagTable } from "./tags.schema"
 import { UserTable } from "./users.schema"
-
-export const stageSchema = z.enum([
-  "Mainnet",
-  "Testnet",
-  "Devnet",
-  "Local/Private",
-])
-
-export const stage = pgEnum("stage", [
-  "Mainnet",
-  "Testnet",
-  "Devnet",
-  "Local/Private",
-])
 
 export const projectTagSchema = z.enum([
   "AI",
@@ -67,7 +53,9 @@ export const ProjectTable = pgTable("project", {
   releaseDate: timestamp("release_date"),
   summary: varchar("summary", { length: 255 }).notNull(),
   isLive: boolean("is_live").notNull().default(false),
-  stage: stage("stage").notNull(),
+  stageId: integer("stage_id")
+    .references(() => StageTable.id)
+    .notNull(),
   description: text("description").notNull(),
   communitySize: integer("community_size"),
   website: varchar("website", { length: 255 }),
@@ -96,6 +84,7 @@ const BaseSchema = createSelectSchema(ProjectTable).omit(timestamps)
 export const ProjectWithTagsSchema = BaseSchema.extend({
   tags: z.array(z.string()).max(3),
   mainTag: z.string(),
+  stage: z.string(),
   website: z.string().url(),
   whitepaper: z.string().url(),
   twitter: z.string().url(),
