@@ -50,7 +50,7 @@ const faqs = [
 export default function Faqs() {
   return (
     <div className="bg-[#1A1A1A] py-12 text-white">
-      <h1 className="w-full py-6 text-center text-6xl font-bold">FAQs</h1>
+      <h1 className="mb-10 mt-6 w-full text-center text-6xl font-bold">FAQs</h1>
       <div className="px-4 sm:px-20">
         <Accordion
           className="grid grid-cols-1 lg:grid-cols-3"

@@ -1,11 +1,9 @@
 "use client"
+import LandingCont from "@/components/containers/LandingCont"
+import Heading from "@/components/headers/Heading"
+import Faqs from "@/components/ui/Faqs"
 import Hero from "@/components/ui/Hero"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+import Team from "@/components/ui/Team"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -127,11 +125,12 @@ export default function HomePage() {
           </span>
         </Marquee>
       </div>
-      <div className="mb-10 px-40 py-2 sm:py-12">
-        <h1 className="text-4xl font-semibold">
-          <span className="bg-[#E9C0EA]">Most Popular</span> Projects
-        </h1>
-        <h2 className="mt-2 font-medium">Discover Sei's Popular Projects</h2>
+      <LandingCont className="mb-10 py-2 sm:py-12">
+        <Heading
+          highlighted={"Most Popular"}
+          headingText={"Projects"}
+          desc={"Discover Seis Popular Projects"}
+        />
         <div className="grid grid-cols-2 gap-10 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {projects.map((project) => (
             <div
@@ -161,11 +160,9 @@ export default function HomePage() {
             Load More
           </Button>
         </div>
-      </div>
+      </LandingCont>
       <div className="px-40 pb-12">
-        <h1 className="text-4xl font-semibold text-black">
-          Trending Sei Projects
-        </h1>
+        <Heading headingText={"Trending Sei Projects"} />
         <div className="flex gap-4">
           <Button className="shadow-faded-bottom-right">Popular</Button>
           <Button variant={"outline"} className="bg-white shadow-bottom-right">
@@ -223,27 +220,8 @@ export default function HomePage() {
           </TableBody>
         </Table>
       </div>
-      <div className="bg-[#1A1A1A] py-12 text-white">
-        <h1 className="w-full py-6 text-center text-6xl font-bold">FAQs</h1>
-        <div className="flex flex-col px-20">
-          <Accordion
-            className="grid grid-cols-2 gap-x-12"
-            type="single"
-            collapsible
-          >
-            {faqs.map((faq, index) => (
-              <AccordionItem value={`faq-${index}`} key={index}>
-                <AccordionTrigger className="text-left text-2xl">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-xl">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </div>
+      <Team />
+      <Faqs />
     </div>
   )
 }
