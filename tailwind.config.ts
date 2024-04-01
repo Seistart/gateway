@@ -21,6 +21,7 @@ const config = {
       boxShadow: {
         "bottom-right": "6px 6px 0px rgba(0, 0, 0, 1)",
         "faded-bottom-right": "6px 6px 0px rgba(0, 0, 0, 0.6)",
+        "bottom-right-2": "6px 6px 0px rgba(0, 0, 0, 0.4)",
         accentuated: "3px 3px 0px rgba(0, 0, 0, 1)",
         table: "15px 15px 0px rgba(0, 0, 0, 0.2)",
       },
