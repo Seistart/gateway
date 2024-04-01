@@ -7,8 +7,8 @@ export function Hero() {
   const projects = mockProjects(4)
 
   return (
-    <div className="mx-auto w-full max-w-[80rem] py-10">
-      <div className="flex max-h-screen min-h-[60vh] max-w-[80rem] items-end justify-between border border-black bg-background p-4 shadow-bottom-right">
+    <div className="mx-auto w-full max-w-[80rem] py-4">
+      <div className="flex max-h-screen min-h-[40vh] max-w-[80rem] items-end justify-between border border-black bg-background p-4 shadow-bottom-right">
         <div className="flex w-full items-center justify-between">
           <h1 className="text-2xl">Your Gateway to the Sei Ecosystem</h1>
           <Button>Browse</Button>

@@ -1,26 +1,21 @@
 "use client"
 import LandingCont from "@/components/containers/LandingCont"
 import Heading from "@/components/headers/Heading"
-import { Hero, Trending } from "@/components/home"
+import { Hero, HomeMarquee, Trending } from "@/components/home"
 import { Collaborators, Faqs } from "@/components/shared"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { mockProjects } from "@/mocks/projects.mocks"
 import Image from "next/image"
-import Marquee from "react-fast-marquee"
 
 export default function HomePage() {
   const projects = mockProjects(8)
   return (
     <div>
-      <div className="">
+      <LandingCont className="mb-10 py-12 lg:py-2">
         <Hero />
-        <Marquee className="bg-[#1a1a1a] px-4 py-4 text-5xl font-bold text-white">
-          <span className="ml-2">
-            Seistart offers various projects that are currently getting built.
-          </span>
-        </Marquee>
-      </div>
+      </LandingCont>
+      <HomeMarquee />
       <LandingCont className="mb-10 py-2 sm:py-12">
         <Heading
           highlighted={"Most Popular"}

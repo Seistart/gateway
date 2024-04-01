@@ -14,7 +14,7 @@ const config = {
       body: ["space-grotesk", "ui-sans-serif", "system-ui"],
     },
     container: {
-      padding: "1rem",
+      padding: "", // no padding intially
       screens: {},
     },
     extend: {
