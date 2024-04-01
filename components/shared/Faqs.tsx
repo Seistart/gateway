@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./accordion"
+} from "../ui/accordion"
 
 const faqs = [
   {
@@ -47,7 +47,7 @@ const faqs = [
   },
 ]
 
-export default function Faqs() {
+export function Faqs() {
   return (
     <div className="bg-[#1A1A1A] py-12 text-white">
       <h1 className="mb-10 mt-6 w-full text-center text-6xl font-bold">FAQs</h1>

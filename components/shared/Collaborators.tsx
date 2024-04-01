@@ -1,9 +1,9 @@
 import Image from "next/image"
 import LandingCont from "../containers/LandingCont"
 import Heading from "../headers/Heading"
-import { AspectRatio } from "./aspect-ratio"
+import { AspectRatio } from "../ui/aspect-ratio"
 
-export default function Team() {
+export function Collaborators() {
   const arrayToMap = new Array(6).fill(null)
   return (
     <LandingCont className="pb-20 pt-10">
@@ -16,7 +16,7 @@ export default function Team() {
             </AspectRatio>
             <div className="flex flex-col gap-2 bg-[#212121] p-2 text-white">
               <p className="text-lg font-bold">Hax Haxo</p>
-              <p className="self-end font-light">Head Team</p>
+              <p className="self-end font-light">Head Collaborator</p>
             </div>
           </div>
         ))}

@@ -15,7 +15,7 @@ export default function Heading({
   return (
     <>
       <h1 className="text-4xl font-semibold">
-        <span className="bg-[#E9C0EA]">{highlighted}</span>
+        <span className="mr-2 bg-[#E9C0EA]">{highlighted}</span>
         {headingText}
       </h1>
       {desc && <h2 className="mt-2 font-medium">{desc}</h2>}

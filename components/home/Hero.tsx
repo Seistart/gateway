@@ -1,9 +1,9 @@
 import { mockProjects } from "@/mocks/projects.mocks"
 import Image from "next/image"
-import { Badge } from "./badge"
-import { Button } from "./button"
+import { Badge } from "../ui/badge"
+import { Button } from "../ui/button"
 
-function Hero() {
+export function Hero() {
   const projects = mockProjects(4)
 
   return (
@@ -44,5 +44,3 @@ function Hero() {
     </div>
   )
 }
-
-export default Hero
