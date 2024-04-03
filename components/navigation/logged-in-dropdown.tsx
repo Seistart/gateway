@@ -5,11 +5,11 @@ import { signOutAction } from "@/server-actions/users/users.actions"
 import { addWalletAction } from "@/server-actions/wallets/wallets.actions"
 import { userStore } from "@/stores/user-store"
 import { preventDefaultAction } from "@/utils/react-event-handlers.utils"
-import { SeiWallet } from "@sei-js/core"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useTransition } from "react"
+import { useAccount, useDisconnect } from "wagmi"
+import { ConnectWallet } from "../evm/connect-wallet"
 import { ThemeRadioGroup } from "../theme/theme-radio-group"
 import { Badge } from "../ui/badge"
 import {
@@ -26,35 +26,26 @@ import {
 interface LoggedInDropdownProps {
   userProfile: CompletUserProfile
   setDropdownOpen: (status: boolean) => void
-  disconnect: () => void
-  connectWallet: () => void
-  connectedWallet?: SeiWallet
-  walletAddress: string
 }
 
-export const LoggedInDropdown = ({
-  userProfile,
-  setDropdownOpen,
-  disconnect,
-  connectWallet,
-  connectedWallet,
-  walletAddress,
-}: LoggedInDropdownProps) => {
+export const LoggedInDropdown = ({ userProfile }: LoggedInDropdownProps) => {
+  const { isConnected, address } = useAccount()
+  const { disconnect } = useDisconnect()
   const mainWalletAddress = userProfile.mainWallet.walletAddress
-  const mainWalletAddressConnected = walletAddress === mainWalletAddress
+  const mainWalletAddressConnected = address === mainWalletAddress
   const otherWalletLinked = userProfile.wallets.some(
-    (wallet) => (wallet.walletAddress = walletAddress)
+    (wallet) => (wallet.walletAddress = address as string)
   )
   const { setUserProfile } = userStore()
   const [isPending, startTransition] = useTransition()
-  const pathname = usePathname()
+
   return (
     <>
       <DropdownMenuLabel>
         <div className="flex flex-col space-y-1">
-          {walletAddress ? (
+          {address ? (
             <div className="text-sm">
-              {`${walletAddress.substring(0, 6)}...${walletAddress.substring(walletAddress.length - 3)}`}
+              {`${address.substring(0, 6)}...${address.substring(address.length - 3)}`}
               <Badge className="ml-2">
                 {mainWalletAddressConnected
                   ? "Main"
@@ -72,13 +63,13 @@ export const LoggedInDropdown = ({
         </div>
       </DropdownMenuLabel>
       <DropdownMenuItem disabled>
-        {walletAddress ? "Connected" : "Not Connected"}
+        {address ? "Connected" : "Not Connected"}
       </DropdownMenuItem>
-      {!otherWalletLinked && walletAddress && !mainWalletAddressConnected && (
+      {!otherWalletLinked && address && !mainWalletAddressConnected && (
         <DropdownMenuItem
           onSelect={async (event) => {
             preventDefaultAction(event)
-            await addWalletAction(walletAddress)
+            await addWalletAction(address)
           }}
         >
           Link Wallet
@@ -109,16 +100,8 @@ export const LoggedInDropdown = ({
       </DropdownMenuSub>
       <DropdownMenuSeparator />
 
-      {connectedWallet ? (
+      {isConnected ? (
         <>
-          <DropdownMenuItem
-            onSelect={() => {
-              disconnect()
-              connectWallet()
-            }}
-          >
-            Change Wallet
-          </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={() => {
               disconnect()
@@ -128,12 +111,8 @@ export const LoggedInDropdown = ({
           </DropdownMenuItem>
         </>
       ) : (
-        <DropdownMenuItem
-          onSelect={() => {
-            connectWallet()
-          }}
-        >
-          Connect Wallet
+        <DropdownMenuItem asChild>
+          <ConnectWallet></ConnectWallet>
         </DropdownMenuItem>
       )}
 

@@ -3,8 +3,9 @@
 import { getCompleteUserProfileAction } from "@/server-actions/user-profile/user-profile.actions"
 import { userStore } from "@/stores/user-store"
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
-import { useSelectWallet, useWallet } from "@sei-js/react"
 import { useEffect, useState } from "react"
+import { useAccount } from "wagmi"
+import { ConnectWallet } from "../evm/connect-wallet"
 import { Button } from "../ui/button"
 import {
   DropdownMenu,
@@ -15,6 +16,7 @@ import { LoggedInDropdown } from "./logged-in-dropdown"
 import { WalletConnectedDropdown } from "./wallet-connected-dropdown"
 
 export const UserNavigation = () => {
+  const { isConnected, address } = useAccount()
   const { userProfile, setUserProfile } = userStore()
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
@@ -28,15 +30,13 @@ export const UserNavigation = () => {
   }, [setUserProfile])
 
   const [isDropdownOpen, setDropdownOpen] = useState(false)
-  const { connectedWallet, disconnect, accounts } = useWallet()
-  const { openModal: connectWallet } = useSelectWallet()
 
   if (isLoading) {
     return <>loading...</>
   }
   return (
     <>
-      {connectedWallet || userProfile ? (
+      {isConnected || userProfile ? (
         <DropdownMenu
           open={isDropdownOpen}
           onOpenChange={() => setDropdownOpen(!isDropdownOpen)}
@@ -68,26 +68,19 @@ export const UserNavigation = () => {
               <LoggedInDropdown
                 userProfile={userProfile}
                 setDropdownOpen={setDropdownOpen}
-                disconnect={disconnect}
-                connectWallet={connectWallet}
-                connectedWallet={connectedWallet}
-                walletAddress={accounts[0]?.address}
               ></LoggedInDropdown>
             ) : (
-              connectedWallet && (
+              address && (
                 <WalletConnectedDropdown
-                  disconnect={disconnect}
-                  connectedWallet={connectedWallet}
-                  walletAddress={accounts[0].address}
+                  walletAddress={address as string}
                   setDropdownOpen={setDropdownOpen}
-                  connectWallet={connectWallet}
                 ></WalletConnectedDropdown>
               )
             )}
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button onClick={connectWallet}>Connect Wallet</Button>
+        <ConnectWallet></ConnectWallet>
       )}
     </>
   )

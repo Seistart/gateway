@@ -1,9 +1,9 @@
 "use client"
 
 import useSignIn from "@/hooks/use-sign-in"
-import { SeiWallet } from "@sei-js/core"
 import { Loader2 } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { useDisconnect } from "wagmi"
 import { ThemeRadioGroup } from "../theme/theme-radio-group"
 import {
   DropdownMenuGroup,
@@ -17,26 +17,16 @@ import {
 } from "../ui/dropdown-menu"
 
 interface WalletConnectedDropdownProps {
-  connectedWallet: SeiWallet
   walletAddress: string
-  disconnect: () => void
-  connectWallet: () => void
   setDropdownOpen: (status: boolean) => void
 }
 
 export const WalletConnectedDropdown = ({
-  setDropdownOpen,
-  connectedWallet,
-  disconnect,
   walletAddress,
-  connectWallet,
 }: WalletConnectedDropdownProps) => {
+  const { disconnect } = useDisconnect()
   const pathName = usePathname()
-  const { signIn, isSigningIn } = useSignIn(
-    connectedWallet,
-    walletAddress,
-    pathName
-  )
+  const { signIn, isSigningIn } = useSignIn(pathName)
 
   return (
     <>
@@ -80,14 +70,6 @@ export const WalletConnectedDropdown = ({
         </DropdownMenuSub>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem
-        onSelect={() => {
-          disconnect()
-          connectWallet()
-        }}
-      >
-        Change Wallet
-      </DropdownMenuItem>
       <DropdownMenuItem onSelect={() => disconnect()}>
         Disconnect Wallet
       </DropdownMenuItem>

@@ -1,6 +1,10 @@
-import { SeiProvider } from "@/components/sei/sei-provider"
+"use client"
+
 import { ThemeProvider } from "@/components/theme/theme-provider"
+import { config } from "@/wagmi.config"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactNode } from "react"
+import { WagmiProvider } from "wagmi"
 
 const chainConfiguration = {
   chainId: "atlantic-2",
@@ -10,6 +14,8 @@ const chainConfiguration = {
 interface AppProviderProps {
   children: ReactNode
 }
+
+const queryClient = new QueryClient()
 const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ThemeProvider
@@ -17,12 +23,11 @@ const AppProvider = ({ children }: AppProviderProps) => {
       enableSystem={true}
       disableTransitionOnChange
     >
-      <SeiProvider
-        wallets={["compass"]}
-        chainConfiguration={chainConfiguration}
-      >
-        {children}
-      </SeiProvider>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </WagmiProvider>
     </ThemeProvider>
   )
 }

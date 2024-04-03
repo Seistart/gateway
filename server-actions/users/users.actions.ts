@@ -8,9 +8,8 @@ import { RoleTable, UserRoleTable } from "@/database/schemas/roles.schema"
 import { UserTable } from "@/database/schemas/users.schema"
 import { MainWalletTable, WalletTable } from "@/database/schemas/wallets.schema"
 import { env } from "@/env.mjs"
-import { StdSignature } from "@cosmjs/amino"
-import { verifyArbitrary } from "@sei-js/core"
 import { and, eq } from "drizzle-orm"
+import { verifyMessage } from "ethers"
 import jwt from "jsonwebtoken"
 import { Cookie, generateId } from "lucia"
 import { cookies } from "next/headers"
@@ -108,7 +107,7 @@ export async function generateSignedMessageAction(walletAddress: string) {
 }
 
 export async function singInSignUpAction(
-  signedMessage: StdSignature,
+  signedMessage: string,
   signedJwtToken: string
 ) {
   const isValidJwt = jwt.verify(signedJwtToken, env.NEXTAUTH_JWT_SECRET)
@@ -116,11 +115,7 @@ export async function singInSignUpAction(
     throw "Invalid JWT"
   }
   const { iat, exp, ...message } = jwt.decode(signedJwtToken) as jwt.JwtPayload
-  const verified = await verifyArbitrary(
-    message.walletAddress,
-    JSON.stringify(message),
-    signedMessage
-  )
+  const verified = verifyMessage(JSON.stringify(message), signedMessage)
   if (!verified) {
     throw "Invalid Signature"
   } else {

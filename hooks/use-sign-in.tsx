@@ -3,28 +3,23 @@ import {
   singInSignUpAction,
 } from "@/server-actions/users/users.actions"
 import { userStore } from "@/stores/user-store"
-import { SeiWallet } from "@sei-js/core"
 import { useState } from "react"
-
-function useSignIn(
-  connectedWallet: SeiWallet,
-  walletAddress: string,
-  pathName: string
-) {
+import { useAccount, useSignMessage } from "wagmi"
+function useSignIn(pathName: string) {
   const { setUserProfile } = userStore()
   const [isSigningIn, setIsSigningIn] = useState(false)
-
+  const { isConnected, address } = useAccount()
+  const { signMessageAsync } = useSignMessage()
   const signIn = async () => {
     setIsSigningIn(true)
     try {
-      if (connectedWallet?.signArbitrary) {
-        const { jwt, message } =
-          await generateSignedMessageAction(walletAddress)
-        const signature = await connectedWallet.signArbitrary(
-          "atlantic-2",
-          walletAddress,
-          JSON.stringify(message)
+      if (isConnected) {
+        const { jwt, message } = await generateSignedMessageAction(
+          address as string
         )
+        const signature = (await signMessageAsync({
+          message: JSON.stringify(message),
+        })) as string
         if (signature) {
           const userProfile = await singInSignUpAction(signature, jwt)
           setUserProfile(userProfile)
