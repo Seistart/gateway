@@ -72,7 +72,9 @@ export const UserNavigation = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button onClick={connectWallet}>Connect Wallet</Button>
+        <Button onClick={connectWallet} className="h-full">
+          Connect Wallet
+        </Button>
       )}
     </>
   )

@@ -18,17 +18,13 @@ export function Trending() {
       <Heading headingText={"Trending Sei Projects"} />
       <div className="flex gap-4">
         <Button className="shadow-faded-bottom-right">Popular</Button>
-        <Button variant={"outline"} className="bg-white shadow-bottom-right">
-          Trending
-        </Button>
-        <Button variant={"outline"} className="bg-white shadow-bottom-right">
-          All Time
-        </Button>
+        <Button variant={"outline"}>Trending</Button>
+        <Button variant={"outline"}>All Time</Button>
         <Button className="border border-black bg-[#E9C0EA] shadow-bottom-right">
           More
         </Button>
       </div>
-      <Table className="bg-[#1A1A1A] text-white shadow-table">
+      <Table className="bg-[#1A1A1A border border-white text-white shadow-table">
         <TableCaption>Current Popular Projects on Sei</TableCaption>
         <TableHeader>
           <TableRow>

@@ -9,11 +9,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90border border-input hover:bg-accent hover:text-accent-foreground shadow-bottom-right",
+          "bg-primary text-primary-foreground hover:bg-primary hover:text-accent-foreground",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-background hover:bg-background hover:text-accent-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
@@ -27,10 +27,15 @@ const buttonVariants = cva(
         lg: "h-10 py-8",
         icon: "h-9 w-9 my-1 mx-2",
       },
+      shadow: {
+        default: "shadow-bottom-right",
+        none: "shadow-none",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      shadow: "default",
     },
   }
 )

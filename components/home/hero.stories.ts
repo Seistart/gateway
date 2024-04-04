@@ -1,5 +1,5 @@
+import { Hero } from "@/components/home"
 import type { Meta, StoryObj } from "@storybook/react"
-import Hero from "../home/Hero"
 
 const meta = {
   title: "Ui/Hero",

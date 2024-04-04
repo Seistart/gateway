@@ -1,5 +1,3 @@
-import { Footer } from "@/components/footer"
-import { Header } from "@/components/header"
 import { appMetadata } from "@/config/meteada.config"
 import AppProvider from "@/providers/app-provider"
 import { cn } from "@/utils/tailwind.utils"
@@ -17,13 +15,13 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="light">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn(spaceGrotesk.className)}>
         <AppProvider>
-          <div className="min-h-100vh container mx-auto flex flex-col supports-[height:100cqh]:min-h-[100cqh] supports-[height:100dvh]:min-h-[100dvh] supports-[height:100svh]:min-h-[100svh]">
-            <Header />
+          <div className="min-h-100vh container mx-auto flex flex-col bg-background supports-[height:100cqh]:min-h-[100cqh] supports-[height:100dvh]:min-h-[100dvh] supports-[height:100svh]:min-h-[100svh]">
+            {/* <Header /> */}
             <main className="flex">{children}</main>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </AppProvider>
       </body>

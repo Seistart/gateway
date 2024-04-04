@@ -1,7 +1,6 @@
-"use client"
 import LandingCont from "@/components/containers/LandingCont"
 import Heading from "@/components/headers/Heading"
-import { Hero, HomeMarquee, Trending } from "@/components/home"
+import { Hero, Trending } from "@/components/home"
 import { Collaborators, Faqs } from "@/components/shared"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -15,7 +14,7 @@ export default function HomePage() {
       <LandingCont className="mb-10 py-12 lg:py-2">
         <Hero />
       </LandingCont>
-      <HomeMarquee />
+      {/* <HomeMarquee /> */}
       <LandingCont className="mb-10 py-2 sm:py-12">
         <Heading
           highlighted={"Most Popular"}
@@ -25,7 +24,7 @@ export default function HomePage() {
         <div className="grid grid-cols-2 gap-10 py-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {projects.map((project) => (
             <div
-              className="border border-b-4 border-r-4 border-black p-4 shadow-faded-bottom-right"
+              className="border border-b-4 border-r-4 border-black bg-card p-4 shadow-faded-bottom-right"
               key={project.id}
             >
               <Image

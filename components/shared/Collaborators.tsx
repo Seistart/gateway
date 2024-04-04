@@ -14,7 +14,7 @@ export function Collaborators() {
             <AspectRatio ratio={1}>
               <Image src={"/images/hax.jpg"} alt="hax" fill />
             </AspectRatio>
-            <div className="flex flex-col gap-2 bg-[#212121] p-2 text-white">
+            <div className="flex flex-col gap-2 bg-card p-2 text-white">
               <p className="text-lg font-bold">Hax Haxo</p>
               <p className="self-end font-light">Head Collaborator</p>
             </div>

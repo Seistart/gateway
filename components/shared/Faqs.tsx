@@ -49,8 +49,8 @@ const faqs = [
 
 export function Faqs() {
   return (
-    <div className="bg-[#1A1A1A] py-12 text-white">
-      <h1 className="mb-10 mt-6 w-full text-center text-6xl font-bold">FAQs</h1>
+    <div className="bg-card py-32 text-white">
+      <h1 className="mt- mb-10 w-full text-center text-6xl font-bold">FAQs</h1>
       <div className="px-4 sm:px-20">
         <Accordion
           className="grid grid-cols-1 lg:grid-cols-3"

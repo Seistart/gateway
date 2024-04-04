@@ -40,7 +40,7 @@ export const NavigationMenuPage = () => {
           >
             <Button
               variant={"outline"}
-              className="my-0 border-b-0 border-l border-t-0 bg-white py-8"
+              className="my-0 border-b-0 border-l border-t-0 py-8"
             >
               Discover
             </Button>
