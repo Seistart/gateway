@@ -11,9 +11,7 @@ export default function HomePage() {
   const projects = mockProjects(8)
   return (
     <div>
-      <LandingCont className="mb-10 py-12 lg:py-2">
-        <Hero />
-      </LandingCont>
+      <Hero />
       {/* <HomeMarquee /> */}
       <LandingCont className="mb-10 py-2 sm:py-12">
         <Heading
@@ -46,9 +44,7 @@ export default function HomePage() {
               </div>
             </div>
           ))}
-          <Button className="border-none text-white shadow-faded-bottom-right">
-            Load More
-          </Button>
+          <Button className="shadow-faded-bottom-right">Load More</Button>
         </div>
       </LandingCont>
       <Trending />

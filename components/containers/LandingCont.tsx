@@ -11,7 +11,10 @@ export default function LandingCont({
   ...props
 }: LandingContProps) {
   return (
-    <div className={cn("px-2 sm:px-40", className)} {...props}>
+    <div
+      className={cn("mx-auto max-w-[80rem] px-4 sm:px-0", className)}
+      {...props}
+    >
       {children}
     </div>
   )

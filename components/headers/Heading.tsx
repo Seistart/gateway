@@ -14,8 +14,8 @@ export default function Heading({
 }: HeadingProps) {
   return (
     <>
-      <h1 className="text-4xl font-semibold">
-        <span className="mr-2 bg-[#E9C0EA]">{highlighted}</span>
+      <h1 className="xs:text-3xl text-2xl font-semibold sm:text-4xl">
+        <span className="mr-2 bg-primary text-black">{highlighted}</span>
         {headingText}
       </h1>
       {desc && <h2 className="mt-2 font-medium">{desc}</h2>}
