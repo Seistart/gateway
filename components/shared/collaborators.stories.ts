@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import Collaborators from "./Collaborators"
+import { Collaborators } from "."
 
 const meta = {
   title: "Ui/Collaborators",
