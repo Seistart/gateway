@@ -1,6 +1,9 @@
-import { CreateDefsFn, DefsSelection } from "../../types"
+import { CreateDefsFn, DefsSelection, NodeDatum } from "../../types"
 
-export const createDefs: CreateDefsFn = function (selection) {
+export const createDefs: CreateDefsFn = async function (
+  selection: any,
+  nodeDatum: NodeDatum[]
+) {
   const defs = selection
     .append("defs")
     .attr("id", "defs")
@@ -30,6 +33,48 @@ export const createDefs: CreateDefsFn = function (selection) {
       "d",
       "M50.4921 22.1294C50.1867 21.9569 49.8133 21.9569 49.5079 22.1294L26.5079 35.1294C26.1941 35.3068 26 35.6395 26 36V63C26 63.3605 26.1941 63.6932 26.5079 63.8706L49.5079 76.8706C49.8133 77.0431 50.1867 77.0431 50.4921 76.8706L73.4921 63.8706C73.8059 63.6932 74 63.3605 74 63V36C74 35.6395 73.8059 35.3068 73.4921 35.1294L50.4921 22.1294ZM38 43.6161L28 37.7465V61.259L38 55.4256V43.6161ZM49 74.2861L29.0081 62.9863L39.0165 57.1481L49 62.5936V74.2861ZM60.9956 41.8866L50.9518 36.4076L50.9939 24.7104L70.9966 36.0163L60.9956 41.8866ZM48.9518 36.4086L48.9938 24.7174L29.0034 36.0163L39.0152 41.8929L48.9518 36.4086ZM62 43.6161L72 37.7465V61.259L62 55.4256V43.6161ZM60.9835 57.1481L70.9919 62.9863L51 74.2861V62.5936L60.9835 57.1481Z"
     )
+
+  // Function to load and append an SVG icon as a symbol
+  const loadAndAppendSVGIcon = async (datum: NodeDatum) => {
+    const iconId = `icon-${datum.info.name.replace(/\s+/g, "-").toLowerCase()}`
+    const iconUrl = datum.info.logoUrl
+
+    try {
+      const response = await fetch(iconUrl)
+      const svgText = await response.text()
+      const tempContainer = document.createElement("div")
+      tempContainer.innerHTML = svgText
+      const svgElement = tempContainer.querySelector("svg")
+
+      if (!svgElement)
+        throw new Error("SVG element not found in fetched content")
+
+      const symbol = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "symbol"
+      )
+      symbol.setAttribute("id", iconId)
+      symbol.setAttribute(
+        "viewBox",
+        svgElement.getAttribute("viewBox") || "0 0 100 100"
+      )
+
+      svgElement.querySelectorAll("*").forEach((child) => {
+        symbol.appendChild(child.cloneNode(true))
+      })
+
+      defs.node()?.appendChild(symbol)
+    } catch (error) {
+      console.error("Failed to load SVG icon:", error)
+    }
+  }
+
+  // Load and append SVG icons for each node
+  for (let datum of nodeDatum) {
+    if (datum.info.logoUrl) {
+      await loadAndAppendSVGIcon(datum)
+    }
+  }
 
   return defs as unknown as DefsSelection
 }

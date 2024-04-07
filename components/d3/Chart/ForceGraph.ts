@@ -15,6 +15,7 @@ import {
   CreateSimulationFn,
   CreateSimulationNodeDataFn,
   CreateStageFn,
+  DefsSelection,
   GenerateMaskColorFn,
   MapEntityToColorFn,
   MaskSelection,
@@ -124,17 +125,22 @@ export function ForceGraph(
     const canvasMask = createMask()
     const entityColorMaps = canvasMask.datum().state.colorEntityMaps
 
+    let nodeGroupSelection: NodeGroupSelection
+    let nodeSelection: NodeSelection<SVGGElement, SVGSymbolElement>
+
     const stage = createStage()
-    const defs = createDefs(stage)
+    const defs = createDefs(stage, simulationNodeData).then(
+      (defs: DefsSelection) => {
+        nodeGroupSelection = createNodeGroup(defs)
+        nodeSelection = createNodes(nodeGroupSelection, simulationNodeData)
+      }
+    )
 
     simulationNodeData.forEach((datum) => {
       const maskColor = generateMaskColor(entityColorMaps.nodes, datum)
       mapEntityToColor(canvasMask, datum, maskColor)
       datum.state.maskColor = maskColor
     })
-
-    const nodeGroupSelection = createNodeGroup(defs)
-    const nodeSelection = createNodes(nodeGroupSelection, simulationNodeData)
 
     // Handle invalidation.
     if (invalidation !== null) {

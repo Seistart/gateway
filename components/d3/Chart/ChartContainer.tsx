@@ -34,6 +34,7 @@ export const ChartContainer = ({
         labels: entry.tags,
         name: entry.name,
         communitySize: entry.communitySize!,
+        logoUrl: "",
       })
       return acc
     }, [])

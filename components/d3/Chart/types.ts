@@ -14,6 +14,7 @@ export interface NodeInfo {
   tag: string
   labels: string[]
   communitySize: number
+  logoUrl: string
   x?: number
   y?: number
   radius?: number
@@ -118,13 +119,16 @@ export type DefsSelection = Selection<
   SVGSVGElement,
   undefined
 >
-export type CreateDefsFn = (selection: StageSelection) => DefsSelection
+export type CreateDefsFn = (
+  selection: Selection<any, any, any, any>,
+  nodeData: NodeDatum[]
+) => Promise<DefsSelection>
 
 // NodeGroup
 export type NodeGroupSelection = Selection<
-  SVGSymbolElement,
+  SVGGElement,
   undefined,
-  SVGDefsElement,
+  SVGSVGElement,
   undefined
 >
 export type CreateNodeGroupFn = (selection: DefsSelection) => NodeGroupSelection
