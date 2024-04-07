@@ -12,7 +12,6 @@ import { preventDefaultAction } from "@/utils/react-event-handlers.utils"
 import { cn } from "@/utils/tailwind.utils"
 import Link from "next/link"
 import { ReactNode } from "react"
-import { Button } from "../ui/button"
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -38,12 +37,12 @@ export const NavigationMenuPage = () => {
             onPointerMove={preventDefaultAction}
             onPointerLeave={preventDefaultAction}
           >
-            <Button
+            {/* <Button
               variant={"outline"}
               className="my-0 border-b-0 border-l border-t-0 py-8"
             >
               Discover
-            </Button>
+            </Button> */}
           </NavigationMenuTrigger>
           <NavigationMenuContent
             onPointerMove={preventDefaultAction}

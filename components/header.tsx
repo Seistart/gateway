@@ -14,7 +14,12 @@ export const Header = async ({}: HeaderProps) => {
     <header className="z-20 flex items-center justify-between border-b-2 border-primary/10 bg-[#1F1F1F]">
       <div className="flex-shrink- justify- flex w-full items-center">
         <Link href="/" className="mr-2">
-          <Image src="/images/logo_850.png" width="50" height="50" alt="test" />
+          <Image
+            src="/images/logo_850.png"
+            width="50"
+            height="50"
+            alt="seistart"
+          />
         </Link>
         <div className="hidden items-center justify-center md:flex">
           <NavigationMenuPage />
