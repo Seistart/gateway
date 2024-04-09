@@ -1,6 +1,6 @@
 import LandingCont from "@/components/containers/LandingCont"
 import Heading from "@/components/headers/Heading"
-import { Hero, Trending } from "@/components/home"
+import { Hero, HomeMarquee, Trending } from "@/components/home"
 import { Collaborators, Faqs } from "@/components/shared"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div>
       <Hero />
-      {/* <HomeMarquee /> */}
+      <HomeMarquee />
       <LandingCont className="mb-10 py-2 sm:py-12">
         <Heading
           highlighted={"Most Popular"}

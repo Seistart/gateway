@@ -14,11 +14,11 @@ export function Hero() {
         <div className="flex w-full flex-col items-center justify-between sm:flex-row">
           <h1 className="text-2xl">Your Gateway to the Sei Ecosystem</h1>
           <Link href={"/"} className={buttonVariants({ variant: "default" })}>
-            Browse
+            View
           </Link>
         </div>
       </div>
-      <div className="grid max-w-[80rem] grid-cols-2 gap-10 py-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid max-w-[80rem] grid-cols-2 gap-4 py-10 pt-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {projects.map((project) => (
           <div
             className="border border-b-4 border-r-4 border-black bg-card p-4 shadow-faded-bottom-right"
@@ -31,16 +31,11 @@ export function Hero() {
               height={40}
               className="mb-2 rounded-full opacity-80"
             />
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
-                {/* <p>sth cool</p>
-              <Badge className="bg-[#E9C0EA]">New</Badge> */}
-              </div>
-              <p className="text-sm">Small Description about it</p>
-              <div className="flex items-center gap-2">
-                <p className="text-sm font-medium">Project Name</p>
-                <Badge className="bg-[#E9C0EA]">New</Badge>
-              </div>
+            <div className="relative h-12 flex-col gap-2">
+              <div className="flex gap-2"></div>
+              <Badge className="absolute right-1 top-[-3rem] bg-[#E9C0EA]">
+                New
+              </Badge>
             </div>
           </div>
         ))}
