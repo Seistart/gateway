@@ -1,3 +1,4 @@
+import { cn } from "@/utils/tailwind.utils"
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
@@ -5,6 +6,7 @@ const headingVariants = cva("mr-2 px-2 text-black", {
   variants: {
     variant: {
       default: "bg-primary",
+      alternative: "bg-yellow-100",
       destructive: "bg-destructive",
     },
   },
@@ -22,12 +24,12 @@ export interface HeadingProps
 }
 
 const Heading = React.forwardRef<HTMLLabelElement, HeadingProps>(
-  ({ highlighted, variant, headingText, desc }, ref) => {
+  ({ highlighted, variant, headingText, desc, className }, ref) => {
     return (
       <>
         <h1 className="xs:text-3xl text-2xl font-semibold sm:text-4xl">
           {highlighted && (
-            <span className="mr-2 bg-primary px-2 text-black ">
+            <span className={cn(headingVariants({ variant, className }))}>
               {highlighted}
             </span>
           )}

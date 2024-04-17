@@ -41,7 +41,9 @@ export const UserNavigation = () => {
           onOpenChange={() => setDropdownOpen(!isDropdownOpen)}
         >
           <DropdownMenuTrigger asChild>
-            <Button className="my-0 py-8">Profile</Button>
+            <Button variant={"nav"} shadow="none" className="my-0 py-8">
+              Profile
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-56"

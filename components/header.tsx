@@ -28,7 +28,7 @@ export const Header = async ({}: HeaderProps) => {
           <Button
             variant={"outline"}
             shadow={"none"}
-            className="my-0 border-b-0 border-r-0 border-t-0 py-8"
+            className="my-0 border-0 py-8"
           >
             32.5 SEI
           </Button>

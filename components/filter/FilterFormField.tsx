@@ -1,14 +1,5 @@
+import MultipleSelector from "../shared/multiple-selector"
 import { FormField, FormItem, FormMessage } from "../ui/form"
-
-import { CaretSortIcon } from "@radix-ui/react-icons"
-import { useState } from "react"
-import { Button } from "../ui/button"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible"
-import { CheckboxItem } from "./CheckboxItem"
 
 type Props = {
   name: string
@@ -17,59 +8,31 @@ type Props = {
 }
 
 export function FilterFormField({ name, methods, items }: Props) {
-  const [itemIsOpen, setItemIsOpen] = useState<boolean>(false)
-
-  const initialItems = items.slice(0, 5)
-  const collabsibleItems = items.slice(5)
-
-  const disabled = items.length < 5
-
   return (
     <FormField
       control={methods.control}
       name={name}
-      render={() => (
+      render={({ field }) => (
         <FormItem>
-          {/* Collapsible Items */}
-          <Collapsible
-            open={itemIsOpen}
-            onOpenChange={setItemIsOpen}
-            className="space-y-2"
-          >
-            <div className="flex items-center justify-between space-x-4">
-              <h4 className="text-sm font-semibold capitalize">{name}</h4>
-              <CollapsibleTrigger asChild disabled={disabled}>
-                <Button variant="ghost" size="sm">
-                  <CaretSortIcon className="h-4 w-8" />
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-            {/* Initial Items */}
-            {initialItems.map((item: string) => (
-              <CheckboxItem
-                key={item}
-                item={item}
-                name={name}
-                control={methods.control}
-              />
-            ))}
-            <div
-              className={`transition-all duration-500 ease-out ${itemIsOpen ? "max-h-[30rem]" : "max-h-0"}`}
-            >
-              <CollapsibleContent className="space-y-2 transition-all duration-300 ease-out">
-                {collabsibleItems.map((item: string) => (
-                  <CheckboxItem
-                    key={item}
-                    item={item}
-                    name={name}
-                    control={methods.control}
-                  />
-                ))}
-              </CollapsibleContent>
-            </div>
-          </Collapsible>
-
-          <FormMessage />
+          <div className="flex w-full flex-col gap-5">
+            <MultipleSelector
+              {...field}
+              defaultOptions={items}
+              onChange={(change) =>
+                field.onChange(change.map((option) => option.value))
+              }
+              value={methods.value} // Controlled value from react-hook-form
+              ref={methods.ref} // Ref forwarding for react-hook-form
+              hidePlaceholderWhenSelected
+              placeholder={`Filter ${name}`}
+              emptyIndicator={
+                <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                  No {name} found.
+                </p>
+              }
+            />
+          </div>
+          {methods.error && <FormMessage>{methods.error.message}</FormMessage>}
         </FormItem>
       )}
     />

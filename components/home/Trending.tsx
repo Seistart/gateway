@@ -16,7 +16,11 @@ import { coinData } from "./constants/mockdata"
 export function Trending() {
   return (
     <LandingCont className="overflow-hidden">
-      <Heading highlighted={"Trending"} headingText={"Sei Projects"} />
+      <Heading
+        highlighted={"Trending"}
+        variant={"alternative"}
+        headingText={"Sei Projects"}
+      />
       <div className="flex flex-wrap gap-4">
         <Button className="shadow-faded-bottom-right">Popular</Button>
         <Button variant={"outline"}>Trending</Button>

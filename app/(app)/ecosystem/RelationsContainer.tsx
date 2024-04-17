@@ -10,7 +10,11 @@ import RelationsChart from "./RelationsChart"
 export const RelationsContainer = () => {
   const { projects, filteredProjects, setProjects } = useFilterStore()
   if (projects.length === 0) {
-    setProjects(mockProjects(100))
+    if (process.env.USE_MOCK_DATA === "TRUE") {
+      setProjects(mockProjects(100))
+    } else {
+      // const { projects } = await getAllProjectsAction()
+    }
   }
 
   const [nodes] = React.useMemo(() => {
