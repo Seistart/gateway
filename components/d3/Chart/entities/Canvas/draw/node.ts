@@ -142,7 +142,7 @@ export const drawNode = function (
 
   context.fillStyle = nodeCircle.attr("fill")
 
-  const maskColor = `rgb(${datum.state.maskColor.join(", ")})`
+  const maskColor = `rgb(${datum.state.maskColor?.join(", ")})`
   maskContext.fillStyle = maskColor
 
   const ellipseParams = [

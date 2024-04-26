@@ -1,5 +1,6 @@
 import { projectTagSchema } from "@/database/schemas/projects.schema"
 import { useFilterStore } from "@/stores/project-filter-store"
+import { debounce } from "@/utils/debounce"
 import { stages } from "@/utils/mock.utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DoubleArrowRightIcon } from "@radix-ui/react-icons"
@@ -26,6 +27,7 @@ export const FilterScreen = ({ close }: Props) => {
   const { filter, filteredProjects, resetFilters, updateFilter } =
     useFilterStore()
   const [showFilters, setShowFilters] = useState<boolean>(true)
+  const [reset, setReset] = useState<boolean>(false)
 
   const ready = true // changed uppon loading graph
 
@@ -58,6 +60,21 @@ export const FilterScreen = ({ close }: Props) => {
     },
   })
 
+  // Create a debounced function to handle updates
+  const debouncedUpdateFilter = React.useCallback(
+    debounce((newFilter) => {
+      updateFilter(newFilter)
+    }, 300),
+    [updateFilter]
+  ) // Debounce period is 300 ms
+
+  const { searchTerm, tags, stage } = methods.watch()
+
+  React.useEffect(() => {
+    const newFilter = { searchTerm, tags, stage }
+    debouncedUpdateFilter(newFilter)
+  }, [searchTerm, tags, stage, debouncedUpdateFilter])
+
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     updateFilter({
       searchTerm: data.searchTerm,
@@ -74,6 +91,7 @@ export const FilterScreen = ({ close }: Props) => {
       tags: [],
       stage: [],
     })
+    setReset(!reset)
     close && setShowFilters(false)
   }
 
@@ -85,6 +103,7 @@ export const FilterScreen = ({ close }: Props) => {
         <Button
           onClick={() => setShowFilters(!showFilters)}
           variant="outline"
+          shadow="none"
           className={`absolute right-[-2.21rem] top-6 z-10 m-0 h-9 w-9 bg-gray-800 p-2.5 text-white transition-transform duration-300 ${showFilters ? "rotate-180" : "rotate-0"}`}
         >
           <DoubleArrowRightIcon className="h-4 w-4" />
@@ -137,9 +156,6 @@ export const FilterScreen = ({ close }: Props) => {
             />
 
             <div className="absolute bottom-0 ml-[-.5rem] flex justify-between">
-              <Button variant={"outline"} className="text-white">
-                Apply
-              </Button>
               <Button
                 onClick={(e) => {
                   e.preventDefault()

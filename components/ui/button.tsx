@@ -21,7 +21,7 @@ const buttonVariants = cva(
         nav: "bg-primary text-primary-foreground hover:bg-primary hover:text-accent-foreground",
         navigation: `text-primary underline-offset-4 hover:underline h-8 w-[100%] items-center justify-center p-1 text-gray-400`,
       },
-      selected: { true: "bg-secondary text-primary" },
+      selected: { true: "bg-neutral-800 text-white" },
       size: {
         default: "h-9 w-32 py-6 my-4 mx-0",
         sm: "h-8 py-3 text-xs",
