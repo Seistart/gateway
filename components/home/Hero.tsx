@@ -42,7 +42,7 @@ export function Hero() {
           }}
           className="absolute left-0 top-0 z-0 h-full w-full"
         ></div>
-        <div className="z-10 flex w-full flex-col items-center justify-between sm:flex-row">
+        <div className="z-0 flex w-full flex-col items-center justify-between sm:flex-row">
           <h1 className="bg-[#ffe5ca] p-2 px-4 text-2xl text-black">
             Your Gateway to the Sei Ecosystem
           </h1>
