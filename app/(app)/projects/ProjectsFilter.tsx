@@ -7,22 +7,15 @@ import { Project } from "@/database/schemas/projects.schema"
 import { useFilterStore } from "@/stores/project-filter-store"
 import Image from "next/image"
 import Link from "next/link"
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 
 export default function FilterProjects({
   initialProjects,
 }: {
   initialProjects: Project[]
 }) {
-  const {
-    projects,
-    filter,
-    resetFilters,
-    setProjects,
-    updateFilter,
-    filteredProjects,
-    isLoading,
-  } = useFilterStore()
+  const { projects, setProjects, filteredProjects, isLoading } =
+    useFilterStore()
 
   useEffect(() => {
     // Fetch and set projects from db here
@@ -30,10 +23,6 @@ export default function FilterProjects({
       setProjects(initialProjects)
     }
   }, [setProjects])
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateFilter({ searchTerm: event.target.value })
-  }
 
   if (isLoading) {
     return <Spinner />
@@ -50,7 +39,7 @@ export default function FilterProjects({
           No Projects found
         </div>
       ) : (
-        <div className="projects-grid overflow-y-scroll">
+        <div className="projects-grid overflow-y-auto">
           <div className="grid grid-cols-2 gap-4 overflow-hidden md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filteredProjects.map((project) => (
               <Link

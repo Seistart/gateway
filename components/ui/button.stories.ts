@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: "Hello",
+    children: "Load more",
     variant: "default",
   },
 }

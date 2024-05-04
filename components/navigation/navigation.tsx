@@ -7,7 +7,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { preventDefaultAction } from "@/utils/react-event-handlers.utils"
 import { cn } from "@/utils/tailwind.utils"
@@ -22,8 +21,8 @@ const components: { title: string; href: string; description: string }[] = [
       "A modal dialog that interrupts the user with important content and expects a response.",
   },
   {
-    title: "Documentation",
-    href: "/",
+    title: "Exploration",
+    href: "/ecosystem",
     description:
       "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
   },
@@ -38,14 +37,19 @@ export const NavigationMenuPage = () => {
             onPointerMove={preventDefaultAction}
             onPointerLeave={preventDefaultAction}
           >
-            Discover
+            {/* <Button
+              variant={"outline"}
+              className="my-0 border-b-0 border-l border-t-0 py-8"
+            >
+              Discover
+            </Button> */}
           </NavigationMenuTrigger>
           <NavigationMenuContent
             onPointerMove={preventDefaultAction}
             onPointerLeave={preventDefaultAction}
             className="z-20"
           >
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+            <ul className="grid w-[400px] gap-3 p-0 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
               {components.map((component) => (
                 <ListItem
                   key={component.title}
@@ -57,43 +61,6 @@ export const NavigationMenuPage = () => {
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger
-            onPointerMove={preventDefaultAction}
-            onPointerLeave={preventDefaultAction}
-          >
-            Recruit
-          </NavigationMenuTrigger>
-          <NavigationMenuContent
-            onPointerMove={preventDefaultAction}
-            onPointerLeave={preventDefaultAction}
-          >
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <div className="row-span-3">
-                <ListItem href="/" title="Explore">
-                  Find people passionate builders looking to contribute to the
-                  SEI ecosystem
-                </ListItem>
-              </div>
-              <ListItem href="/" title="Developers">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/" title="Artist">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/" title="Community">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/blog" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Blog
-            </NavigationMenuLink>
-          </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

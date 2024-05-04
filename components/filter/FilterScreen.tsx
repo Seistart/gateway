@@ -1,5 +1,7 @@
 import { projectTagSchema } from "@/database/schemas/projects.schema"
 import { useFilterStore } from "@/stores/project-filter-store"
+import { debounce } from "@/utils/debounce"
+import { stages } from "@/utils/mock.utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DoubleArrowRightIcon } from "@radix-ui/react-icons"
 import * as React from "react"
@@ -25,14 +27,23 @@ export const FilterScreen = ({ close }: Props) => {
   const { filter, filteredProjects, resetFilters, updateFilter } =
     useFilterStore()
   const [showFilters, setShowFilters] = useState<boolean>(true)
+  const [reset, setReset] = useState<boolean>(false)
 
   const ready = true // changed uppon loading graph
 
   // Tags - Derived from the tags schema
-  const tags = projectTagSchema.options
+  // const tags = projectTagSchema.options
 
-  // Stages - Derived from the stage schema
-  const stages = ["Local/Private", "Devnet", "Testnet", "Mainnet"]
+  const tagsOptions = projectTagSchema.options.map((tag) => ({
+    value: tag, // or any logic to assign value
+    label: tag, // or any logic to transform tag into a more readable label if necessary
+  }))
+
+  // Given stages array
+  const stagesOptions = stages.map((stage) => ({
+    value: stage.toLowerCase().replace(/\W+/g, "_"), // Transforming "Local/Private" to "local_private", etc.
+    label: stage, // Keeping the original string as the label
+  }))
 
   React.useEffect(() => {
     if (!ready) {
@@ -48,6 +59,21 @@ export const FilterScreen = ({ close }: Props) => {
       stage: filter.stage,
     },
   })
+
+  // Create a debounced function to handle updates
+  const debouncedUpdateFilter = React.useCallback(
+    debounce((newFilter) => {
+      updateFilter(newFilter)
+    }, 300),
+    [updateFilter]
+  ) // Debounce period is 300 ms
+
+  const { searchTerm, tags, stage } = methods.watch()
+
+  React.useEffect(() => {
+    const newFilter = { searchTerm, tags, stage }
+    debouncedUpdateFilter(newFilter)
+  }, [searchTerm, tags, stage, debouncedUpdateFilter])
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     updateFilter({
@@ -65,6 +91,7 @@ export const FilterScreen = ({ close }: Props) => {
       tags: [],
       stage: [],
     })
+    setReset(!reset)
     close && setShowFilters(false)
   }
 
@@ -76,6 +103,7 @@ export const FilterScreen = ({ close }: Props) => {
         <Button
           onClick={() => setShowFilters(!showFilters)}
           variant="outline"
+          shadow="none"
           className={`absolute right-[-2.21rem] top-6 z-10 m-0 h-9 w-9 bg-gray-800 p-2.5 text-white transition-transform duration-300 ${showFilters ? "rotate-180" : "rotate-0"}`}
         >
           <DoubleArrowRightIcon className="h-4 w-4" />
@@ -83,7 +111,7 @@ export const FilterScreen = ({ close }: Props) => {
       )}
 
       <div
-        className={`scrollbar-left w-full overflow-y-scroll px-2 text-neutral-800  ${showFilters ? "visible" : "hidden"}`}
+        className={`scrollbar-left h-full w-full overflow-y-scroll px-2 text-neutral-800  ${showFilters ? "visible" : "hidden"}`}
       >
         <div className="flex w-full items-center justify-between py-4">
           <div className="text-left text-sm text-neutral-800">
@@ -114,13 +142,20 @@ export const FilterScreen = ({ close }: Props) => {
                 </>
               )}
             />
-            <FilterFormField name="tags" methods={methods} items={tags} />
-            <FilterFormField name="stage" methods={methods} items={stages} />
+            <FilterFormField
+              key="tags"
+              name="tags"
+              methods={methods}
+              items={tagsOptions}
+            />
+            <FilterFormField
+              key="stage"
+              name="stage"
+              methods={methods}
+              items={stagesOptions}
+            />
 
             <div className="absolute bottom-0 ml-[-.5rem] flex justify-between">
-              <Button variant={"outline"} className="text-white">
-                Apply
-              </Button>
               <Button
                 onClick={(e) => {
                   e.preventDefault()

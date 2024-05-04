@@ -14,10 +14,17 @@ const config = {
       body: ["space-grotesk", "ui-sans-serif", "system-ui"],
     },
     container: {
-      padding: "1rem",
+      padding: "", // no padding intially
       screens: {},
     },
     extend: {
+      boxShadow: {
+        "bottom-right": "6px 6px 0px rgba(0, 0, 0, 1)",
+        "faded-bottom-right": "6px 6px 0px rgba(0, 0, 0, 0.6)",
+        "bottom-right-2": "6px 6px 0px rgba(0, 0, 0, 0.4)",
+        accentuated: "3px 3px 0px rgba(0, 0, 0, 1)",
+        table: "15px 15px 0px rgba(0, 0, 0, 0.2)",
+      },
       spacing: {
         "72": "18rem",
         "84": "21rem",
@@ -25,11 +32,21 @@ const config = {
       },
       animation: {
         "infinite-scroll": "infinite-scroll 25s linear infinite",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       keyframes: {
         "infinite-scroll": {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-100%)" },
+        },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       colors: {

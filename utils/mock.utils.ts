@@ -7,6 +7,8 @@ import { Faker, faker } from "@faker-js/faker"
 import merge from "lodash/merge"
 import { z, ZodArray, ZodSchema } from "zod"
 
+export const stages = ["Local/Private", "Devnet", "Testnet", "Mainnet"]
+
 const keyToFnMap: { [key: string]: () => string | number | boolean | Date } = {
   projectId: faker.string.uuid,
 }

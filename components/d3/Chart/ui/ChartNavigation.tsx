@@ -126,6 +126,7 @@ export const ChartNavigation = ({
     <div className="absolute bottom-6 right-6 z-30 flex h-[23rem] w-[3rem] flex-col items-center justify-between bg-white py-2 shadow-md">
       <Button
         variant={"navigation"}
+        shadow="none"
         selected={show}
         size={"icon"}
         onClick={onClickLegendButton}
@@ -134,6 +135,7 @@ export const ChartNavigation = ({
       </Button>
       <Button
         variant={"navigation"}
+        shadow="none"
         selected={mode === "move"}
         size={"icon"}
         onClick={setCursorModeMoveHandler}
@@ -142,6 +144,7 @@ export const ChartNavigation = ({
       </Button>
       <Button
         variant={"navigation"}
+        shadow="none"
         selected={mode === "select"}
         size={"icon"}
         onClick={setCursorModeSelectHandler}
@@ -150,6 +153,7 @@ export const ChartNavigation = ({
       </Button>
       <Button
         variant={"navigation"}
+        shadow="none"
         disabled={currentZoomLevel === 0}
         size={"icon"}
         onClick={zoomIn}
@@ -158,6 +162,7 @@ export const ChartNavigation = ({
       </Button>
       <Button
         variant={"navigation"}
+        shadow="none"
         disabled={currentZoomLevel === 30}
         size={"icon"}
         onClick={zoomOut}
@@ -166,6 +171,7 @@ export const ChartNavigation = ({
       </Button>
       <Button
         variant={"navigation"}
+        shadow="none"
         disabled={!canUndo}
         size={"icon"}
         onClick={resetChart}
@@ -174,6 +180,7 @@ export const ChartNavigation = ({
       </Button>
       <Button
         variant={"navigation"}
+        shadow="none"
         onClick={undoChart}
         size={"icon"}
         disabled={!canUndo}

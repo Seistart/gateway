@@ -68,7 +68,8 @@ function projectMatchesFilter(
   const matchesTags =
     filter.tags.length === 0 || filter.tags.includes(project.mainTag)
   const matchesStage =
-    filter.stage.length === 0 || filter.stage.includes(project.stage)
+    filter.stage.length === 0 ||
+    filter.stage.includes(project.stage.toLowerCase().replace(/\W+/g, "_"))
   const matchesMainTag =
     filter.mainTag.length === 0 || filter.mainTag.includes(project.mainTag)
 

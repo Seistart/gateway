@@ -44,8 +44,6 @@ export const DetailScreen = ({ nodes }: TProps) => {
     }
   }, [ready, setShowDetails])
 
-  console.log("selection", selection)
-
   return (
     <div
       className={`relative bg-white transition-all duration-300 ease-out ${details.show ? "max-w-[380px]" : "max-w-0"} relative right-0 z-20 flex h-full flex-1 `}
@@ -53,6 +51,7 @@ export const DetailScreen = ({ nodes }: TProps) => {
       <div className="mt-2 h-full min-w-[min-content] overflow-y-scroll p-6 shadow-none">
         <Button
           variant={"ghost"}
+          shadow="none"
           size="icon"
           className={`absolute left-[-2.25rem] z-10 m-0 self-start bg-gray-800 p-2 text-white ${details ? `visible` : `hidden`}`}
           onClick={onClose}

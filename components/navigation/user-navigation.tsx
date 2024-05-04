@@ -2,7 +2,6 @@
 
 import { getCompleteUserProfileAction } from "@/server-actions/user-profile/user-profile.actions"
 import { userStore } from "@/stores/user-store"
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import { useSelectWallet, useWallet } from "@sei-js/react"
 import { useEffect, useState } from "react"
 import { Button } from "../ui/button"
@@ -42,20 +41,8 @@ export const UserNavigation = () => {
           onOpenChange={() => setDropdownOpen(!isDropdownOpen)}
         >
           <DropdownMenuTrigger asChild>
-            <Button
-              className="h-10 w-10 rounded-full"
-              size="icon"
-              variant="ghost"
-            >
-              <Avatar>
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  className="rounded-full"
-                />
-                <AvatarFallback>
-                  <div className="h-10 w-10 animate-pulse rounded-full bg-primary/10"></div>
-                </AvatarFallback>
-              </Avatar>
+            <Button variant={"nav"} shadow="none" className="my-0 py-8">
+              Profile
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -87,7 +74,9 @@ export const UserNavigation = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <Button onClick={connectWallet}>Connect Wallet</Button>
+        <Button onClick={connectWallet} className="h-full">
+          Connect Wallet
+        </Button>
       )}
     </>
   )

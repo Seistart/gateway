@@ -91,6 +91,8 @@ export const ProjectWithTagsSchema = BaseSchema.extend({
   discord: z.string().url(),
   telegram: z.string().url(),
   contactEmail: z.string().email(),
+  backgroundImage: z.string(),
+  iconImage: z.string(),
 })
 
 export const ProjectsResponseSchema = z.array(ProjectWithTagsSchema)

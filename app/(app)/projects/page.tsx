@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { appMetadata } from "@/config/meteada.config"
+import { Project } from "@/database/schemas/projects.schema"
 import { mockProjects } from "@/mocks/projects.mocks"
 import { Fullscreen } from "lucide-react"
 import { Metadata } from "next"
@@ -11,8 +12,12 @@ export const metadata: Metadata = {
 }
 
 export default async function ProjectsPage() {
-  // const { projects } = await getAllProjectsAction()
-  const projectsList = mockProjects(50)
+  let projects: Project[] = []
+  if (process.env.USE_MOCK_DATA === "TRUE") {
+    projects = mockProjects(50)
+  } else {
+    // const { projects } = await getAllProjectsAction()
+  }
 
   return (
     <div className="relative sm:p-6">
@@ -22,7 +27,7 @@ export default async function ProjectsPage() {
         </h1>
       </div>
       <div>
-        <FilterProjects initialProjects={projectsList} />
+        <FilterProjects initialProjects={projects} />
       </div>
       <Link href="/ecosystem">
         <div className="h-18 w-18 fixed bottom-4 right-4 m-4 bg-white p-0">

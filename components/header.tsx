@@ -1,8 +1,6 @@
 import { UserProfile } from "@/database/schemas/profiles.schema"
 import Image from "next/image"
 import Link from "next/link"
-import { FaBell, FaSearch } from "react-icons/fa"
-import { MobileNavigation } from "./navigation/mobile-navigation"
 import { NavigationMenuPage } from "./navigation/navigation"
 import { UserNavigation } from "./navigation/user-navigation"
 import { Button } from "./ui/button"
@@ -13,31 +11,29 @@ interface HeaderProps {
 
 export const Header = async ({}: HeaderProps) => {
   return (
-    <header className="z-20 flex items-center justify-between border-b-2 border-primary/10">
-      <div className="flex flex-shrink-0 items-center justify-center">
+    <header className="z-20 flex items-center justify-between border-b-2 border-primary/10 bg-[#1F1F1F]">
+      <div className="flex-shrink- justify- flex w-full items-center">
         <Link href="/" className="mr-2">
-          <Image src="/images/logo_850.png" width="50" height="50" alt="test" />
+          <Image
+            src="/images/logo_850.png"
+            width="50"
+            height="50"
+            alt="seistart"
+          />
         </Link>
         <div className="hidden items-center justify-center md:flex">
           <NavigationMenuPage />
         </div>
-        <div className="flex items-center justify-center md:hidden">
-          <MobileNavigation />
+        <div className="flex w-full items-center justify-end">
+          <Button
+            variant={"outline"}
+            shadow={"none"}
+            className="my-0 border-0 py-8"
+          >
+            32.5 SEI
+          </Button>
+          <UserNavigation />
         </div>
-      </div>
-      <div className="flex items-center">
-        <div className="hidden items-center justify-center md:flex">
-          <Button variant="outline">
-            <span className="flex">32.06 SEI</span>
-          </Button>
-          <Button variant="ghost" size="icon">
-            <FaSearch className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="icon">
-            <FaBell className="h-4 w-4" />
-          </Button>
-        </div>
-        <UserNavigation></UserNavigation>
       </div>
     </header>
   )
